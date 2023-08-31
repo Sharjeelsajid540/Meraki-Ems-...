@@ -1,4 +1,5 @@
 ﻿using MerakiEMS.Application.Contracts.Requests;
+using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Domain.Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Interfaces
 {
     public interface IUsersRepository
     { 
-        Task<Users> CheckUser( Users user);
-         Task<string> GenerateToken( Users user );
-        Task<Users> CheckLogin(Users user);
+        Task<User> CheckUser( User user);
+         Task<string> GenerateToken( LoginResponse response );
+        Task<LoginResponse> CheckLogin(User user);
     }
     
 }

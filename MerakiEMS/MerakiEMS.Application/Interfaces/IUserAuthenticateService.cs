@@ -12,7 +12,7 @@ namespace MerakiEMS.Application.Interfaces
 {
     public interface IUserAuthenticateService
     {
-        Task<ApiResponse<string>> AuthenticateUser(RegisterRequest request);
+        //Task<ApiResponse<string>> AuthenticateUser(RegisterRequest request);
         Task<LoginResponse> LoginUser(LoginRequest request);
     }
 }

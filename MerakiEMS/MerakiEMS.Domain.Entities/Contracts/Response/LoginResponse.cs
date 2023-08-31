@@ -8,11 +8,13 @@ namespace MerakiEMS.Application.Contracts.Response
 {
     public class LoginResponse
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Username { get; set; }
+        public string Name { get; set; }
         public int Id { get; set; }
-        public bool IsActive { get; set; }
+        public string UserRole { get; set; }
+        public int RoleID { get; set; }
+        public List<string> UserPermissions { get; set; }
+        
+        public  List<int> PermissionID { get; set; }
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
         public List<string> Errors { get; set; }

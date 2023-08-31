@@ -14,6 +14,7 @@ namespace MerakiEMS.Infrastructure.Bootstrap
         {
             services.AddDbContext<UsersContext>(options => options.UseSqlServer(configuration.GetConnectionString("MerakiEMSDb")));
             services.AddDbContext<PostsContext>(options => options.UseSqlServer(configuration.GetConnectionString("MerakiEMSDb")));
+            services.AddDbContext<UserContext>(options => options.UseSqlServer(configuration.GetConnectionString("MerakiEMSDb")));
 
             //services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUsersRepository, UsersRepository>();
