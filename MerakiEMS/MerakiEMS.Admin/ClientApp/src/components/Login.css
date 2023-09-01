@@ -22,23 +22,27 @@
     font-size: large;
     font-weight: 600;
     margin-right: 270px;
+
+    
   }
 
   img{
 
     /* margin: 30px 0 50px 125px; */
     width: 30%;
-    margin-bottom: 60px;
+    margin-bottom: 50px;
+    
     
     
   }
   .btn{
     background-color: #0B2B50 !important;
     
-    width: 70%;
+    width: 100%;
     color: #fff;
     font-size: large;
     font-weight: 600;
+    margin-top: 20px;
   }
   .btn:hover{
     color: #0B2B50 !important;
@@ -47,6 +51,22 @@
     border: 1px solid;
   } 
   .form-control{
-    margin-bottom: 40px;
+    margin-bottom: 20px;
+  }
+  .password-input{
+    position: relative;
+  }
+  .eye-icon{
+    position: absolute;
+    top: 28%;
+    right: 4%;
+    opacity: 0.2;
+  }
+  .eye-icon:hover{
+    opacity: 1;
+  }
+  h6{
+    margin-bottom: 20px;
+    margin-top: -20px;
   }
 
