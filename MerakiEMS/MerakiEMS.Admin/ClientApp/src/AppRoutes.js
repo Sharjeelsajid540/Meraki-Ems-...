@@ -1,11 +1,11 @@
+import Login from "./components/Login";
 
 
-import Home  from "./components/Home";
 
 const AppRoutes = [
   {
     path: '/',
-    element: <Home />
+    element: <Login />
   }
   
 ];
