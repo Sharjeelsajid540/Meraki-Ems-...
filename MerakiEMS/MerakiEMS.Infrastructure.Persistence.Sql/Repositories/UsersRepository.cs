@@ -7,24 +7,25 @@ using MerakiEMS.Infrastructure.Persistence.Sql.Context;
 using MerakiEMS.Infrastructure.Persistence.Sql.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using MerakiEMS.Application.Contracts.Response;
 
 namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 {
     public class UsersRepository : IUsersRepository
     {
-        private readonly UsersContext _context;
+        private readonly UserContext _context;
         private IConfiguration _config;
 
-        public UsersRepository(UsersContext context, IConfiguration config)
+        public UsersRepository(UserContext context, IConfiguration config)
         {
             _context = context;
             _config = config;
         }
-        public async Task<Users> CheckUser(Users user)
+        public async Task<User> CheckUser(User user)
         {
             
-            var userr = await _context.Users
-                .Where(s => s.Username == user.Username).FirstOrDefaultAsync();
+            var userr = await _context.User
+                .Where(s => s.Name == user.Name).FirstOrDefaultAsync();
            
             
             if (userr == null)
@@ -40,17 +41,68 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             
             return null;
         }
-        public async Task<Users> CheckLogin(Users user)
+        public async Task<LoginResponse> CheckLogin(User user)
         {
-            var userr = await _context.Users
-                .Where(s=> s.Email== user.Email && s.Password==user.Password).FirstOrDefaultAsync();
+            LoginResponse response = new LoginResponse();
+            var userr = await _context.User
+                .Where(s=> s.Name== user.Name && s.Password==user.Password).FirstOrDefaultAsync();
             if(userr == null)
             {
                 return null;
             }
-            return userr;
+            else
+            {
+                response.Name=userr.Name;
+                response.Id = userr.ID;
+                
+            }
+            var rl = await _context.UserRole.Where(s=> s.UserID == userr.ID).FirstOrDefaultAsync();
+            if (rl == null)
+            {
+                return null;
+            }                         
+            var userRole = await _context.Role
+               .Where(s => s.ID == rl.RoleID).FirstOrDefaultAsync();
+                if (userRole == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    response.UserRole = userRole.RoleName;
+                response.RoleID = userRole.ID;
+                    
+                }
+            var rp = await _context.RolePermissions.Where(s=> s.RoleID == userRole.ID).ToListAsync();
+            if (rp == null)
+            {
+                return null;
+            }
+
+            foreach (var r in rp)
+            {
+                var userPrem = await _context.Permissions
+                   .Where(s => s.ID == r.PermissionID).FirstOrDefaultAsync();
+                if (userPrem == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    if (response.UserPermissions == null)
+                    {
+                        response.UserPermissions = new List<string>();
+                        response.PermissionID = new List<int>();
+                    }
+
+                    response.UserPermissions.Add(userPrem.Permission);
+                    response.PermissionID.Add(userPrem.ID);
+                }
+            }
+
+            return response;
         }
-        public async Task<string> GenerateToken(Users users)
+        public async Task<string> GenerateToken(LoginResponse response)
         {
             var securitykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
            

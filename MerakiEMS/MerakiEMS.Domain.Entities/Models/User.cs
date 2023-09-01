@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MerakiEMS.Application.Contracts.Requests
+namespace MerakiEMS.Domain.Entities.Models
 {
-    public class LoginRequest
+    public class User
     {
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
+       
     }
 }

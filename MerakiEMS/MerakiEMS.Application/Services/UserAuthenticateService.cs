@@ -18,78 +18,77 @@ namespace MerakiEMS.Application.Services
             _usersRepository = usersRepository;
         }
 
-        public async Task<ApiResponse<string>>AuthenticateUser(RegisterRequest request)
-        {
-            var response = new ApiResponse<string>();
-            try
-            {
-                Users entityUser = new();
-                {
-                    entityUser.Email = request.Email;
-                    entityUser.Password = request.Password;
-                    entityUser.Username = request.Username;
-                    entityUser.IsActive = true;
-                }
-                var res = await _usersRepository.CheckUser(entityUser);
+        //public async Task<ApiResponse<string>>AuthenticateUser(RegisterRequest request)
+        //{
+        //    var response = new ApiResponse<string>();
+        //    try
+        //    {
+        //        Users entityUser = new();
+        //        {
+        //            entityUser.Email = request.Email;
+        //            entityUser.Password = request.Password;
+        //            entityUser.Username = request.Username;
+        //            entityUser.IsActive = true;
+        //        }
+        //        var res = await _usersRepository.CheckUser(entityUser);
 
-                if (res != null)
-                {
-                    var token = await _usersRepository.GenerateToken(res);
-                    response.IsRequestSuccessful = true;
-                    response.SuccessResponse = "User Registered Successfully";
-                    response.Token = token;
+        //        if (res != null)
+        //        {
+        //            var token = await _usersRepository.GenerateToken(res);
+        //            response.IsRequestSuccessful = true;
+        //            response.SuccessResponse = "User Registered Successfully";
+        //            response.Token = token;
                     
 
 
-                }
-                else
-                {
-                    response.IsRequestSuccessful = false;
-                    response.Errors = new List<string> { { $"User Already Exist!" } };
-                }
-            }
-            catch (Exception ex)
-            {
-                response.IsRequestSuccessful = false;
-                response.Errors = new List<string> { { $"Something went wrong Error:  Please check Message for more details" } };
+        //        }
+        //        else
+        //        {
+        //            response.IsRequestSuccessful = false;
+        //            response.Errors = new List<string> { { $"User Already Exist!" } };
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.IsRequestSuccessful = false;
+        //        response.Errors = new List<string> { { $"Something went wrong Error:  Please check Message for more details" } };
 
 
-            }
-                return response;
+        //    }
+        //        return response;
 
 
 
-        }
+        //}
         public async Task<LoginResponse>LoginUser(LoginRequest request)
         {
-            var response = new LoginResponse();
+            LoginResponse response = new LoginResponse();
             try
             {
-                Users entityUser = new();
+                User entityUser = new();
                 {
-                    entityUser.Email = request.Email;
+                    entityUser.Name = request.Name;
                     entityUser.Password = request.Password;
                 }
                 var res = await _usersRepository.CheckLogin(entityUser);
                 if (res != null) {
                     var token = _usersRepository.GenerateToken(res);
-                    response.IsSuccess = true;
-                    response.Message = "Login Successfull";
-                    response.Email = res.Email;
-                    response.Username = res.Username;
-                    response.IsActive = res.IsActive;
-                    response.Token = token.Result;
+                    res.IsSuccess = true;
+                    res.Message = "Login Successfull";
+                    
+                    res.Token = token.Result;
 
-                    return response;
+                    return res;
                 }
                 else
                 {
                     response.IsSuccess = false;
-                    response.Errors = new List<string> { { "Invalid Email or password! Please try again" } };
+                    response.Errors = new List<string> { { "Invalid Name or password! Please try again" } };
                 }
             }
-            catch(Exception ex)
+                catch(Exception ex)
             {
+                    
                 response.IsSuccess = false;
                 response.Errors = new List<string> { { $"Something went wrong Error:  Please check Message for more details" } };
 
