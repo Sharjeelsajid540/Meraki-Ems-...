@@ -6,7 +6,7 @@ import AddEmployee from "./components/AddEmployee";
 
 const AppRoutes = [
   {
-    path: '/',
+    path: '/login',
     element: <Login />
   },
   

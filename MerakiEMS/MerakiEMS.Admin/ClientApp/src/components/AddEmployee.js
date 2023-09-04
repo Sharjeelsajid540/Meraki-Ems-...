@@ -15,23 +15,25 @@ import { useNavigate } from "react-router-dom";
 const AddEmployee = () => {
     const[name, setName]=useState('');
     const[password, setPassword]=useState('');
-    const[userRole, setUserRole]=useState('');
+    const[roleID, setRoleID]=useState('');
     const navigate = useNavigate();
     const handleSubmit = async (e)=>{
         e.preventDefault();
         const data={
             name,
             password,
-            userRole,
+            roleID,
         };
-        if (e.userRole === "Admin"){
-            data.userRole=1;
+        
+        if (roleID === "Admin"){
+            data.roleID=1;
         }
         else{
-            data.userRole=2;
+            data.roleID=2;
         }
       
-axios.post("https://localhost:7206/api/User/AddUser",data)
+      
+const response = await axios.post("https://localhost:7206/api/User/AddUser",data)
 .then((result) => {
     
     clear();
@@ -51,7 +53,7 @@ axios.post("https://localhost:7206/api/User/AddUser",data)
     const clear = () => {
         setName("");
         setPassword("");
-        setUserRole("");
+        setRoleID("");
       };
   return (
     <>
@@ -59,7 +61,7 @@ axios.post("https://localhost:7206/api/User/AddUser",data)
       <Row className="mt-3">
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>Name</Form.Label>
-          <Form.Control type="email" placeholder="Enter Name" value={name} onChange={(e)=> setName(e.target.value)} required />
+          <Form.Control type="name" placeholder="Enter Name" value={name} onChange={(e)=> setName(e.target.value)} required />
         </Form.Group>
         </Row>
         <Row className="mt-3">
@@ -71,12 +73,12 @@ axios.post("https://localhost:7206/api/User/AddUser",data)
       <Row className="mt-3">
         <Form.Group as={Col} controlId="formGridState">
           <Form.Label>Role</Form.Label>
-          <Form.Select defaultValue="Choose Role..." value={userRole}
-              onChange={(e) => setUserRole(e.target.value)}
+          <Form.Select  value={roleID}
+              onChange={(e) => setRoleID(e.target.value)}
               required>
-            <option>Choose...</option>
-            <option>Admin</option>
             <option>Employee</option>
+            <option>Admin</option>
+            
           </Form.Select>
         </Form.Group>
       </Row>

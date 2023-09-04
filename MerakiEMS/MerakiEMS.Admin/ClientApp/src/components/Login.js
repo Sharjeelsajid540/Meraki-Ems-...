@@ -24,7 +24,7 @@ const Login = () => {
         password: password
       });
       if(response.data.isSuccess === true){
-        console.log(response.data);
+       
       toast.success("Login Successful");
       navigate("/home");
     

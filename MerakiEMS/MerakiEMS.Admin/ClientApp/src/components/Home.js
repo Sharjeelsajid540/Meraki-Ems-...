@@ -24,8 +24,8 @@ function Home() {
           <div className="left-menu">
             <NavLink
               className="menu-links"
-              activeClassName="is-active"
-              exact={true}
+              activeclassname="is-active"
+              exact="true"
               to="/home"
             >
               <h5 className="link-text">
