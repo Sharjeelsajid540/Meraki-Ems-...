@@ -38,7 +38,7 @@ namespace MerakiEMS.Application.Services
         //            response.IsRequestSuccessful = true;
         //            response.SuccessResponse = "User Registered Successfully";
         //            response.Token = token;
-                    
+
 
 
         //        }
@@ -60,6 +60,35 @@ namespace MerakiEMS.Application.Services
 
 
         //}
+
+        public async Task<ApiResponse<string>> AddPost(AddEmployeeRequest req)
+        {
+            var response = new ApiResponse<string>();
+            if (req == null)
+            {
+                response.IsRequestSuccessful = false;
+                response.SuccessResponse = "User fields can not be empty";
+            }
+            else
+            {
+                var postt = await _usersRepository.InsertUser(req);
+                if (postt  == null) {
+                    response.IsRequestSuccessful = false;
+                    response.SuccessResponse = "User fields can not be empty";
+
+                }
+                else
+                {
+                    response.IsRequestSuccessful = true;
+                    response.SuccessResponse = "User added successfully";
+                }
+                
+            }
+
+            return response;
+
+        }
+
         public async Task<LoginResponse>LoginUser(LoginRequest request)
         {
             LoginResponse response = new LoginResponse();

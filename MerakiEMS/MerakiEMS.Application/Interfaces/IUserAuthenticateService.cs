@@ -14,5 +14,6 @@ namespace MerakiEMS.Application.Interfaces
     {
         //Task<ApiResponse<string>> AuthenticateUser(RegisterRequest request);
         Task<LoginResponse> LoginUser(LoginRequest request);
+        Task<ApiResponse<string>> AddPost(AddEmployeeRequest req);
     }
 }

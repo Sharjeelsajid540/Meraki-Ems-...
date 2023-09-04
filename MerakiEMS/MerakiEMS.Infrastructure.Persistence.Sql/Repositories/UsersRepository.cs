@@ -41,6 +41,33 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             
             return null;
         }
+
+        public async Task<User> InsertUser(AddEmployeeRequest req)
+        {
+            User user = new User();
+            UserRole role = new UserRole();
+            user.Name = req.Name;
+            user.Password = req.Password;
+            _context.User.Add(user);
+            await _context.SaveChangesAsync();
+            var userr = await _context.User
+               .Where(s => s.Name == user.Name && s.Password == user.Password).FirstOrDefaultAsync();
+            if (userr == null)
+            {
+                return null;
+            }
+            else
+            {
+                role.UserID = userr.ID;
+                role.RoleID = req.RoleID;
+            }
+            _context.UserRole.Add(role);
+            await _context.SaveChangesAsync();
+
+            return new User();
+            
+        }
+      
         public async Task<LoginResponse> CheckLogin(User user)
         {
             LoginResponse response = new LoginResponse();
@@ -114,6 +141,6 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-
+        
     }
 }
