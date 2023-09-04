@@ -14,6 +14,9 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Interfaces
         Task<User> CheckUser( User user);
          Task<string> GenerateToken( LoginResponse response );
         Task<LoginResponse> CheckLogin(User user);
+
+        Task<User> InsertUser(AddEmployeeRequest req);
+       
     }
     
 }
