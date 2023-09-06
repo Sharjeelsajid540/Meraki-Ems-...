@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const AddEmployee = () => {
+  const [roleNames, setRoleNames] = useState([]);
     const[name, setName]=useState('');
     const[password, setPassword]=useState('');
     const[roleID, setRoleID]=useState('');
@@ -36,8 +37,13 @@ const AddEmployee = () => {
 const response = await axios.post("https://localhost:7206/api/User/AddUser",data)
 .then((result) => {
     
-    clear();
-    toast.success("User has been Added");
+    if (result.data.isRequestSuccessful === true){
+      clear();
+      toast.success("User has been Added");
+    }
+    else{
+      toast.error(result.data.successResponse)
+    }
   })
   .catch((error) => {
     if (error.response.status === 401) {
@@ -55,6 +61,29 @@ const response = await axios.post("https://localhost:7206/api/User/AddUser",data
         setPassword("");
         setRoleID("");
       };
+      useEffect(() => {
+        getRoles();
+      }, []);
+      const getRoles = ()=>{
+        axios.get("https://localhost:7206/api/User/UserRole")
+        .then((result)=>{
+          localStorage.setItem('RolesData', JSON.stringify(result.data));
+        })
+      }
+      const getRoleNamesFromLocalStorage = () => {
+        const roleNames = localStorage.getItem('RolesData');
+        
+        return roleNames ? JSON.parse(roleNames) : [];
+        
+         
+      };
+     
+      useEffect(() => {
+        
+        const storedRoleNames = getRoleNamesFromLocalStorage();
+        setRoleNames(storedRoleNames);
+        
+      }, []);
   return (
     <>
     <div><Form onSubmit={handleSubmit}>
@@ -76,8 +105,9 @@ const response = await axios.post("https://localhost:7206/api/User/AddUser",data
           <Form.Select  value={roleID}
               onChange={(e) => setRoleID(e.target.value)}
               required>
-            <option>Employee</option>
-            <option>Admin</option>
+            {roleNames.map((role) => (
+            <option key={role.id}>{role.roleName}</option>
+          ))}
             
           </Form.Select>
         </Form.Group>
