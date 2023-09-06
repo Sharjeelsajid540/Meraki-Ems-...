@@ -16,5 +16,6 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Context
         public DbSet<Permissions> Permissions { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
         public DbSet<RolePermissions> RolePermissions { get; set; }
+        public DbSet<UserAttendance> UserAttendance { get; set; }
     }
 }

@@ -2,6 +2,8 @@
 using MerakiEMS.Application.Contracts.Requests;
 using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Application.Interfaces;
+using MerakiEMS.Domain.Entities.Contracts.Requests;
+using MerakiEMS.Domain.Entities.Contracts.Response;
 using MerakiEMS.Domain.Entities.Models;
 using MerakiEMS.Infrastructure.Persistence.Sql.Interfaces;
 
@@ -61,20 +63,20 @@ namespace MerakiEMS.Application.Services
 
         //}
 
-        public async Task<ApiResponse<string>> AddPost(AddEmployeeRequest req)
+        public async Task<ApiResponse<string>> AddUser(AddEmployeeRequest req)
         {
             var response = new ApiResponse<string>();
             if (req == null)
             {
                 response.IsRequestSuccessful = false;
-                response.SuccessResponse = "User fields can not be empty";
+                response.SuccessResponse = "User fields can not be empty!";
             }
             else
             {
                 var postt = await _usersRepository.InsertUser(req);
                 if (postt  == null) {
                     response.IsRequestSuccessful = false;
-                    response.SuccessResponse = "User fields can not be empty";
+                    response.SuccessResponse = "User Already Exists!";
 
                 }
                 else
@@ -88,7 +90,16 @@ namespace MerakiEMS.Application.Services
             return response;
 
         }
-
+        public async Task<List<Role>> GetRoleList()
+        {
+            var response = await _usersRepository.RoleList();
+            return response;
+        }
+        public async Task<List<UserAttendance>> GetAttendanceList()
+        {
+            var response = await _usersRepository.AttendanceList();
+            return response;
+        }
         public async Task<LoginResponse>LoginUser(LoginRequest request)
         {
             LoginResponse response = new LoginResponse();
@@ -123,6 +134,50 @@ namespace MerakiEMS.Application.Services
 
             }
             return response;
+        }
+        public async Task<CheckInResponse> InsertAttendance(CheckInRequest req)
+        {
+            var response = await _usersRepository.InsertAttendance(req);
+            if (response != null)
+            {
+                response.SuccessMessage = "CheckIn Successfull";
+                response.IsRequestSuccessfull = "true";
+            }
+            else
+            {
+                response.IsRequestSuccessfull = "false";
+                response.Errors = new List<string> { "Something Went wrong" };
+            }
+            return response;
+        }
+        public async Task<CheckoutResponse> UpdateAttendance(CheckOutRequest req)
+        {
+            CheckoutResponse response = new CheckoutResponse();
+            try
+            {
+                var res = await _usersRepository.EditAttendance(req);
+                if (res != null)
+                {
+                    response.SuccessMessage = "CheckOut Successfull";
+                    response.IsRequestSuccessfull = "true";
+
+                }
+                else
+                {
+                    response.IsRequestSuccessfull = "false";
+                    response.SuccessMessage = "CheckOut Failed!";
+                }
+                return response;
+            }
+            catch(Exception ex) 
+            {
+                response.IsRequestSuccessfull = "false";
+                response.Errors = new List<string> {  ex.Message };
+                return response;
+
+            }
+            
+            
         }
     }
 }
