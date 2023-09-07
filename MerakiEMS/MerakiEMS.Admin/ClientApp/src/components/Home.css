@@ -42,7 +42,6 @@ body {
     border-top: 1px solid rgb(232, 232, 232);
     border-bottom:1px solid rgb(232, 232, 232); 
     font-weight: 400;
-    font-size: 1.5vw;
     padding-top: 15%;
     padding-bottom: 15%;    
   }
@@ -62,7 +61,7 @@ body {
   .menu-links:hover {
     color: white;
     background-color: #0B2B50;
-    border-radius: 16px;
+    border-radius: 10px;
   }
   .menu-icons {
     margin-right: 16px;
@@ -79,16 +78,17 @@ body {
   .menu-links.active {
     color: white;
     background-color: #0B2B50;
-    border-radius: 16px;
+    border-radius: 10px;
   }
   .addEmployee {
     
     position: absolute;
     margin: 10% 20%;
     width: 75%;
-    
-   
-    /* margin: 110px 0px 0px 17.5%; */
-    
+    /* margin: 110px 0px 0px 17.5%; */ 
   }
+  h5, .h5 {
+    font-size: 0.9rem !important;
+}
+
   

@@ -35,7 +35,7 @@
     
     
   }
-  .btn{
+  .btn-log{
     background-color: #0B2B50 !important;
     
     width: 100%;
@@ -44,7 +44,7 @@
     font-weight: 600;
     margin-top: 20px;
   }
-  .btn:hover{
+  .btn-log:hover{
     color: #0B2B50 !important;
     background-color:#fff !important;
     border-color:#0B2B50;

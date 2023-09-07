@@ -14,7 +14,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import AddEmployee from './AddEmployee';
+
+import "react-toastify/dist/ReactToastify.css";
+import AppComp from './AppComp';
+
 function Home() {
+
+   var role = localStorage.getItem('loginData');
+   var roleData = JSON.parse(role);
+   
+    if (roleData.userRole == "Admin"){
+      var UserRole = "Admin";
+    }
+    else{
+      var UserRole= "User";
+    }
   
   return (
     <>
@@ -33,38 +47,38 @@ function Home() {
                   icon={faUser}
                   size="xs"
                   className="menu-icons"
-                />
-                Employees
+                />{UserRole=="Admin"?"Employees":"Dashboard"}
+                
               </h5>
             </NavLink>
-            <NavLink className="menu-links" to="/orders">
+            <NavLink className="menu-links" to="/leaves">
               <h5 className="link-text">
                 <FontAwesomeIcon
                   icon={faCalendarXmark}
                   size="xs"
                   className="menu-icons"
                 />
-               Leaves
+               {UserRole=="Admin"?"Leaves":"Apply Leave"}
               </h5>
             </NavLink>
-            <NavLink className="menu-links" to="/store">
+            <NavLink className="menu-links" to="/tickets">
               <h5 className="link-text">
                 <FontAwesomeIcon
                   icon={faTicketSimple}
                   size="xs"
                   className="menu-icons"
                 />
-               Tickets
+               {UserRole=="Admin"?"Raise Ticket":"Tickets"}
               </h5>
             </NavLink>
-            <NavLink className="menu-links" to="/additive">
+            <NavLink className="menu-links" to="/feedback">
               <h5 className="link-text">
                 <FontAwesomeIcon
                   icon={faFilePen}
                   size="xs"
                   className="menu-icons"
                 />
-                FeedBack
+                {UserRole=="Admin"?"FeedBack":"Give FeedBack"}
               </h5>
             </NavLink>
             
@@ -90,7 +104,8 @@ function Home() {
           <h6 className="WelcomeBack">Welcome Back</h6>
         </div>
         <div className="addEmployee">
-          <AddEmployee />
+        {UserRole=="Admin"?<AddEmployee />:<AppComp/>}
+          
         </div>
       </div>
     </>

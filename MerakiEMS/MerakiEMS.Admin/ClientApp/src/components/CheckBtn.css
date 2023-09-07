@@ -1,0 +1,13 @@
+.btn-1 {
+  color: #fff !important;
+  background-color:#a4a2ad !important;
+  width: 47%;
+  }
+  
+  /* Button style when clicked */
+  .btn-clicked {
+    background-color: #0B2B50!important; /* Default color */
+    color: #fff !important; /* Text color */
+   
+  }
+  

@@ -95,7 +95,7 @@ const Login = () => {
              
                 
          </div>
-         <button type="submit" className="btn">
+         <button type="submit" className="btn btn-log">
               Log In
             </button>
           </form>
