@@ -22,7 +22,7 @@ function Home() {
 
    var role = localStorage.getItem('loginData');
    var roleData = JSON.parse(role);
-   console.log(roleData.userRole)
+   
     if (roleData.userRole == "Admin"){
       var UserRole = "Admin";
     }
@@ -51,7 +51,7 @@ function Home() {
                 
               </h5>
             </NavLink>
-            <NavLink className="menu-links" to="#">
+            <NavLink className="menu-links" to="/leaves">
               <h5 className="link-text">
                 <FontAwesomeIcon
                   icon={faCalendarXmark}
@@ -61,7 +61,7 @@ function Home() {
                {UserRole=="Admin"?"Leaves":"Apply Leave"}
               </h5>
             </NavLink>
-            <NavLink className="menu-links" to="#">
+            <NavLink className="menu-links" to="/tickets">
               <h5 className="link-text">
                 <FontAwesomeIcon
                   icon={faTicketSimple}
@@ -71,7 +71,7 @@ function Home() {
                {UserRole=="Admin"?"Raise Ticket":"Tickets"}
               </h5>
             </NavLink>
-            <NavLink className="menu-links" to="#">
+            <NavLink className="menu-links" to="/feedback">
               <h5 className="link-text">
                 <FontAwesomeIcon
                   icon={faFilePen}

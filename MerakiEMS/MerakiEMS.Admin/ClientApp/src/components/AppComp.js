@@ -5,12 +5,16 @@ import CheckOut from './CheckOut';
 import AttendanceList from './AttendanceList';
 
 function AppComp() {
+  
+  
   return (
     <div className="container">
  
       <div className="row">
         <div className="col-md-6">
-          <CheckIn />
+          <CheckIn 
+          
+          />
         </div>
         <div className="col-md-6">
           <CheckOut />
@@ -18,7 +22,8 @@ function AppComp() {
       </div>
       <div className="row">
         <div className="col-md-12">
-          <AttendanceList />
+          <AttendanceList
+           />
         </div>
       </div>
     </div>
