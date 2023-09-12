@@ -8,7 +8,7 @@ namespace MerakiEMS.Domain.Entities.Contracts.Requests
 {
     public class CheckInRequest
     {
-        public DateTime CheckInTime { get; set; }
+        //public DateTime CheckInTime { get; set; }
         
         public int UserID { get; set; } 
        

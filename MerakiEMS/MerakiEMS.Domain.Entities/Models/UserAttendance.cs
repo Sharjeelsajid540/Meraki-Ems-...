@@ -15,5 +15,7 @@ namespace MerakiEMS.Domain.Entities.Models
         public DateTime? CheckOutTime { get; set; }
         public TimeSpan? WorkingHours { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public string? Name { get; set; }
+        
     }
 }

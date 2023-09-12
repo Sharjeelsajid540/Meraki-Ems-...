@@ -1,11 +1,15 @@
 import Login from "./components/Login";
 import Home from "./components/Home";
 import AddEmployee from "./components/AddEmployee";
-import AppComp from "./components/AppComp";
+
 
 
 
 const AppRoutes = [
+  {
+    path: '/',
+    element: <Login />
+  },
   {
     path: '/login',
     element: <Login />
@@ -19,11 +23,7 @@ const AppRoutes = [
     path: '/addEmployees',
     element: <AddEmployee />
   }
-  ,
-  {
-    path: '/check-in-out',
-    element: <AppComp />
-  }
+ 
   
 ];
 

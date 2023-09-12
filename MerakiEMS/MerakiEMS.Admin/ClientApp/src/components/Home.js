@@ -16,7 +16,8 @@ import { NavLink } from "react-router-dom";
 import AddEmployee from './AddEmployee';
 
 import "react-toastify/dist/ReactToastify.css";
-import AppComp from './AppComp';
+import AttendanceList from './AttendanceList';
+
 
 function Home() {
 
@@ -104,7 +105,7 @@ function Home() {
           <h6 className="WelcomeBack">Welcome Back</h6>
         </div>
         <div className="addEmployee">
-        {UserRole=="Admin"?<AddEmployee />:<AppComp/>}
+        {UserRole=="Admin"?<AddEmployee />:<AttendanceList/>}
           
         </div>
       </div>

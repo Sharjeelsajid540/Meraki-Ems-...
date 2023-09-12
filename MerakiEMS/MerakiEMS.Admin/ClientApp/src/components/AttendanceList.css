@@ -1,0 +1,10 @@
+.DateHeader{
+    color: rgb(255, 255, 255) !important;
+    background-color: black !important;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: right;
+    flex-direction: column;
+    justify-content: space-between;
+}

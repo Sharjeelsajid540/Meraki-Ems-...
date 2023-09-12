@@ -1,26 +1,97 @@
 import axios from "axios";
-const apiUrl = "https://localhost:7206";
-//const apiUrl = "http://merakiEMS.ecommerce.local.api/";
+const apiUrl = "https://localhost:7206/";
 
-/* Accounts */
-export const userLogin = async (email, password) => {
+
+
+/////////   Attendance List    ///////
+
+
+export const fetchAttendanceData = async (data) => {
   try {
-    const resp = await axios.post(apiUrl + "api/Authetication/Login", {
-      email: email,
-      password: password,
-    });
-    if (resp.data.id > 0) {
-      localStorage.setItem("user", JSON.stringify(resp.data));
-    }
-    if (resp.status == 200) {
-      return resp.data;
+    const response = await axios.post(apiUrl + "api/User/UserAttendance", data);
+    if (response.status == 200) {
+      console.log(response.data)
+      
+            
+            localStorage.setItem('attendList', JSON.stringify(response.data));
+            
+            return response.data;
+          } 
+          else {
+            return false;
+          }
+     } catch (error) {
+    return error.response;
+  } 
+};
+
+
+
+/////////   CheckIn    ///////
+
+
+export const CheckInUser = async (data) => {
+  try {
+    const response = await axios.post(apiUrl + 'api/User/UserCheckIn', data);
+
+    if (response.status === 200) {
+      if(response.data.isRequestSuccessfull == "true"){
+        localStorage.setItem('AttendanceID', JSON.stringify(response.data));
+      }
+     
+      
+
+      
+      return response.data;
     } else {
       return false;
     }
-  } catch (err) {
-    return err.response;
+  } catch (error) {
+    return error.response;
   }
 };
+
+
+
+/////////   CheckIn    ///////
+export const CheckOutUser = async (data) => {
+
+try {
+  const response = await axios.put(
+    apiUrl + 'api/User/UserCheckOut',
+    data
+  );
+  if (response.status === 200) {
+    // Check-out successful, update the state or perform any necessary actions
+    
+   return response.data;
+    
+
+  } else {
+    return false;
+  }
+} catch (error) {
+  return error.response;
+}
+}
+// export const userLogin = async (email, password) => {
+//   try {
+//     const resp = await axios.post(apiUrl + "api/Authetication/Login", {
+//       email: email,
+//       password: password,
+//     });
+//     if (resp.data.id > 0) {
+//       localStorage.setItem("user", JSON.stringify(resp.data));
+//     }
+//     if (resp.status == 200) {
+//       return resp.data;
+//     } else {
+//       return false;
+//     }
+//   } catch (err) {
+//     return err.response;
+//   }
+// };
 
 export const GetProducts = async () => {
   try {

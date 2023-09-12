@@ -23,6 +23,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Interfaces
 
         Task<UserAttendance> EditAttendance(CheckOutRequest req);
         Task<List<UserAttendance>> AttendanceList();
+        Task<AttendanceResponse> SingleAttendanceList(UserAttendanceRequest req);
     }
     
 }
