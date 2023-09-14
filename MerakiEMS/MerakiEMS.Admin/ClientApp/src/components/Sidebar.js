@@ -1,5 +1,5 @@
 import React from 'react';
-import './Sidebar.css';
+import './css/Sidebar.css';
 import Logo from "../images/logo-black.svg";
 
 function Sidebar() {

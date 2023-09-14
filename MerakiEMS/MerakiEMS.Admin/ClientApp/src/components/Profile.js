@@ -1,9 +1,12 @@
 import React from 'react'
-import "./Profile.css"
+import "./css/Profile.css"
+import Button from 'react-bootstrap/Button';
 export const Profile = () => {
   return (
-    <div className="profile">
+   
+   <div className="profile">
     <h6 className="WelcomeBack">Welcome Back</h6>
   </div>
+ 
   )
 }

@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from 'react';
-import './CheckBtn.css';
+import './css/CheckBtn.css';
 import { CheckInUser, CheckOutUser, fetchAttendanceData } from '../Api/Api';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './AttendanceList.css';
+import './css/AttendanceList.css';
 
 function AttendanceList() {
   const [attendanceData, setAttendanceData] = useState([]);
