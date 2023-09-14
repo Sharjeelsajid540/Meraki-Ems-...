@@ -66,7 +66,92 @@ namespace MerakiEMS.Application.Services
 
 
 
+        public async Task<List<GetUsersResponse>> GetUsers()
+        {
+            var response = await _usersRepository.GetAllUsers();
+            return response;
+        }
 
+        public async Task<List<Leave>> GetLeave()
+        {
+            try
+            {
+                var response = await _usersRepository.GetLeave();
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
+        }
+        public async Task<List<Leave>> GetAllLeaves(int id)
+        {
+            try
+            {
+                var response = await _usersRepository.GetAllLeaves(id);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public async Task<UpdateUserResponse> UpdateUser(User user)
+        {
+           var response = new UpdateUserResponse();
+            try
+            {
+                var res = await _usersRepository.UpdateUser(user);
+                if (res == null)
+                {
+                    response.SuccessMessage = "Invalid User ID!";
+                    
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.SuccessMessage = "User Updated Successfully";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.SuccessMessage += ex.Message;
+                
+            }
+            return response;
+            
+        }
+
+        public async Task<UpdateUserResponse> DeleteUser(int id)
+        {
+            var response = new UpdateUserResponse();
+            try
+            {
+                var res = await _usersRepository.DeleteUser(id);
+                if (res == null)
+                {
+                    response.SuccessMessage = "Invalid User ID!";
+
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.SuccessMessage = "User Deleted Successfully";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.SuccessMessage += ex.Message;
+
+            }
+            return response;
+
+        }
 
         public async Task<ApiResponse<string>> RequestLeave(LeaveRequest lev)
         {

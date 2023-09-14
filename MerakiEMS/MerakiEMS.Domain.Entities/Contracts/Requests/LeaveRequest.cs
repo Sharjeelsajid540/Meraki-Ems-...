@@ -14,9 +14,9 @@ namespace MerakiEMS.Domain.Entities.Contracts.Requests
 
         
 
-        public string? From { get; set; }
+        public DateTime? From { get; set; }
 
-        public string? To { get; set; }
+        public DateTime? To { get; set; }
 
         public string? Description { get; set; }
 

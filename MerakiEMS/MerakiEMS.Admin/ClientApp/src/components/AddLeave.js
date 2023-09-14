@@ -12,15 +12,17 @@ import { useNavigate } from "react-router-dom";
 import { Profile } from './Profile';
 import { SideNavbar } from './SideNavbar';
 import "./AddLeave.css"
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 
 
 const AddLeave = () => {
 
-const[userID, setuserID]=useState('');
-const[id, setid]=useState('');
-const[to, setTo]=useState('');
-    const[from, setFrom]=useState('');
+  const[userID, setuserID]=useState('');
+  const[id, setid]=useState('');
+  const[to, setTo]=useState(new Date());
+    const[from, setFrom]=useState(new Date());
     const[description, setDescription]=useState('');
 
     const navigate = useNavigate();
@@ -104,22 +106,38 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
       <Row className="mt-3">
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>From (Date)</Form.Label>
-          <Form.Control type="name" placeholder="Enter From Date" value={from} onChange={(e)=> setFrom(e.target.value)} required />
+          <DatePicker
+            selected={from}
+            onChange={(date) => setFrom(date)}
+            dateFormat="yyyy-MM-dd" // Customize the date format as needed
+            required
+          />
         </Form.Group>
-        </Row>
-        <Row className="mt-3">
+      </Row>
+      <Row className="mt-3">
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>To (Date)</Form.Label>
-          <Form.Control type="name" placeholder="Enter To Date" value={to} onChange={(e)=> setTo(e.target.value)} required />
+          <DatePicker
+            selected={to}
+            onChange={(date) => setTo(date)}
+            dateFormat="yyyy-MM-dd" // Customize the date format as needed
+            required
+          />
         </Form.Group>
-        </Row>
+      </Row>
 
-        <Row className="mt-3">
+      <Row className="mt-3">
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>Description</Form.Label>
-          <Form.Control type="name" placeholder="Enter Description" value={description} onChange={(e)=> setDescription(e.target.value)} required />
+          <Form.Control
+            type="name"
+            placeholder="Enter Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
         </Form.Group>
-        </Row>
+      </Row>
       <Form.Group className="mt-5" id="formGridCheckbox">
         <Form.Check type="checkbox" label="Check me out" />
       </Form.Group>
