@@ -63,6 +63,45 @@ namespace MerakiEMS.Application.Services
 
         //}
 
+
+
+
+
+
+        public async Task<ApiResponse<string>> RequestLeave(LeaveRequest lev)
+        {
+            var response = new ApiResponse<string>();
+            if (lev == null)
+            {
+                response.IsRequestSuccessful = false;
+                response.SuccessResponse = "User fields can not be empty!";
+            }
+            else
+            {
+                var postt = await _usersRepository.RequestLeave(lev);
+                if (postt == null)
+                {
+                    response.IsRequestSuccessful = false;
+                    response.SuccessResponse = "User Already Exists!";
+
+                }
+                else
+                {
+                    response.IsRequestSuccessful = true;
+                    response.SuccessResponse = "User added successfully";
+                }
+
+            }
+
+            return response;
+
+        }
+
+
+
+
+
+
         public async Task<ApiResponse<string>> AddUser(AddEmployeeRequest req)
         {
             var response = new ApiResponse<string>();

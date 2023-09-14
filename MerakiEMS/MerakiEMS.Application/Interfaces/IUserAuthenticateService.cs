@@ -22,5 +22,7 @@ namespace MerakiEMS.Application.Interfaces
         Task<CheckoutResponse> UpdateAttendance(CheckOutRequest req);
         Task<List<AttendanceListResponse>> GetAttendanceList();
         Task<AttendanceResponse2> GetSingleAttendanceList(UserAttendanceRequest req);
+
+        Task<ApiResponse<string>> RequestLeave(LeaveRequest lev);
     }
 }

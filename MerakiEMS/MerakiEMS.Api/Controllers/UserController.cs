@@ -22,6 +22,17 @@ namespace MerakiEMS.Api.Controllers
 
         }
         [HttpPost]
+        [Route("AddLeave")]
+        public async Task<ApiResponse<string>> LeaveRequestByAdmin(LeaveRequest lev)
+        {
+            var response = await _authenticateService.RequestLeave(lev);
+
+            return response;
+        }
+
+
+
+        [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login(LoginRequest request)
         {

@@ -12,7 +12,7 @@ namespace MerakiEMS.Infrastructure.Bootstrap
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<UsersContext>(options => options.UseSqlServer(configuration.GetConnectionString("MerakiEMSDb")));
+           /* services.AddDbContext<UsersContext>(options => options.UseSqlServer(configuration.GetConnectionString("MerakiEMSDb")));*/
             services.AddDbContext<PostsContext>(options => options.UseSqlServer(configuration.GetConnectionString("MerakiEMSDb")));
             services.AddDbContext<UserContext>(options => options.UseSqlServer(configuration.GetConnectionString("MerakiEMSDb")));
 

@@ -29,22 +29,35 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
         {
             
             var userr = await _context.User
-                .Where(s => s.Name == user.Name).FirstOrDefaultAsync();
-           
+                .Where(s => s.Name == user.Name).FirstOrDefaultAsync();     
             
             if (userr == null)
             {   
                 await _context.AddAsync(user);
                 await _context.SaveChangesAsync();
                 return user;
-
-
-
-
-            }
-            
+            }         
             return null;
         }
+
+        public async Task<Leave> RequestLeave(LeaveRequest lev)
+        {
+            Leave leave = new Leave
+            {
+                UserID = lev.UserID,
+                From = lev.From,
+                To = lev.To,
+                Description = lev.Description,
+                CreatedAt = DateTime.Now,
+            AdminRequestViewer = "Ali"
+            };
+
+            _context.Leave.Add(leave); // Add the Leave entity to the context
+            await _context.SaveChangesAsync(); // Save changes to the database
+            return leave; // Return the added Leave entity
+        }
+
+
 
         public async Task<User> InsertUser(AddEmployeeRequest req)
         {
@@ -197,6 +210,9 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 ) ;
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        
+
         public async Task<CheckInResponse> InsertAttendance(CheckInRequest req)
         {
             CheckInResponse response = new CheckInResponse();

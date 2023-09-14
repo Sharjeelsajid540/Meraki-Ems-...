@@ -1,9 +1,8 @@
-﻿import React from 'react';
+﻿
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import './Home.css'; // You can create this CSS file for custom styling
 import Logo from '../images/logo-black.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import {
   faUser,
   
@@ -14,16 +13,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import AddEmployee from './AddEmployee';
-
+import AddLeave from './AddLeave';
+import React, { useState} from 'react';
+import { withRouter } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 import AttendanceList from './AttendanceList';
-
-
+import { Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import { Profile } from './Profile';
+import { SideNavbar } from './SideNavbar';
 function Home() {
-
    var role = localStorage.getItem('loginData');
    var roleData = JSON.parse(role);
-   
     if (roleData.userRole == "Admin"){
       var UserRole = "Admin";
     }
@@ -34,76 +35,8 @@ function Home() {
   return (
     <>
     <div className="CustomerPage">
-        <div className="leftPanel">
-          <img className="logo-image2" src={Logo} alt="Logo" />
-          <div className="left-menu">
-            <NavLink
-              className="menu-links"
-              activeclassname="is-active"
-              exact="true"
-              to="/home"
-            >
-              <h5 className="link-text">
-                <FontAwesomeIcon
-                  icon={faUser}
-                  size="xs"
-                  className="menu-icons"
-                />{UserRole=="Admin"?"Employees":"Dashboard"}
-                
-              </h5>
-            </NavLink>
-            <NavLink className="menu-links" to="/leaves">
-              <h5 className="link-text">
-                <FontAwesomeIcon
-                  icon={faCalendarXmark}
-                  size="xs"
-                  className="menu-icons"
-                />
-               {UserRole=="Admin"?"Leaves":"Apply Leave"}
-              </h5>
-            </NavLink>
-            <NavLink className="menu-links" to="/tickets">
-              <h5 className="link-text">
-                <FontAwesomeIcon
-                  icon={faTicketSimple}
-                  size="xs"
-                  className="menu-icons"
-                />
-               {UserRole=="Admin"?"Raise Ticket":"Tickets"}
-              </h5>
-            </NavLink>
-            <NavLink className="menu-links" to="/feedback">
-              <h5 className="link-text">
-                <FontAwesomeIcon
-                  icon={faFilePen}
-                  size="xs"
-                  className="menu-icons"
-                />
-                {UserRole=="Admin"?"FeedBack":"Give FeedBack"}
-              </h5>
-            </NavLink>
-            
-            
-           
-          </div>
-          <div className='logout'>
-          <NavLink className="menu-links menu-logout" to="/login">
-            
-              <h5 className="link-text">
-                <FontAwesomeIcon
-                  icon={faRightFromBracket}
-                  size="xs"
-                  className="menu-icons"
-                />
-                Logout
-              </h5>
-             
-            </NavLink>
-            </div>
-        </div>
-        <div className="profile">
-          <h6 className="WelcomeBack">Welcome Back</h6>
-        </div>
+       <SideNavbar/>
+      <Profile/>
         <div className="addEmployee">
         {UserRole=="Admin"?<AddEmployee />:<AttendanceList/>}
           

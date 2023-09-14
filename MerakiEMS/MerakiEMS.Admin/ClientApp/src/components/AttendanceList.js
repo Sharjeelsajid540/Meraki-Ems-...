@@ -136,8 +136,11 @@ function AttendanceList() {
         <table className="table">
           <thead>
             <tr>
-              <th colSpan="6" className="DateHeader">
-                Date: {entry.attendanceDate} Total Hours Worked: {entry.totalWorkingHours}
+              <th colSpan="3" className="DateHeader1">
+                Date: {entry.attendanceDate} 
+              </th>
+              <th colSpan="3" className="DateHeader2">
+                 Total Hours Worked: {entry.totalWorkingHours}
               </th>
             </tr>
             <tr>
