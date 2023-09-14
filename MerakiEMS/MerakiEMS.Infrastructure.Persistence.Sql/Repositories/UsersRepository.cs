@@ -10,6 +10,8 @@ using System.Text;
 using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 {
@@ -27,22 +29,35 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
         {
             
             var userr = await _context.User
-                .Where(s => s.Name == user.Name).FirstOrDefaultAsync();
-           
+                .Where(s => s.Name == user.Name).FirstOrDefaultAsync();     
             
             if (userr == null)
             {   
                 await _context.AddAsync(user);
                 await _context.SaveChangesAsync();
                 return user;
-
-
-
-
-            }
-            
+            }         
             return null;
         }
+
+        public async Task<Leave> RequestLeave(LeaveRequest lev)
+        {
+            Leave leave = new Leave
+            {
+                UserID = lev.UserID,
+                From = lev.From,
+                To = lev.To,
+                Description = lev.Description,
+                CreatedAt = DateTime.Now,
+            AdminRequestViewer = "Ali"
+            };
+
+            _context.Leave.Add(leave); // Add the Leave entity to the context
+            await _context.SaveChangesAsync(); // Save changes to the database
+            return leave; // Return the added Leave entity
+        }
+
+
 
         public async Task<User> InsertUser(AddEmployeeRequest req)
         {
@@ -92,19 +107,49 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             var response = await _context.UserAttendance.OrderByDescending(s=> s.CheckInTime).ToListAsync();
             return response;
         }
+        public async Task<AttendanceResponse> SingleAttendanceList(UserAttendanceRequest req)
+        {
+            var res = new AttendanceResponse();
+            try
+            {
+                var data = await _context.UserAttendance
+                    .Where(x => x.UserID == req.UserID)
+                    .OrderByDescending(s => s.CheckInTime)
+                    .ToListAsync();
+
+                var group = data.GroupBy(x => x.CreatedAt).ToList();
+
+                res.GroupedAttendanceList = group.Select(grouping => new Attendance
+                {
+                    AttendanceDate = grouping.Key,
+                    TotalWorkingHours = TimeSpan.FromTicks(grouping.Sum(x => x.WorkingHours?.Ticks ?? 0)),
+                    AttendanceList = grouping.ToList()
+                }).ToList();
+
+                return res;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return res;
+        }
+
+
 
         public async Task<LoginResponse> CheckLogin(User user)
-        {
-            LoginResponse response = new LoginResponse();
-            var userr = await _context.User
-                .Where(s=> s.Name== user.Name && s.Password==user.Password).FirstOrDefaultAsync();
-            if(userr == null)
-            {
-                return null;
-            }
-            else
-            {
-                response.Name=userr.Name;
+{
+    LoginResponse response = new LoginResponse();
+    var userr = await _context.User
+    .Where(s=> s.Name== user.Name && s.Password==user.Password).FirstOrDefaultAsync();
+    if(userr == null)
+    {
+        return null;
+    }
+    else
+    {
+        response.Name=userr.Name;
                 response.Id = userr.ID;
                 
             }
@@ -165,22 +210,41 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 ) ;
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        
+
         public async Task<CheckInResponse> InsertAttendance(CheckInRequest req)
         {
             CheckInResponse response = new CheckInResponse();
             UserAttendance attendance = new UserAttendance();
             try {
-                attendance.CheckInTime = req.CheckInTime;
-                attendance.CreatedAt = req.CheckInTime.Date;
-                attendance.UserID = req.UserID;
+                var check = _context.UserAttendance.Where(s => s.UserID == req.UserID).OrderByDescending(s => s.CheckInTime).FirstOrDefault();
+                if (check == null || check.CheckOutTime != null)
+                {
+                    var name = _context.User.Where
+                    (s => s.ID == req.UserID).FirstOrDefault();
 
+                    attendance.CheckInTime = DateTime.Now;
+                    attendance.CreatedAt = attendance.CheckInTime?.Date;
+                    attendance.UserID = req.UserID;
+                    attendance.Name = name.Name;
 
-                await _context.UserAttendance.AddAsync(attendance);
-                await _context.SaveChangesAsync();
-                var AId = _context.UserAttendance.Where
-                    (s => s.UserID == req.UserID).FirstOrDefault();
-                response.AttendanceID = AId.ID;
-                return response;
+                    await _context.UserAttendance.AddAsync(attendance);
+                    await _context.SaveChangesAsync();
+                    var AId = _context.UserAttendance.Where
+                        (s => s.UserID == req.UserID)
+                        .OrderByDescending(s => s.ID).FirstOrDefault();
+                    response.AttendanceID = AId.ID;
+
+                    return response;
+
+                }
+                else
+                {
+                    
+                    return null;
+                }
+                
             }
             catch (Exception ex)
             {
@@ -196,10 +260,10 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 
                var CheckIn = _context.UserAttendance.Where
                     (s => s.ID == req.AttendanceID).FirstOrDefault();
-            CheckIn.WorkingHours = req.CheckOutTime - CheckIn.CheckInTime;
-            CheckIn.CheckOutTime = req.CheckOutTime;
-            CheckIn.UserID = req.UserID;
-            CheckIn.ID = req.AttendanceID;
+            CheckIn.WorkingHours = DateTime.Now - CheckIn.CheckInTime;
+            CheckIn.CheckOutTime = DateTime.Now;
+            
+            
            
             await _context.SaveChangesAsync();
             

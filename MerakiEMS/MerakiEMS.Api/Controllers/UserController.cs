@@ -22,6 +22,17 @@ namespace MerakiEMS.Api.Controllers
 
         }
         [HttpPost]
+        [Route("AddLeave")]
+        public async Task<ApiResponse<string>> LeaveRequestByAdmin(LeaveRequest lev)
+        {
+            var response = await _authenticateService.RequestLeave(lev);
+
+            return response;
+        }
+
+
+
+        [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login(LoginRequest request)
         {
@@ -60,10 +71,17 @@ namespace MerakiEMS.Api.Controllers
             return response;
         }
         [HttpGet]
-        [Route("UserAttendance")]
-        public async Task<List<UserAttendance>> GetUserAttendance()
+        [Route("AllUserAttendance")]
+        public async Task<List<AttendanceListResponse>> GetUserAttendance()
         {
             var response = await _authenticateService.GetAttendanceList();
+            return response;
+        }
+        [HttpPost]
+        [Route("UserAttendance")]
+        public async Task<AttendanceResponse2> GetSingleUserAttendance(UserAttendanceRequest req)
+        {
+            var response = await _authenticateService.GetSingleAttendanceList(req);
             return response;
         }
     }

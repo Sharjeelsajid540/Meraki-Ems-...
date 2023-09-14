@@ -12,5 +12,6 @@ namespace MerakiEMS.Domain.Entities.Contracts.Response
         public string SuccessMessage { get; set; }
         public string IsRequestSuccessfull { get; set; }
         public List<string> Errors { get; set; }
+        
     }
 }

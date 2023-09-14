@@ -20,6 +20,9 @@ namespace MerakiEMS.Application.Interfaces
         Task<List<Role>>GetRoleList();
         Task<CheckInResponse> InsertAttendance(CheckInRequest req);
         Task<CheckoutResponse> UpdateAttendance(CheckOutRequest req);
-        Task<List<UserAttendance>> GetAttendanceList();
+        Task<List<AttendanceListResponse>> GetAttendanceList();
+        Task<AttendanceResponse2> GetSingleAttendanceList(UserAttendanceRequest req);
+
+        Task<ApiResponse<string>> RequestLeave(LeaveRequest lev);
     }
 }

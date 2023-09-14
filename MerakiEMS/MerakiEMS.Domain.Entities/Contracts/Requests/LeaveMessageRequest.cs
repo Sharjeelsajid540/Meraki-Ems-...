@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace MerakiEMS.Domain.Entities.Contracts.Requests
 {
-    public class CheckOutRequest
+    public class LeaveMessageRequest
     {
-        public int AttendanceID { get; set; }
-        //public DateTime CheckOutTime { get; set;}
-        public int UserID { get; set; } 
-       
+        public int LeaveMessage { get; set; }
+
+        public bool Status { get; set; }
+
+        
     }
 }
