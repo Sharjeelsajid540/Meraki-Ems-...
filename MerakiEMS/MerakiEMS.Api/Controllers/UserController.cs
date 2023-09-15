@@ -78,7 +78,7 @@ namespace MerakiEMS.Api.Controllers
         }
         [HttpPost]
         [Route("UserAttendance")]
-        public async Task<AttendanceResponse2> GetSingleUserAttendance(UserAttendanceRequest req)
+        public async Task<List<AttendanceListResponse>> GetSingleUserAttendance(UserAttendanceRequest req)
         {
             var response = await _authenticateService.GetSingleAttendanceList(req);
             return response;

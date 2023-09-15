@@ -10,7 +10,7 @@ export const fetchAttendanceData = async (data) => {
   try {
     const response = await axios.post(apiUrl + "api/User/UserAttendance", data);
     if (response.status == 200) {
-      console.log(response.data)
+      
       
             
             localStorage.setItem('attendList', JSON.stringify(response.data));

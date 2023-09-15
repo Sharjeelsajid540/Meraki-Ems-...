@@ -18,3 +18,12 @@
     padding-right: 40px !important;
     
 }
+.FooterOptions{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.FooterBtn{
+    border-radius: 4px;
+    padding: 2px;
+}

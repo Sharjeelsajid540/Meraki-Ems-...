@@ -175,9 +175,9 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             var response = await _context.UserAttendance.OrderByDescending(s=> s.CheckInTime).ToListAsync();
             return response;
         }
-        public async Task<AttendanceResponse> SingleAttendanceList(UserAttendanceRequest req)
+        public async Task<List<UserAttendance>> SingleAttendanceList(UserAttendanceRequest req)
         {
-            var res = new AttendanceResponse();
+            
             try
             {
                 var data = await _context.UserAttendance
@@ -185,23 +185,16 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                     .OrderByDescending(s => s.CheckInTime)
                     .ToListAsync();
 
-                var group = data.GroupBy(x => x.CreatedAt).ToList();
+                
 
-                res.GroupedAttendanceList = group.Select(grouping => new Attendance
-                {
-                    AttendanceDate = grouping.Key,
-                    TotalWorkingHours = TimeSpan.FromTicks(grouping.Sum(x => x.WorkingHours?.Ticks ?? 0)),
-                    AttendanceList = grouping.ToList()
-                }).ToList();
-
-                return res;
+                return data;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
 
-            return res;
+            return null;
         }
 
 
