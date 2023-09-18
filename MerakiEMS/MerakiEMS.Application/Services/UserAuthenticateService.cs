@@ -226,7 +226,7 @@ namespace MerakiEMS.Application.Services
                     response.ID = result.ID;
                     response.UserID = result.UserID;
                     response.CheckInTime = result.CheckInTime?.ToString("HH:mm:ss");
-                    response.CreatedAt = result.CreatedAt?.ToString("yyyy-MM-dd");
+                    response.CreatedAt = result.CreatedAt?.ToString("MM-dd-yyyy");
                     response.CheckOutTime = result.CheckOutTime?.ToString("HH:mm:ss");
                     response.WorkingHours = result.WorkingHours?.ToString(@"hh\:mm\:ss");
                     responses.Add(response);
@@ -283,7 +283,7 @@ namespace MerakiEMS.Application.Services
 
 
 
-        public async Task<AttendanceResponse2> GetSingleAttendanceList(UserAttendanceRequest req)
+        
         public async Task<List<AttendanceListResponse>> GetSingleAttendanceList(UserAttendanceRequest req)
         {
             var res = await _usersRepository.SingleAttendanceList(req);
@@ -303,7 +303,7 @@ namespace MerakiEMS.Application.Services
                     response.ID = result.ID;
                     response.UserID = result.UserID;
                     response.CheckInTime = result.CheckInTime?.ToString("HH:mm:ss");
-                    response.CreatedAt = result.CreatedAt?.ToString("yyyy-MM-dd");
+                    response.CreatedAt = result.CreatedAt?.ToString("MM-dd-yyyy");
                     response.CheckOutTime = result.CheckOutTime?.ToString("HH:mm:ss");
                     response.WorkingHours = result.WorkingHours?.ToString(@"hh\:mm\:ss");
                     responses.Add(response);

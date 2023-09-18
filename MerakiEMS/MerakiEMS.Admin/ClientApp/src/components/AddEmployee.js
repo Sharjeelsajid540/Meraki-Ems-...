@@ -97,14 +97,14 @@ const response = await axios.post("https://localhost:7206/api/User/AddUser",data
     <div className="CustomerPage">
        
       
-       <Button variant="secondary" className='secondary-btn' onClick={handleShow}>Add Role</Button>{' '}
+       <Button variant="secondary" className='secondary-btn' onClick={handleShow}>Add Employee</Button>{' '}
        <UsersListAdmin />  
        <br/>
     <div className="addEmployee">
     
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Role</Modal.Title>
+          <Modal.Title>Add Employee</Modal.Title>
         </Modal.Header>
         <Modal.Body>
     <Form onSubmit={handleSubmit}>

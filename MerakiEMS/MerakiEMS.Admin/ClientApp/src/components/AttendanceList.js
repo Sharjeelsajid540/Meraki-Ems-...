@@ -1,11 +1,8 @@
 import React, { useState,useEffect, useMemo } from 'react';
-import './CheckBtn.css';
-import React, { useState,useEffect } from 'react';
 import './css/CheckBtn.css';
 import { CheckInUser, CheckOutUser, fetchAttendanceData } from '../Api/Api';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './AttendanceList.css';
 import { flexRender, useReactTable, getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table';
 import moment from 'moment-timezone';
 import { Button, Modal } from 'react-bootstrap';
@@ -282,6 +279,7 @@ table.getState().pagination.pageSize = 7;
          
         </tbody>
       </table>
+      <div className="menu-list">
       <div className="FooterOptions">
         <button className='FooterBtn' onClick={()=> table.setPageIndex(0)}>{'<<'}</button>
         <button className='FooterBtn' disabled={!table.getCanPreviousPage()} onClick={()=> table.previousPage()}>{'<'}</button>
@@ -306,6 +304,7 @@ table.getState().pagination.pageSize = 7;
             className="border p-1 rounded w-16"
           />
         </span>
+      </div>
       </div>
       {/* <div>
   {attendanceData.groupedAttendanceList ? (

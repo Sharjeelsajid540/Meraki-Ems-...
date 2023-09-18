@@ -1,15 +1,13 @@
 import React from 'react'
 import Logo from '../images/logo-black.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import './Home.css';
-import './SideNavbar.css'; 
 import './css/Home.css';
-import './css/SideNavbar.css'; // You can create this CSS file for custom styling
+import './css/SideNavbar.css';
 import {
 faUser,faTicketSimple,faFilePen,faRightFromBracket,faCalendarXmark}
 from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
-import ShowLeaves from "./ShowLeavesAdmin";
+
 
 export const SideNavbar = () => {
     var role = localStorage.getItem('loginData');

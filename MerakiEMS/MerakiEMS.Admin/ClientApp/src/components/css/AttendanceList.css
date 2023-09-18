@@ -1,32 +1,30 @@
-.DateHeader1{
-    color: rgb(255, 255, 255) !important;
-    background-color: black !important;
-    border-radius: 12px 0px 0px 12px;
-    font-weight: bold;
-    font-size: 1rem;
-    text-align: left;
-    padding-left: 40px !important;
-   
-}
-.DateHeader2{
-    color: rgb(255, 255, 255) !important;
-    background-color: black !important;
-    border-radius:  0px 12px 12px 0px;
-    font-weight: bold;
-    font-size: 1rem;
-    text-align: right;
-    padding-right: 40px !important;
-    
-}
+
 .FooterOptions{
     display: flex;
     align-items: center;
     gap: 10px;
+   
 }
 .FooterBtn{
     border-radius: 4px;
     padding: 2px;
-    background-color: #0B2B50;
-    color: white;
-    border: none;
+    
+   
+    
+}
+.menu-list{
+    position: absolute;
+    margin: 5% 20% 0% 25%;
+}
+.table-div{
+    min-height: 350px;
+}
+.globar-filter{
+    text-align: right;
+    margin: -10px 0px 10px 0px;
+    
+}
+.filter-input{
+    border-radius: 6px;
+    padding: 4px;
 }
