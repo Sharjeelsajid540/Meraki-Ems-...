@@ -10,14 +10,18 @@ namespace MerakiEMS.Domain.Entities.Contracts.Response
     {
         public int ID { get; set; }
 
-        public int From { get; set; }
+        public int UserID { get; set; }
 
-        public int To { get; set; }
+        public string? From { get; set; }
+
+        public string? To { get; set; }
 
         public string? Description { get; set; }
 
         public string? CreatedAt { get; set; }
 
-        public string? RequestViewer { get; set; }
+        public string? AdminRequestViewer { get; set; }
+
+        public string Status { get; set; }
     }
 }

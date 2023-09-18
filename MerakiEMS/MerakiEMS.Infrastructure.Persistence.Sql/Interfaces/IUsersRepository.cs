@@ -26,6 +26,8 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Interfaces
         Task<List<UserAttendance>> SingleAttendanceList(UserAttendanceRequest req);
 
         Task<Leave> RequestLeave(LeaveRequest lev);
+
+        Task<Leave> AdminLeaveRequest(AdminRequest req);
         Task<List<GetUsersResponse>> GetAllUsers();
         Task<User> UpdateUser(User user);
         Task<User> DeleteUser(int id);

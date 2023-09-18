@@ -1,6 +1,6 @@
 ﻿
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import './Home.css'; // You can create this CSS file for custom styling
+import './css/Home.css'; // You can create this CSS file for custom styling
 import Logo from '../images/logo-black.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

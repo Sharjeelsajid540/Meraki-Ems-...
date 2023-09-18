@@ -29,6 +29,22 @@ namespace MerakiEMS.Api.Controllers
             return response;
         }
 
+        [HttpPut]
+        [Route("AdminRequest")]
+        public async Task<AdminLeaveResponse> LeaveAdminRequest(AdminRequest req)
+        {
+            var response = await _authenticateService.AdminLeaveRequest(req);
+
+            return response;
+        }
+        [HttpPut]
+        [Route("UserCheckOut")]
+        public async Task<CheckoutResponse> UpdateUserAttendance(CheckOutRequest req)
+        {
+            var response = await _authenticateService.UpdateAttendance(req);
+            return response;
+        }
+
 
 
         [HttpPost]
@@ -62,13 +78,7 @@ namespace MerakiEMS.Api.Controllers
             var response = await _authenticateService.InsertAttendance(req);
             return response;
         }
-        [HttpPut]
-        [Route("UserCheckOut")]
-        public async Task<CheckoutResponse> UpdateUserAttendance(CheckOutRequest req)
-        {
-            var response = await _authenticateService.UpdateAttendance(req);
-            return response;
-        }
+       
         [HttpGet]
         [Route("AllUserAttendance")]
         public async Task<List<AttendanceListResponse>> GetUserAttendance()
@@ -107,7 +117,7 @@ namespace MerakiEMS.Api.Controllers
         }
         [HttpGet]
         [Route("GetLeave")]
-        public async Task<List<Leave>> GetLeave()
+        public async Task<List<LeaveResponse>> GetLeave()
         {
             var response = await _authenticateService.GetLeave();
             return response;

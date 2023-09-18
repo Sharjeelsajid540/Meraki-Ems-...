@@ -98,6 +98,25 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 throw ex;
             }
         }
+
+
+        public async Task<Leave> AdminLeaveRequest(AdminRequest req)
+        {
+            var CheckIn = _context.Leave.Where
+            (s => s.ID == req.ID).FirstOrDefault();
+
+            CheckIn.UserID = req.UserID;
+            CheckIn.AdminRequestViewer = req.AdminRequestViewer;
+            CheckIn.Status = req.Status;
+            CheckIn.Comments = req.Comments;
+
+
+            await _context.SaveChangesAsync(); // Add the Leave entity to the context
+             // Save changes to the database
+            return CheckIn; // Return the added Leave entity
+        }
+
+
         public async Task<Leave> RequestLeave(LeaveRequest lev)
         {
             Leave leave = new Leave
@@ -107,7 +126,8 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 To = lev.To,
                 Description = lev.Description,
                 CreatedAt = DateTime.Now,
-            AdminRequestViewer = "Ali"
+            AdminRequestViewer = "Ali",
+            Status = "Pending"
             };
 
             _context.Leave.Add(leave); // Add the Leave entity to the context

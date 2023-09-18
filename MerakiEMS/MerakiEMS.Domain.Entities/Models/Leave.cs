@@ -21,5 +21,11 @@ namespace MerakiEMS.Domain.Entities.Models
         public DateTime? CreatedAt { get; set; }
 
         public string? AdminRequestViewer { get; set; }
+
+        public string? Status { get; set; }
+
+        public string? Comments { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
     }
 }
