@@ -24,5 +24,11 @@ namespace MerakiEMS.Application.Interfaces
         Task<AttendanceResponse2> GetSingleAttendanceList(UserAttendanceRequest req);
 
         Task<ApiResponse<string>> RequestLeave(LeaveRequest lev);
+        Task<AdminLeaveResponse> AdminLeaveRequest(AdminRequest req);
+        Task<List<GetUsersResponse>> GetUsers();
+        Task<UpdateUserResponse> UpdateUser(User user);
+        Task<UpdateUserResponse> DeleteUser(int id);
+        Task<List<LeaveResponse>> GetLeave();
+        Task<List<Leave>> GetAllLeaves(int id);
     }
 }

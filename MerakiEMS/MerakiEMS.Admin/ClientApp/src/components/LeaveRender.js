@@ -1,5 +1,5 @@
 import React from 'react'
-import ShowLeaves from './ShowLeaves'
+import ShowLeaves from './ShowLeavesAdmin'
 import AddLeave from './AddLeave'
 import { Profile } from './Profile';
 import { SideNavbar } from './SideNavbar';

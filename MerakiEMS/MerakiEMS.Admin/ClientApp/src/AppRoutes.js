@@ -1,7 +1,7 @@
 import Login from "./components/Login";
 import Home from "./components/Home";
 import AddEmployee from "./components/AddEmployee";
-import Leave from "./components/Leave";
+import LeaveRender from "./components/LeaveRender";
 
 
 
@@ -16,7 +16,7 @@ const AppRoutes = [
   },
   {
     path: '/leaves',
-    element: <Leave/>
+    element: <LeaveRender/>
   },
   
   {

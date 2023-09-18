@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 
-function AttendanceList() {
+function UsersListAdmin() {
   const [attendanceData, setAttendanceData] = useState([]);
 
   // Replace this with an API call to fetch attendance data
@@ -49,4 +49,4 @@ function AttendanceList() {
   );
 }
 
-export default AttendanceList;
+export default UsersListAdmin;

@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import UsersList from './UsersList';
+import UsersListAdmin from './UsersListAdmin';
 import Modal from 'react-bootstrap/Modal';
 
 
@@ -98,7 +98,7 @@ const response = await axios.post("https://localhost:7206/api/User/AddUser",data
        
       
        <Button variant="secondary" className='secondary-btn' onClick={handleShow}>Add Role</Button>{' '}
-       <UsersList />  
+       <UsersListAdmin />  
        <br/>
     <div className="addEmployee">
     

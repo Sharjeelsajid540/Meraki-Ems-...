@@ -1,7 +1,6 @@
 ﻿using MerakiEMS.Application.Contracts.Requests;
 using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Application.Interfaces;
-using MerakiEMS.Application.Services;
 using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
 using MerakiEMS.Domain.Entities.Models;
@@ -27,6 +26,22 @@ namespace MerakiEMS.Api.Controllers
         {
             var response = await _authenticateService.RequestLeave(lev);
 
+            return response;
+        }
+
+        [HttpPut]
+        [Route("AdminRequest")]
+        public async Task<AdminLeaveResponse> LeaveAdminRequest(AdminRequest req)
+        {
+            var response = await _authenticateService.AdminLeaveRequest(req);
+
+            return response;
+        }
+        [HttpPut]
+        [Route("UserCheckOut")]
+        public async Task<CheckoutResponse> UpdateUserAttendance(CheckOutRequest req)
+        {
+            var response = await _authenticateService.UpdateAttendance(req);
             return response;
         }
 
@@ -63,13 +78,7 @@ namespace MerakiEMS.Api.Controllers
             var response = await _authenticateService.InsertAttendance(req);
             return response;
         }
-        [HttpPut]
-        [Route("UserCheckOut")]
-        public async Task<CheckoutResponse> UpdateUserAttendance(CheckOutRequest req)
-        {
-            var response = await _authenticateService.UpdateAttendance(req);
-            return response;
-        }
+       
         [HttpGet]
         [Route("AllUserAttendance")]
         public async Task<List<AttendanceListResponse>> GetUserAttendance()
@@ -82,6 +91,42 @@ namespace MerakiEMS.Api.Controllers
         public async Task<AttendanceResponse2> GetSingleUserAttendance(UserAttendanceRequest req)
         {
             var response = await _authenticateService.GetSingleAttendanceList(req);
+            return response;
+        }
+        [HttpGet]
+        [Route("GetUsers")]
+        public async Task<List<GetUsersResponse>> GetAllUsers()
+        {
+            var response = await _authenticateService.GetUsers();
+            return response;
+        }
+        [HttpPost]
+        [Route("UpdateUser")]
+        public async Task<UpdateUserResponse> UpdateUser(User user)
+        {
+            var response = await _authenticateService.UpdateUser(user);
+            return response;
+        }
+        [HttpDelete]
+        [Route("DeleteUser")]
+        
+         public async Task<UpdateUserResponse> DeleteUser(int id)
+        {
+            var response = await _authenticateService.DeleteUser(id);
+            return response;
+        }
+        [HttpGet]
+        [Route("GetLeave")]
+        public async Task<List<LeaveResponse>> GetLeave()
+        {
+            var response = await _authenticateService.GetLeave();
+            return response;
+        }
+        [HttpPost]
+        [Route("GetAllLeaves")]
+        public async Task<List<Leave>> GetAllLeaves(int id)
+        {
+            var response = await _authenticateService.GetAllLeaves(id);
             return response;
         }
     }

@@ -14,7 +14,7 @@ namespace MerakiEMS.Application.Services
     public class UserAuthenticateService : IUserAuthenticateService
     {
         private readonly IUsersRepository _usersRepository;
-        
+
         public UserAuthenticateService(IUsersRepository usersRepository)
         {
             _usersRepository = usersRepository;
@@ -66,7 +66,80 @@ namespace MerakiEMS.Application.Services
 
 
 
+        public async Task<List<GetUsersResponse>> GetUsers()
+        {
+            var response = await _usersRepository.GetAllUsers();
+            return response;
+        }
 
+
+        public async Task<List<Leave>> GetAllLeaves(int id)
+        {
+            try
+            {
+                var response = await _usersRepository.GetAllLeaves(id);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public async Task<UpdateUserResponse> UpdateUser(User user)
+        {
+            var response = new UpdateUserResponse();
+            try
+            {
+                var res = await _usersRepository.UpdateUser(user);
+                if (res == null)
+                {
+                    response.SuccessMessage = "Invalid User ID!";
+
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.SuccessMessage = "User Updated Successfully";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.SuccessMessage += ex.Message;
+
+            }
+            return response;
+
+        }
+
+        public async Task<UpdateUserResponse> DeleteUser(int id)
+        {
+            var response = new UpdateUserResponse();
+            try
+            {
+                var res = await _usersRepository.DeleteUser(id);
+                if (res == null)
+                {
+                    response.SuccessMessage = "Invalid User ID!";
+
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.SuccessMessage = "User Deleted Successfully";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.SuccessMessage += ex.Message;
+
+            }
+            return response;
+
+        }
 
         public async Task<ApiResponse<string>> RequestLeave(LeaveRequest lev)
         {
@@ -97,7 +170,7 @@ namespace MerakiEMS.Application.Services
 
         }
 
-
+    
 
 
 
@@ -113,7 +186,7 @@ namespace MerakiEMS.Application.Services
             else
             {
                 var postt = await _usersRepository.InsertUser(req);
-                if (postt  == null) {
+                if (postt == null) {
                     response.IsRequestSuccessful = false;
                     response.SuccessResponse = "User Already Exists!";
 
@@ -123,7 +196,7 @@ namespace MerakiEMS.Application.Services
                     response.IsRequestSuccessful = true;
                     response.SuccessResponse = "User added successfully";
                 }
-                
+
             }
 
             return response;
@@ -137,7 +210,7 @@ namespace MerakiEMS.Application.Services
         public async Task<List<AttendanceListResponse>> GetAttendanceList()
         {
             List<AttendanceListResponse> responses = new List<AttendanceListResponse>();
-            
+
             var res = await _usersRepository.AttendanceList();
             if (res == null)
             {
@@ -145,7 +218,7 @@ namespace MerakiEMS.Application.Services
             }
             else
             {
-                
+
                 foreach (var result in res)
                 {
                     var response = new AttendanceListResponse();
@@ -162,8 +235,53 @@ namespace MerakiEMS.Application.Services
                 return responses;
 
             }
-            
+
         }
+
+
+
+    public async Task<List<LeaveResponse>> GetLeave()
+    { List<LeaveResponse> responses = new List<LeaveResponse>();
+        try
+        {
+            var res = await _usersRepository.GetLeave();
+            if (res == null)
+            {
+                return null;
+            }
+            else
+            {
+
+                foreach (var result in res)
+                {
+                    var response = new LeaveResponse();
+                    response.UserID = result.UserID;
+                    response.Status = result.Status;
+                    response.Description = result.Description;
+                    response.From = result.From?.ToString("yyyy-MM-dd");
+                    response.To = result.To?.ToString("yyyy-MM-dd");
+                    response.AdminRequestViewer = result.AdminRequestViewer;
+
+                    response.CreatedAt = result.CreatedAt?.ToString("yyyy-MM-dd");
+
+                    responses.Add(response);
+
+                }
+
+
+                return responses;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+    }
+
+
+
 
         public async Task<AttendanceResponse2> GetSingleAttendanceList(UserAttendanceRequest req)
         {
@@ -251,6 +369,40 @@ namespace MerakiEMS.Application.Services
             }
             return response;
         }
+
+
+        public async Task<AdminLeaveResponse> AdminLeaveRequest(AdminRequest req)
+        {
+            AdminLeaveResponse response = new AdminLeaveResponse();
+            try
+            {
+                var res = await _usersRepository.AdminLeaveRequest(req);
+                if (res != null)
+                {
+                    response.SuccessMessage = "CheckOut Successfull";
+                    response.IsRequestSuccessfull = "true";
+
+                }
+                else
+                {
+                    response.IsRequestSuccessfull = "false";
+                    response.SuccessMessage = "CheckOut Failed!";
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.IsRequestSuccessfull = "false";
+                response.Errors = new List<string> { ex.Message };
+                return response;
+
+            }
+
+
+        }
+
+
+
         public async Task<CheckoutResponse> UpdateAttendance(CheckOutRequest req)
         {
             CheckoutResponse response = new CheckoutResponse();

@@ -7,7 +7,7 @@ import {
 faUser,faTicketSimple,faFilePen,faRightFromBracket,faCalendarXmark}
 from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
-import ShowLeaves from "./ShowLeaves";
+import ShowLeaves from "./ShowLeavesAdmin";
 
 export const SideNavbar = () => {
     var role = localStorage.getItem('loginData');
@@ -60,7 +60,7 @@ export const SideNavbar = () => {
                   className="menu-icons"
                 />
               
-              {UserRole === "Admin" ?  "Leaves": "Add Leave"}
+              {UserRole === "Admin" ?  "Leaves": "Leaves"}
       
               </h5>
             </NavLink>
@@ -81,7 +81,7 @@ export const SideNavbar = () => {
                   size="xs"
                   className="menu-icons"
                 />
-                {UserRole==="Admin"?"FeedBack":"Give FeedBack"}
+                {UserRole==="Admin"?"Feedback":"Give Feedback"}
               </h5>
             </NavLink>
             

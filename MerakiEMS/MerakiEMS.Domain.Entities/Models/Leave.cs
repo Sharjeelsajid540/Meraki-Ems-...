@@ -12,14 +12,20 @@ namespace MerakiEMS.Domain.Entities.Models
 
         public int UserID { get; set; }
 
-        public string? From { get; set; }
+        public DateTime? From { get; set; }
 
-        public string? To { get; set; }
+        public DateTime? To { get; set; }
 
         public string? Description { get; set; }
 
         public DateTime? CreatedAt { get; set; }
 
         public string? AdminRequestViewer { get; set; }
+
+        public string? Status { get; set; }
+
+        public string? Comments { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
     }
 }

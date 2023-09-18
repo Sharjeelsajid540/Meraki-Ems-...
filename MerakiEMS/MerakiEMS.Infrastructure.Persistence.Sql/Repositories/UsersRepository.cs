@@ -10,8 +10,7 @@ using System.Text;
 using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+
 
 namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 {
@@ -40,6 +39,84 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             return null;
         }
 
+
+        public async Task<List<GetUsersResponse>> GetAllUsers()
+        {
+            List<GetUsersResponse> users = new List<GetUsersResponse>();
+            //User user = new User();
+            var user = await _context.User.OrderByDescending(s => s.ID).ToListAsync();
+          
+            foreach (var u in user)
+            {
+                var userRole =  _context.UserRole.Where(s => s.UserID == u.ID).FirstOrDefault();
+                var response = new GetUsersResponse();
+                response.UserID = u.ID;
+                response.Name = u.Name;
+                response.Password = u.Password;
+                response.Role = userRole.RoleID;
+                users.Add(response);
+            }
+            return users;
+        }
+
+        public async Task<User> UpdateUser(User user)
+        {
+            try
+            {
+
+            
+            var res = await _context.User.Where(s => s.ID == user.ID).FirstOrDefaultAsync();
+            
+                res.Name = user.Name;
+                res.Password = user.Password;
+
+            _context.User.Update(res);
+            await _context.SaveChangesAsync();
+            return res;
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
+        }
+
+        public async Task<User> DeleteUser(int id)
+        {
+            try
+            {
+
+
+                var res = await _context.User.Where(s => s.ID == id).FirstOrDefaultAsync();
+
+
+
+                _context.User.Remove(res);
+                await _context.SaveChangesAsync();
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public async Task<Leave> AdminLeaveRequest(AdminRequest req)
+        {
+            var CheckIn = _context.Leave.Where
+            (s => s.ID == req.ID).FirstOrDefault();
+
+            CheckIn.UserID = req.UserID;
+            CheckIn.AdminRequestViewer = req.AdminRequestViewer;
+            CheckIn.Status = req.Status;
+            CheckIn.Comments = req.Comments;
+
+
+            await _context.SaveChangesAsync(); // Add the Leave entity to the context
+             // Save changes to the database
+            return CheckIn; // Return the added Leave entity
+        }
+
+
         public async Task<Leave> RequestLeave(LeaveRequest lev)
         {
             Leave leave = new Leave
@@ -49,7 +126,8 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 To = lev.To,
                 Description = lev.Description,
                 CreatedAt = DateTime.Now,
-            AdminRequestViewer = "Ali"
+            AdminRequestViewer = "Ali",
+            Status = "Pending"
             };
 
             _context.Leave.Add(leave); // Add the Leave entity to the context
@@ -57,7 +135,17 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             return leave; // Return the added Leave entity
         }
 
+        public async Task<List<Leave>> GetLeave()
+        {
+            var response = await _context.Leave.OrderByDescending(s=> s.CreatedAt).ToListAsync();
+            return response;
+        }
 
+        public async Task<List<Leave>> GetAllLeaves(int id)
+        {
+            var response = await _context.Leave.Where(s=> s.UserID == id).OrderByDescending(s => s.CreatedAt).ToListAsync();
+            return response;
+        }
 
         public async Task<User> InsertUser(AddEmployeeRequest req)
         {

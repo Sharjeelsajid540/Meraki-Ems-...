@@ -26,11 +26,13 @@ function ShowLeaves() {
       <table className="table">
         <thead>
           <tr>
-            <th>Employe ID</th>
+            <th>Employee ID</th>
             <th>Name</th>
             <th>From (Date)</th>
             <th>To (Date)</th>
             <th>Description</th>
+            <th>Status</th>
+            <th>Action</th>
 
           </tr>
         </thead>
