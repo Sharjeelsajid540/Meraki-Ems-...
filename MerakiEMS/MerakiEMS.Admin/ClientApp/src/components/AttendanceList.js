@@ -6,13 +6,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import './AttendanceList.css';
 import { flexRender, useReactTable, getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table';
 import moment from 'moment-timezone';
+import { Button, Modal } from 'react-bootstrap';
 
 function AttendanceList() {
   const [attendanceData, setAttendanceData] = useState([]);
-  const [buttonText, setButtonText] = useState('CheckedIN');
   const [isChanged, setIsChanged] = useState(0);
   const [isCheckInDisabled, setIsCheckInDisabled] = useState(false);
-  const [isCheckOutDisabled, setIsCheckOutDisabled] = useState(false);
+  const [isCheckOutDisabled, setIsCheckOutDisabled] = useState(true);
+  const [showCheckInModal, setShowCheckInModal] = useState(false);
+  const [showCheckOutModal, setShowCheckOutModal] = useState(false);
+
+
 
   const pakistanTimezone = 'Asia/Karachi';
   const currentTimeInPakistan = moment.tz(pakistanTimezone);
@@ -21,16 +25,29 @@ function AttendanceList() {
 
   
 
- 
+  
 
   useEffect(() => {
+    const storedIsCheckInDisabled = localStorage.getItem('isCheckInDisabled');
+    const storedIsCheckOutDisabled = localStorage.getItem('isCheckOutDisabled');
+
+    if (storedIsCheckInDisabled === 'true') {
+      setIsCheckInDisabled(true);
+    }
+
+    if (storedIsCheckOutDisabled === 'true') {
+      setIsCheckOutDisabled(true);
+    }
+    if (storedIsCheckOutDisabled === 'false') {
+      setIsCheckOutDisabled(false);
+    }
     
     if (currentTimeInPakistan.isBetween(startTime, endTime)) {
-      setIsCheckInDisabled(false);
+      
     } else {
       setIsCheckInDisabled(true);
     }
-    setIsCheckOutDisabled(localStorage.getItem('hasCheckedOut') === 'true');
+    
   
   }, [currentTimeInPakistan]);
  
@@ -39,6 +56,7 @@ function AttendanceList() {
 
   const id = localStorage.getItem('loginData');
   var idData = JSON.parse(id);
+  var userName = idData.name;
   const attendId = localStorage.getItem('AttendanceID');
   var attendID = JSON.parse(attendId);
 
@@ -63,9 +81,10 @@ const columns = [
 ]
 
 
-  const handleCheckIn = async () => {
-    if (!isCheckInDisabled) {
-   
+const confirmCheckIn = async () => {
+  // Perform Check-In action
+
+  
     try {
       const data = {
         userID: idData.id,
@@ -75,12 +94,13 @@ const columns = [
         toast.success(response.successMessage);
         setIsChanged(isChanged + 1);
         setIsCheckInDisabled(true);
-        if (!localStorage.getItem('lastClickedDate')) {
-          localStorage.setItem('lastClickedDate', moment().format('YYYY-MM-DD'));
-        }
+        localStorage.setItem('isCheckInDisabled', 'true');
+        localStorage.setItem('isCheckOutDisabled', 'false');
+        
       } 
       else if (response && response.isRequestSuccessfull==="false") {
         toast.error(response.successMessage);
+        
       }
       else if (response && response.errors) {
         console.log(response.errors);
@@ -95,44 +115,53 @@ const columns = [
       console.error("Error occurred:", error);
       toast.error("An error occurred while processing your request");
     }
+    setShowCheckInModal(false);
+  };
+
+
+const confirmCheckOut = async () => {
+  const data={
+    attendanceID: attendID.attendanceID,
     
-    if (!localStorage.getItem('lastClickedDate')) {
-      localStorage.setItem('lastClickedDate', moment().format('YYYY-MM-DD'));
+    userID: idData.id,
+  }
+ const response = await CheckOutUser(data);
+ try{
+ 
+    if (response.isRequestSuccessfull =="true") {
+      toast.success(response.successMessage);
+      setIsChanged(isChanged + 1);
+      localStorage.setItem('isCheckOutDisabled', 'true');
     }
-    localStorage.setItem('hasCheckedOut', 'false');
-    
+    else if (response && response.isRequestSuccessfull==="false") {
+      toast.error(response.successMessage);
+    }
+    else if (response && response.errors) {
+      
+      toast.error("Something Went Wrong");
+    } 
+     else {
+      console.error('Error checking out:', response.data);
+    }
+  } catch (error) {
+    console.error('Error checking out:', error);
+  }
+  
+    setShowCheckOutModal(false); 
+};
+  
+
+const handleCheckIn = async () => {
+    if (!isCheckInDisabled) {
+      setShowCheckInModal(true);
   }
   };
 
+  
+  
   const handleCheckOut = async () => {
     if (!isCheckOutDisabled) {
-      
-    const data={
-      attendanceID: attendID.attendanceID,
-      
-      userID: idData.id,
-    }
-   const response = await CheckOutUser(data);
-   try{
-   
-      if (response.isRequestSuccessfull =="true") {
-        toast.success(response.successMessage);
-        setIsChanged(isChanged + 1);
-      }
-      else if (response && response.errors) {
-        
-        toast.error("Something Went Wrong");
-      } 
-       else {
-        console.error('Error checking out:', response.data);
-      }
-    } catch (error) {
-      console.error('Error checking out:', error);
-    }
-
-    
-    setIsCheckOutDisabled(true);
-    localStorage.setItem('hasCheckedOut', 'true');
+      setShowCheckOutModal(true);
   }
   };
   
@@ -169,7 +198,7 @@ table.getState().pagination.pageSize = 7;
    <div>
       <h2>Check-In</h2>
       <button className={`btn btn-1 ${isCheckInDisabled  ? 'btn-clicked' : ''}`} onClick={handleCheckIn} disabled={isCheckInDisabled }>
-       { isCheckInDisabled ? "Checked IN" : "CheckIn"}
+       { isCheckInDisabled ? "Checked IN ✓" : "CheckIn"}
       </button>
     </div>
     </div>
@@ -181,8 +210,38 @@ table.getState().pagination.pageSize = 7;
         onClick={handleCheckOut}
         disabled={isCheckOutDisabled }
       >
-       { isCheckInDisabled ? "Checked Out" : "CheckOut"}
+       { isCheckOutDisabled ? "Checked Out   ✓" : "CheckOut"}
       </button>
+      <Modal show={showCheckInModal} onHide={() => setShowCheckInModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Check-In</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to Check-In?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowCheckInModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={confirmCheckIn}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      
+      <Modal show={showCheckOutModal} onHide={() => setShowCheckOutModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Check-Out</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to Check-Out?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowCheckOutModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={confirmCheckOut}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
      
     </div>
     </div>

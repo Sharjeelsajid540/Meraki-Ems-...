@@ -282,22 +282,33 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 var check = _context.UserAttendance.Where(s => s.UserID == req.UserID).OrderByDescending(s => s.CheckInTime).FirstOrDefault();
                 if (check == null || check.CheckOutTime != null)
                 {
-                    var name = _context.User.Where
-                    (s => s.ID == req.UserID).FirstOrDefault();
+                    var date = DateTime.Now;
+                    var dateCheck = _context.UserAttendance.Where(s => s.UserID == req.UserID && s.CreatedAt==date.Date).OrderByDescending(s => s.CreatedAt).FirstOrDefault();
 
-                    attendance.CheckInTime = DateTime.Now;
-                    attendance.CreatedAt = attendance.CheckInTime?.Date;
-                    attendance.UserID = req.UserID;
-                    attendance.Name = name.Name;
+                    if (dateCheck == null)
+                    {
+                        var name = _context.User.Where
+                        (s => s.ID == req.UserID).FirstOrDefault();
 
-                    await _context.UserAttendance.AddAsync(attendance);
-                    await _context.SaveChangesAsync();
-                    var AId = _context.UserAttendance.Where
-                        (s => s.UserID == req.UserID)
-                        .OrderByDescending(s => s.ID).FirstOrDefault();
-                    response.AttendanceID = AId.ID;
+                        attendance.CheckInTime = DateTime.Now;
+                        attendance.CreatedAt = attendance.CheckInTime?.Date;
+                        attendance.UserID = req.UserID;
+                        attendance.Name = name.Name;
 
-                    return response;
+                        await _context.UserAttendance.AddAsync(attendance);
+                        await _context.SaveChangesAsync();
+                        var AId = _context.UserAttendance.Where
+                            (s => s.UserID == req.UserID)
+                            .OrderByDescending(s => s.ID).FirstOrDefault();
+                        response.AttendanceID = AId.ID;
+
+                        return response;
+                    }
+                    else
+                    {
+                        response.SuccessMessage = "Already CheckedIN!";
+                        return response;
+                    }
 
                 }
                 else
@@ -321,18 +332,27 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 
                var CheckIn = _context.UserAttendance.Where
                     (s => s.ID == req.AttendanceID).FirstOrDefault();
-            CheckIn.WorkingHours = DateTime.Now - CheckIn.CheckInTime;
-            CheckIn.CheckOutTime = DateTime.Now;
+            if(CheckIn.CheckOutTime == null)
+            {
+                CheckIn.WorkingHours = DateTime.Now - CheckIn.CheckInTime;
+                CheckIn.CheckOutTime = DateTime.Now;
+
+
+
+                await _context.SaveChangesAsync();
+                return CheckIn;
+            }
+            else
+            {
+                return null;
+            }
             
+            
+            
+
+
             
            
-            await _context.SaveChangesAsync();
-            
-            
-
-
-            
-            return CheckIn;
 
         }
 

@@ -321,9 +321,19 @@ namespace MerakiEMS.Application.Services
             var res = await _usersRepository.InsertAttendance(req);
             if (res != null)
             {
-                response.AttendanceID = res.AttendanceID;
-                response.SuccessMessage = "CheckIn Successfull";
-                response.IsRequestSuccessfull = "true";
+                if(res.SuccessMessage == "Already CheckedIN!")
+                {
+                    response.SuccessMessage = res.SuccessMessage;
+                    response.IsRequestSuccessfull = "false";
+                    
+                }
+                else
+                {
+                    response.AttendanceID = res.AttendanceID;
+                    response.SuccessMessage = "CheckIn Successfull";
+                    response.IsRequestSuccessfull = "true";
+                }
+               
             }
             else
             {
@@ -348,7 +358,7 @@ namespace MerakiEMS.Application.Services
                 else
                 {
                     response.IsRequestSuccessfull = "false";
-                    response.SuccessMessage = "CheckOut Failed!";
+                    response.SuccessMessage = "Already CheckedOut!";
                 }
                 return response;
             }

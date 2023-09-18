@@ -2,7 +2,7 @@ import React from 'react'
 import Logo from '../images/logo-black.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './Home.css';
-import './SideNavbar.css'; // You can create this CSS file for custom styling
+import './SideNavbar.css'; 
 import {
   faUser,
   
@@ -22,17 +22,10 @@ export const SideNavbar = () => {
         UserRole= "User";
      }
 
-    //  const clickedStyle = {
-    //     textDecoration: 'none',
-    //     color: 'white',
-    //     //background: '#0B2B50',
-    //   };
-    
-    //   const unclickedStyle = {
-    //     textDecoration: 'none',
-    //     // color: '#0B2B50',
-    //     background: 'white',
-    //   };
+  const handleLogout =()=>{
+    localStorage.clear();
+
+  }
   return (
     <div className="leftPanel">
           <img className="logo-image2" src={Logo} alt="Logo" />
@@ -92,7 +85,7 @@ export const SideNavbar = () => {
            
           </div>
           <div className='logout'>
-            <NavLink className="menu-links menu-logout" to="/login">
+            <NavLink className="menu-links menu-logout" to="/login" onClick={handleLogout}>
             
               <h5 className="link-text">
                 <FontAwesomeIcon

@@ -26,4 +26,7 @@
 .FooterBtn{
     border-radius: 4px;
     padding: 2px;
+    background-color: #0B2B50;
+    color: white;
+    border: none;
 }
