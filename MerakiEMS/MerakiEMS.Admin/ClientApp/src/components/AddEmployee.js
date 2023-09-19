@@ -3,12 +3,14 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import "./AddEmployee.css"
+import "./css/AddEmployee.css"
 import { useState } from 'react';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import UsersListAdmin from './UsersListAdmin';
+import Modal from 'react-bootstrap/Modal';
 
 
 
@@ -17,7 +19,12 @@ const AddEmployee = () => {
     const[name, setName]=useState('');
     const[password, setPassword]=useState('');
     const[roleID, setRoleID]=useState('');
+    const [isChanged, setIsChanged] = useState(0);
+
+
     const navigate = useNavigate();
+
+
     const handleSubmit = async (e)=>{
         e.preventDefault();
         const data={
@@ -61,13 +68,18 @@ const response = await axios.post("https://localhost:7206/api/User/AddUser",data
         setPassword("");
         setRoleID("");
       };
+
+
       useEffect(() => {
         getRoles();
       }, []);
-      const getRoles = ()=>{
-        axios.get("https://localhost:7206/api/User/UserRole")
+
+
+      const getRoles = async()=>{
+        await axios.get("https://localhost:7206/api/User/UserRole")
         .then((result)=>{
           localStorage.setItem('RolesData', JSON.stringify(result.data));
+          setIsChanged(isChanged + 1);
         })
       }
       const getRoleNamesFromLocalStorage = () => {
@@ -77,16 +89,35 @@ const response = await axios.post("https://localhost:7206/api/User/AddUser",data
         
          
       };
-     
+
       useEffect(() => {
         
         const storedRoleNames = getRoleNamesFromLocalStorage();
         setRoleNames(storedRoleNames);
         
-      }, []);
+      }, [isChanged]);
+
+      const [show, setShow] = useState(false);
+      const handleClose = () => setShow(false);
+      const handleShow = () => setShow(true);
+     
+      
   return (
-    <>
-    <div><Form onSubmit={handleSubmit}>
+    
+    <div className="CustomerPage">
+       
+      
+       <Button variant="secondary" className='secondary-btn' onClick={handleShow}>Add Employee</Button>{' '}
+       <UsersListAdmin />  
+       <br/>
+    <div className="addEmployee">
+    
+    <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Employee</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+    <Form onSubmit={handleSubmit}>
       <Row className="mt-3">
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>Name</Form.Label>
@@ -118,9 +149,22 @@ const response = await axios.post("https://localhost:7206/api/User/AddUser",data
       <Button variant="primary" type="submit" className='addBtn'>
         Submit
       </Button>
-    </Form></div>
-    </>
+    </Form>
+    </Modal.Body>
+    {/* <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer> */}
+      </Modal>
+
+    </div>
+    </div>
+    //  
   )
 }
 
-export default AddEmployee
+export default AddEmployee;

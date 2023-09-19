@@ -1,38 +1,28 @@
 import React from 'react'
 import Logo from '../images/logo-black.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import './Home.css';
-import './SideNavbar.css'; // You can create this CSS file for custom styling
+import './css/Home.css';
+import './css/SideNavbar.css';
 import {
-  faUser,
-  
-  faTicketSimple,
-  faFilePen,
-  faRightFromBracket,
-  faCalendarXmark,
-} from "@fortawesome/free-solid-svg-icons";
+faUser,faTicketSimple,faFilePen,faRightFromBracket,faCalendarXmark}
+from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
+
+
 export const SideNavbar = () => {
     var role = localStorage.getItem('loginData');
     var roleData = JSON.parse(role);
-     if (roleData.userRole == "Admin"){
+     if (roleData.userRole === "Admin"){
        var UserRole = "Admin";
      }
      else{
         UserRole= "User";
      }
 
-    //  const clickedStyle = {
-    //     textDecoration: 'none',
-    //     color: 'white',
-    //     //background: '#0B2B50',
-    //   };
-    
-    //   const unclickedStyle = {
-    //     textDecoration: 'none',
-    //     // color: '#0B2B50',
-    //     background: 'white',
-    //   };
+  const handleLogout =()=>{
+    localStorage.clear();
+
+  }
   return (
     <div className="leftPanel">
           <img className="logo-image2" src={Logo} alt="Logo" />
@@ -48,7 +38,7 @@ export const SideNavbar = () => {
                   icon={faUser}
                   size="xs"
                   className="menu-icons"
-                />{UserRole=="Admin"?"Employees":"Dashboard"}
+                />{UserRole==="Admin"?"Employees":"Dashboard"}
                 
               </h5>
             </NavLink>
@@ -63,7 +53,7 @@ export const SideNavbar = () => {
                   className="menu-icons"
                 />
               
-              {UserRole === "Admin" ? "Leaves" : "Add Leave"}
+              {UserRole === "Admin" ?  "Leaves": "Leaves"}
       
               </h5>
             </NavLink>
@@ -74,7 +64,7 @@ export const SideNavbar = () => {
                   size="xs"
                   className="menu-icons"
                 />
-               {UserRole=="Admin"?"Raise Ticket":"Tickets"}
+               {UserRole==="Admin"?"Raise Ticket":"Tickets"}
               </h5>
             </NavLink>
             <NavLink className="menu-links" to="/feedback">
@@ -84,7 +74,7 @@ export const SideNavbar = () => {
                   size="xs"
                   className="menu-icons"
                 />
-                {UserRole=="Admin"?"FeedBack":"Give FeedBack"}
+                {UserRole==="Admin"?"Feedback":"Give Feedback"}
               </h5>
             </NavLink>
             
@@ -92,7 +82,7 @@ export const SideNavbar = () => {
            
           </div>
           <div className='logout'>
-            <NavLink className="menu-links menu-logout" to="/login">
+            <NavLink className="menu-links menu-logout" to="/login" onClick={handleLogout}>
             
               <h5 className="link-text">
                 <FontAwesomeIcon

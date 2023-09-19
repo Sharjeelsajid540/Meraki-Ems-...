@@ -1,0 +1,30 @@
+
+.FooterOptions{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+   
+}
+.FooterBtn{
+    border-radius: 4px;
+    padding: 2px;
+    
+   
+    
+}
+.menu-list{
+    position: absolute;
+    margin: 5% 20% 0% 25%;
+}
+.table-div{
+    min-height: 350px;
+}
+.globar-filter{
+    text-align: right;
+    margin: -10px 0px 10px 0px;
+    
+}
+.filter-input{
+    border-radius: 6px;
+    padding: 4px;
+}
