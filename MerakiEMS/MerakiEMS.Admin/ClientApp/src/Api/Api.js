@@ -59,10 +59,11 @@ export const CheckInUser = async (data) => {
       }
      
       
-
+      localStorage.setItem('AttendanceID', JSON.stringify(response.data));
       
       return response.data;
     } else {
+      
       return false;
     }
   } catch (error) {
@@ -72,7 +73,7 @@ export const CheckInUser = async (data) => {
 
 
 
-/////////   CheckIn    ///////
+/////////   CheckOut    ///////
 export const CheckOutUser = async (data) => {
 
 try {

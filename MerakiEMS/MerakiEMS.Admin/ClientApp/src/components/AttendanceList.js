@@ -21,7 +21,7 @@ function AttendanceList() {
   const pakistanTimezone = 'Asia/Karachi';
   const currentTimeInPakistan = moment.tz(pakistanTimezone);
   const startTime = moment.tz('09:00', 'HH:mm', pakistanTimezone);
-  const endTime = moment.tz('19:00', 'HH:mm', pakistanTimezone);
+  const endTime = moment.tz('20:00', 'HH:mm', pakistanTimezone);
 
   
 
@@ -100,6 +100,9 @@ const confirmCheckIn = async () => {
       } 
       else if (response && response.isRequestSuccessfull==="false") {
         toast.error(response.successMessage);
+        localStorage.setItem('isCheckOutDisabled', 'false');
+        setIsCheckInDisabled(true);
+        localStorage.setItem('isCheckInDisabled', 'true');
         
       }
       else if (response && response.errors) {
@@ -133,8 +136,9 @@ const confirmCheckOut = async () => {
       setIsChanged(isChanged + 1);
       localStorage.setItem('isCheckOutDisabled', 'true');
     }
-    else if (response && response.isRequestSuccessfull==="false") {
+    else if (response && response.isRequestSuccessfull=="false") {
       toast.error(response.successMessage);
+      localStorage.setItem('isCheckOutDisabled', 'true');
     }
     else if (response && response.errors) {
       

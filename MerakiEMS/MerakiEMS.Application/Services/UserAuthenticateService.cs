@@ -359,6 +359,7 @@ namespace MerakiEMS.Application.Services
                 {
                     response.SuccessMessage = res.SuccessMessage;
                     response.IsRequestSuccessfull = "false";
+                    response.AttendanceID = res.AttendanceID;
                     
                 }
                 else

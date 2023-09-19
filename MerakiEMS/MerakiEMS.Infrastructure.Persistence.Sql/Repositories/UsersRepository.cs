@@ -10,6 +10,7 @@ using System.Text;
 using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
+using System.Security.Cryptography;
 
 
 namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
@@ -326,6 +327,10 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                     }
                     else
                     {
+                        var AId = _context.UserAttendance.Where
+                            (s => s.UserID == req.UserID)
+                            .OrderByDescending(s => s.ID).FirstOrDefault();
+                        response.AttendanceID = AId.ID;
                         response.SuccessMessage = "Already CheckedIN!";
                         return response;
                     }
@@ -333,8 +338,12 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 }
                 else
                 {
-                    
-                    return null;
+                    response.SuccessMessage = "Already CheckedIN!";
+                    var AId = _context.UserAttendance.Where
+                            (s => s.UserID == req.UserID)
+                            .OrderByDescending(s => s.ID).FirstOrDefault();
+                    response.AttendanceID = AId.ID;
+                    return response;
                 }
                 
             }
