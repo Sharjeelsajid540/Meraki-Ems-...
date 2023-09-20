@@ -22,6 +22,10 @@ namespace MerakiEMS.Domain.Entities.Contracts.Response
 
         public string? AdminRequestViewer { get; set; }
 
+        public string? Comments { get; set; }
+
         public string Status { get; set; }
+
+        public string? UpdatedAt { get; set; }
     }
 }

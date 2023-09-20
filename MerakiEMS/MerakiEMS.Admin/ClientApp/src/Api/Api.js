@@ -1,4 +1,5 @@
 import axios from "axios";
+import React, { useState , useEffect } from 'react';
 const apiUrl = "https://localhost:7206/";
 
 
@@ -93,12 +94,20 @@ try {
 //   }
 // };
 
-export const GetProducts = async () => {
-  try {
-    const resp = await axios.get(apiUrl + "api/Product/GetProduct");
+/////// Update Leaves Api //////
 
-    if (resp.status == 200) {
-      return resp.data;
+
+
+export const UpdateLeaveStatus = async (data) => {
+  const [id, setID] = useState("");
+  try {
+
+    const response = await axios.put(apiUrl + "api/User/AdminRequest" + id,
+    data);
+     
+
+    if (response.status == 200) {
+      return response.data;
     } else {
       return false;
     }
@@ -106,6 +115,7 @@ export const GetProducts = async () => {
     return err.response;
   }
 };
+
 
 export const GetOrders = async () => {
   try {

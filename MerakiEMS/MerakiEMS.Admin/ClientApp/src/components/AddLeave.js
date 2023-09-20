@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect , useRef } from 'react'
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-// import "./css/AddEmployee.css"
 import { useState } from 'react';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,8 +12,10 @@ import "./css/AddLeave.css"
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Modal from 'react-bootstrap/Modal';
-import "./css/AddLeave.css"
+import "./css/AddLeave.css";
 import ShowLeavesUser from './ShowLeavesUser';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -26,12 +27,47 @@ const AddLeave = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const[description, setDescription]=useState('');
+  const [attendanceData, setAttendanceData] = useState([]);
+  const [selectedDate1, setSelectedDate1] = useState(null);
+  const [selectedDate2, setSelectedDate2] = useState(null);
+  const datePickerRef1 = useRef(null);
+  const datePickerRef2 = useRef(null);
 
 
 
-    const[description, setDescription]=useState('');
+  // Function to open the date picker when the icon is clicked
+  const handleIconClick1 = () => {
+    if (datePickerRef1.current) {
+      datePickerRef1.current.setOpen(true);
+    }
+  };
+
+  const handleIconClick2 = () => {
+    if (datePickerRef2.current) {
+      datePickerRef2.current.setOpen(true);
+    }
+  };
+
+
+  const fetchAttendanceData = async () => {
+    try {
+    const response = await fetch('https://localhost:7206/api/User/GetLeave');
+    const data = await response.json();
+    setAttendanceData(data);
+    
+    
+  } catch (error) {
+    console.error('Error fetching attendance data:', error);
+  }
+};
 
     const navigate = useNavigate();
+
+
+    const refreshShowLeavesUser = () => {
+      fetchAttendanceData(); // You can also update state or perform any other necessary action here.
+    };
     const handleSubmit = async (e)=>{
         e.preventDefault();
         const uID = localStorage.getItem('loginData');
@@ -54,6 +90,7 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
     if (result.data.isRequestSuccessful === true){
       
       toast.success("Request has been Added");
+      refreshShowLeavesUser();
       clear();
       
     }
@@ -78,41 +115,24 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
         setTo("");
         setDescription("");
       };
-      useEffect(() => {
-        // getRoles();
-      }, []);
-    //   const getRoles = ()=>{
-    //     axios.get("https://localhost:7206/api/User/UserRole")
-    //     .then((result)=>{
-    //       localStorage.setItem('RolesData', JSON.stringify(result.data));
-    //     })
-    //   }
-      // const getRoleNamesFromLocalStorage = () => {
-      //   const uID = localStorage.getItem('attendList');
-        
-      //   return uID ? JSON.parse(uID.userID) : [];
-        
-         
-      // };
+    
 
      
       useEffect(() => {
-        
-        // const storedRoleNames = getRoleNamesFromLocalStorage();
-        // setRoleNames(storedRoleNames);
-        
+ 
+        fetchAttendanceData();
       },[]);
   return (
 
 
-<div>
-    {/* <SideNavbar/>
-    <Profile/> */}
-    <ShowLeavesUser/>
-     <div>
-      <Button variant="secondary" className='secondary-btn-user' onClick={handleShow}>Add Leave</Button>{' '}
+      <div>
+      
 
+      <div>
+      <Button variant="secondary" className='secondary-btn-user' onClick={handleShow}>Add Leave</Button>{' '}
       </div>
+    <ShowLeavesUser refreshData={refreshShowLeavesUser}/>
+    
         <div className="addEmployee">
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -120,34 +140,54 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
            </Modal.Header>
            <Modal.Body>
              <Form onSubmit={handleSubmit}>
-                <Row className="mt-3">
-                <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>From (Date)</Form.Label>
-            <DatePicker
-            selected={from}
-            onChange={(date) => setFrom(date)}
-            dateFormat="yyyy-MM-dd" // Customize the date format as needed
-            required
-          />
+             <Row className="mt-3">
+      <Col>
+        <Form.Group controlId="formGridEmail1">
+          <Form.Label>From (Date)</Form.Label>
+
+            <div className="date-picker-container">
+              <DatePicker
+                selected={selectedDate1}
+                onChange={(date) => setSelectedDate1(date)}
+                dateFormat="yyyy-MM-dd"
+                required
+                className="date-picker-input"
+                ref={datePickerRef1}
+              />
+              <span className="date-picker-icon" onClick={handleIconClick1}>
+                <FontAwesomeIcon icon={faCalendar} />
+              </span>
+            </div>
+
         </Form.Group>
-      </Row>
-      <Row className="mt-3">
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>To (Date)</Form.Label>
-          <DatePicker
-            selected={to}
-            onChange={(date) => setTo(date)}
-            dateFormat="yyyy-MM-dd" // Customize the date format as needed
-            required
-          />
+      </Col>
+      <Col>
+      <Form.Group controlId="formGridEmail2">
+          <Form.Label>From (Date)</Form.Label>
+      
+            <div className="date-picker-container">
+              <DatePicker
+                selected={selectedDate2}
+                onChange={(date) => setSelectedDate2(date)}
+                dateFormat="yyyy-MM-dd"
+                required
+                className="date-picker-input"
+                ref={datePickerRef2}
+              />
+              <span className="date-picker-icon" onClick={handleIconClick2}>
+                <FontAwesomeIcon icon={faCalendar} />
+              </span>
+            </div>
+      
         </Form.Group>
-      </Row>
+      </Col>
+    </Row>
 
       <Row className="mt-3">
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>Description</Form.Label>
           <Form.Control
-            type="name"
+            as="textarea"
             placeholder="Enter Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -155,10 +195,7 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
           />
         </Form.Group>
       </Row>
-      <Form.Group className="mt-5" id="formGridCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
-      <Button variant="primary" type="submit" className='addBtn'>
+      <Button variant="primary" type="submit" className='addBtn' onClick={handleClose}>
         Submit
       </Button>
     </Form>
