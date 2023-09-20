@@ -2,12 +2,12 @@ import React from 'react'
 import Logo from '../images/logo-black.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './css/Home.css';
-import './css/SideNavbar.css'; // You can create this CSS file for custom styling
+import './css/SideNavbar.css';
 import {
 faUser,faTicketSimple,faFilePen,faRightFromBracket,faCalendarXmark}
 from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
-import ShowLeaves from "./ShowLeavesAdmin";
+
 
 export const SideNavbar = () => {
     var role = localStorage.getItem('loginData');
@@ -19,17 +19,10 @@ export const SideNavbar = () => {
         UserRole= "User";
      }
 
-    //  const clickedStyle = {
-    //     textDecoration: 'none',
-    //     color: 'white',
-    //     //background: '#0B2B50',
-    //   };
-    
-    //   const unclickedStyle = {
-    //     textDecoration: 'none',
-    //     // color: '#0B2B50',
-    //     background: 'white',
-    //   };
+  const handleLogout =()=>{
+    localStorage.clear();
+
+  }
   return (
     <div className="leftPanel">
           <img className="logo-image2" src={Logo} alt="Logo" />
@@ -89,7 +82,7 @@ export const SideNavbar = () => {
            
           </div>
           <div className='logout'>
-            <NavLink className="menu-links menu-logout" to="/login">
+            <NavLink className="menu-links menu-logout" to="/login" onClick={handleLogout}>
             
               <h5 className="link-text">
                 <FontAwesomeIcon

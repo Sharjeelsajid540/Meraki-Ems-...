@@ -11,7 +11,26 @@ export const fetchAttendanceData = async (data) => {
   try {
     const response = await axios.post(apiUrl + "api/User/UserAttendance", data);
     if (response.status == 200) {
-      console.log(response.data)
+      
+      
+            
+            localStorage.setItem('attendList', JSON.stringify(response.data));
+            
+            return response.data;
+          } 
+          else {
+            return false;
+          }
+     } catch (error) {
+    return error.response;
+  } 
+};
+
+export const fetchAllAttendanceData = async () => {
+  try {
+    const response = await axios.get(apiUrl + "api/User/AllUserAttendance");
+    if (response.status == 200) {
+      
       
             
             localStorage.setItem('attendList', JSON.stringify(response.data));
@@ -41,10 +60,11 @@ export const CheckInUser = async (data) => {
       }
      
       
-
+      localStorage.setItem('AttendanceID', JSON.stringify(response.data));
       
       return response.data;
     } else {
+      
       return false;
     }
   } catch (error) {
@@ -54,7 +74,7 @@ export const CheckInUser = async (data) => {
 
 
 
-/////////   CheckIn    ///////
+/////////   CheckOut    ///////
 export const CheckOutUser = async (data) => {
 
 try {

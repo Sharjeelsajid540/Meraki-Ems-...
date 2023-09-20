@@ -21,7 +21,7 @@ namespace MerakiEMS.Application.Bootstrap
         private static void AddAppServices(IServiceCollection services)
         {
             services.AddTransient<IUserAuthenticateService, UserAuthenticateService>();
-            services.AddTransient<IPostsService, PostsService>();
+            //services.AddTransient<IPostsService, PostsService>();
             //services.AddTransient<IProductService, ProductService>();
             //services.AddTransient<IOrderService, OrderService>();
 

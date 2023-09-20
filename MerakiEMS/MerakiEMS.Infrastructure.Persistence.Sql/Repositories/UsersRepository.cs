@@ -10,6 +10,7 @@ using System.Text;
 using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
+using System.Security.Cryptography;
 
 
 namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
@@ -198,9 +199,9 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             var response = await _context.UserAttendance.OrderByDescending(s=> s.CheckInTime).ToListAsync();
             return response;
         }
-        public async Task<AttendanceResponse> SingleAttendanceList(UserAttendanceRequest req)
+        public async Task<List<UserAttendance>> SingleAttendanceList(UserAttendanceRequest req)
         {
-            var res = new AttendanceResponse();
+            
             try
             {
                 var data = await _context.UserAttendance
@@ -208,23 +209,16 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                     .OrderByDescending(s => s.CheckInTime)
                     .ToListAsync();
 
-                var group = data.GroupBy(x => x.CreatedAt).ToList();
+                
 
-                res.GroupedAttendanceList = group.Select(grouping => new Attendance
-                {
-                    AttendanceDate = grouping.Key,
-                    TotalWorkingHours = TimeSpan.FromTicks(grouping.Sum(x => x.WorkingHours?.Ticks ?? 0)),
-                    AttendanceList = grouping.ToList()
-                }).ToList();
-
-                return res;
+                return data;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
 
-            return res;
+            return null;
         }
 
 
@@ -312,28 +306,47 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 var check = _context.UserAttendance.Where(s => s.UserID == req.UserID).OrderByDescending(s => s.CheckInTime).FirstOrDefault();
                 if (check == null || check.CheckOutTime != null)
                 {
-                    var name = _context.User.Where
-                    (s => s.ID == req.UserID).FirstOrDefault();
+                    var date = DateTime.Now;
+                    var dateCheck = _context.UserAttendance.Where(s => s.UserID == req.UserID && s.CreatedAt==date.Date).OrderByDescending(s => s.CreatedAt).FirstOrDefault();
 
-                    attendance.CheckInTime = DateTime.Now;
-                    attendance.CreatedAt = attendance.CheckInTime?.Date;
-                    attendance.UserID = req.UserID;
-                    attendance.Name = name.Name;
+                    if (dateCheck == null)
+                    {
+                        var name = _context.User.Where
+                        (s => s.ID == req.UserID).FirstOrDefault();
 
-                    await _context.UserAttendance.AddAsync(attendance);
-                    await _context.SaveChangesAsync();
-                    var AId = _context.UserAttendance.Where
-                        (s => s.UserID == req.UserID)
-                        .OrderByDescending(s => s.ID).FirstOrDefault();
-                    response.AttendanceID = AId.ID;
+                        attendance.CheckInTime = DateTime.Now;
+                        attendance.CreatedAt = attendance.CheckInTime?.Date;
+                        attendance.UserID = req.UserID;
+                        attendance.Name = name.Name;
 
-                    return response;
+                        await _context.UserAttendance.AddAsync(attendance);
+                        await _context.SaveChangesAsync();
+                        var AId = _context.UserAttendance.Where
+                            (s => s.UserID == req.UserID)
+                            .OrderByDescending(s => s.ID).FirstOrDefault();
+                        response.AttendanceID = AId.ID;
+
+                        return response;
+                    }
+                    else
+                    {
+                        var AId = _context.UserAttendance.Where
+                            (s => s.UserID == req.UserID)
+                            .OrderByDescending(s => s.ID).FirstOrDefault();
+                        response.AttendanceID = AId.ID;
+                        response.SuccessMessage = "Already CheckedIN!";
+                        return response;
+                    }
 
                 }
                 else
                 {
-                    
-                    return null;
+                    response.SuccessMessage = "Already CheckedIN!";
+                    var AId = _context.UserAttendance.Where
+                            (s => s.UserID == req.UserID)
+                            .OrderByDescending(s => s.ID).FirstOrDefault();
+                    response.AttendanceID = AId.ID;
+                    return response;
                 }
                 
             }
@@ -351,18 +364,27 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 
                var CheckIn = _context.UserAttendance.Where
                     (s => s.ID == req.AttendanceID).FirstOrDefault();
-            CheckIn.WorkingHours = DateTime.Now - CheckIn.CheckInTime;
-            CheckIn.CheckOutTime = DateTime.Now;
+            if(CheckIn.CheckOutTime == null)
+            {
+                CheckIn.WorkingHours = DateTime.Now - CheckIn.CheckInTime;
+                CheckIn.CheckOutTime = DateTime.Now;
+
+
+
+                await _context.SaveChangesAsync();
+                return CheckIn;
+            }
+            else
+            {
+                return null;
+            }
             
+            
+            
+
+
             
            
-            await _context.SaveChangesAsync();
-            
-            
-
-
-            
-            return CheckIn;
 
         }
 

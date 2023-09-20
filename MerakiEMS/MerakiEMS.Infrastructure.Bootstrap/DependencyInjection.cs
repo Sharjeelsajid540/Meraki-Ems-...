@@ -13,12 +13,12 @@ namespace MerakiEMS.Infrastructure.Bootstrap
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
            /* services.AddDbContext<UsersContext>(options => options.UseSqlServer(configuration.GetConnectionString("MerakiEMSDb")));*/
-            services.AddDbContext<PostsContext>(options => options.UseSqlServer(configuration.GetConnectionString("MerakiEMSDb")));
+           
             services.AddDbContext<UserContext>(options => options.UseSqlServer(configuration.GetConnectionString("MerakiEMSDb")));
 
             //services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUsersRepository, UsersRepository>();
-            services.AddTransient<IPostRepository, PostRepository>();
+           
             //services.AddTransient<IOrderRepository, OrderRepository>();
 
 

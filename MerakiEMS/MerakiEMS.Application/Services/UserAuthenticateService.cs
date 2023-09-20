@@ -226,7 +226,7 @@ namespace MerakiEMS.Application.Services
                     response.ID = result.ID;
                     response.UserID = result.UserID;
                     response.CheckInTime = result.CheckInTime?.ToString("HH:mm:ss");
-                    response.CreatedAt = result.CreatedAt?.ToString("yyyy-MM-dd");
+                    response.CreatedAt = result.CreatedAt?.ToString("MM-dd-yyyy");
                     response.CheckOutTime = result.CheckOutTime?.ToString("HH:mm:ss");
                     response.WorkingHours = result.WorkingHours?.ToString(@"hh\:mm\:ss");
                     responses.Add(response);
@@ -285,36 +285,34 @@ namespace MerakiEMS.Application.Services
 
 
 
-        public async Task<AttendanceResponse2> GetSingleAttendanceList(UserAttendanceRequest req)
+        
+        public async Task<List<AttendanceListResponse>> GetSingleAttendanceList(UserAttendanceRequest req)
         {
             var res = await _usersRepository.SingleAttendanceList(req);
 
+            List<AttendanceListResponse> responses = new List<AttendanceListResponse>();
             if (res == null)
             {
                 return null;
             }
             else
             {
-                var formattedResponse = new AttendanceResponse2
-                {
-                    GroupedAttendanceList = res.GroupedAttendanceList.Select(result => new Attendance2
-                    {
-                        AttendanceDate = result.AttendanceDate?.ToString("yyyy-MM-dd"),
-                        TotalWorkingHours = result.TotalWorkingHours.ToString(@"hh\:mm\:ss"),
-                        AttendanceList = result.AttendanceList.Select(list => new AttendanceListResponse
-                        {
-                            Name = list.Name,
-                            ID = list.ID,
-                            UserID = list.UserID,
-                            CheckInTime = list.CheckInTime?.ToString("HH:mm:ss"),
-                            CreatedAt = list.CreatedAt?.ToString("yyyy-MM-dd"),
-                            CheckOutTime = list.CheckOutTime?.ToString("HH:mm:ss"),
-                            WorkingHours = list.WorkingHours?.ToString(@"hh\:mm\:ss")
-                        }).ToList()
-                    }).ToList()
-                };
 
-                return formattedResponse;
+                foreach (var result in res)
+                {
+                    var response = new AttendanceListResponse();
+                    response.Name = result.Name;
+                    response.ID = result.ID;
+                    response.UserID = result.UserID;
+                    response.CheckInTime = result.CheckInTime?.ToString("HH:mm:ss");
+                    response.CreatedAt = result.CreatedAt?.ToString("MM-dd-yyyy");
+                    response.CheckOutTime = result.CheckOutTime?.ToString("HH:mm:ss");
+                    response.WorkingHours = result.WorkingHours?.ToString(@"hh\:mm\:ss");
+                    responses.Add(response);
+
+                }
+                return responses;
+
             }
         }
 
@@ -359,9 +357,20 @@ namespace MerakiEMS.Application.Services
             var res = await _usersRepository.InsertAttendance(req);
             if (res != null)
             {
-                response.AttendanceID = res.AttendanceID;
-                response.SuccessMessage = "CheckIn Successfull";
-                response.IsRequestSuccessfull = "true";
+                if(res.SuccessMessage == "Already CheckedIN!")
+                {
+                    response.SuccessMessage = res.SuccessMessage;
+                    response.IsRequestSuccessfull = "false";
+                    response.AttendanceID = res.AttendanceID;
+                    
+                }
+                else
+                {
+                    response.AttendanceID = res.AttendanceID;
+                    response.SuccessMessage = "CheckIn Successfull";
+                    response.IsRequestSuccessfull = "true";
+                }
+               
             }
             else
             {
@@ -420,7 +429,7 @@ namespace MerakiEMS.Application.Services
                 else
                 {
                     response.IsRequestSuccessfull = "false";
-                    response.SuccessMessage = "CheckOut Failed!";
+                    response.SuccessMessage = "Already CheckedOut!";
                 }
                 return response;
             }
