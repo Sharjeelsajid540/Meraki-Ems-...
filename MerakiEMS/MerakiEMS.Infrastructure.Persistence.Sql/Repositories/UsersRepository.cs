@@ -124,6 +124,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             Leave leave = new Leave
             {   ID =lev.ID,
                 UserID = lev.UserID,
+                Name = lev.Name,
                 From = lev.From,
                 To = lev.To,
                 Description = lev.Description,

@@ -10,6 +10,7 @@ namespace MerakiEMS.Domain.Entities.Contracts.Response
     {
         public int ID { get; set; }
 
+        public string? Name { get; set; }
         public int UserID { get; set; }
 
         public string? From { get; set; }

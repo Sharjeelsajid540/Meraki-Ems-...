@@ -33,8 +33,13 @@ const AddLeave = () => {
   const [selectedDate2, setSelectedDate2] = useState(null);
   const datePickerRef1 = useRef(null);
   const datePickerRef2 = useRef(null);
+  const [isLeaveAdded, setIsLeaveAdded] = useState(false);
 
-
+  // Retrieve the stored current page number from localStorage
+  const storedPageNumber = localStorage.getItem('currentPage');
+  const [currentPage, setCurrentPage] = useState(
+    storedPageNumber ? parseInt(storedPageNumber, 10) : 1
+  );
 
   // Function to open the date picker when the icon is clicked
   const handleIconClick1 = () => {
@@ -68,13 +73,18 @@ const AddLeave = () => {
     const refreshShowLeavesUser = () => {
       fetchAttendanceData(); // You can also update state or perform any other necessary action here.
     };
+
+    var role = localStorage.getItem('loginData');
+    var roleData = JSON.parse(role);
+
     const handleSubmit = async (e)=>{
         e.preventDefault();
+        localStorage.setItem('currentPage', currentPage);
         const uID = localStorage.getItem('loginData');
         const usID = JSON.parse(uID);
         console.log(usID.id);
         const data={
-            
+            name:roleData.name,
             userID:usID.id,
             from:from,
             to:to,
@@ -91,6 +101,7 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
       
       toast.success("Request has been Added");
       refreshShowLeavesUser();
+      setIsLeaveAdded(true);
       clear();
       
     }
@@ -109,6 +120,8 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
   });
     }
 
+    localStorage.setItem('currentPage', currentPage);
+
     const clear = () => {
         
         setFrom("");
@@ -121,6 +134,7 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
       useEffect(() => {
  
         fetchAttendanceData();
+     
       },[]);
   return (
 
@@ -129,7 +143,7 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
       
 
       <div>
-      <Button variant="secondary" className='secondary-btn-user' onClick={handleShow}>Add Leave</Button>{' '}
+      <Button variant="secondary" className='secondary-btn-user' disabled={isLeaveAdded} onClick={handleShow}>Add Leave</Button>{' '}
       </div>
     <ShowLeavesUser refreshData={refreshShowLeavesUser}/>
     

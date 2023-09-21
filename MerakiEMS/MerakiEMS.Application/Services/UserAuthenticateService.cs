@@ -256,6 +256,7 @@ namespace MerakiEMS.Application.Services
                 {
                     var response = new LeaveResponse();
                     response.ID=result.ID;
+                    response.Name=result.Name;
                     response.UserID = result.UserID;
                     response.Status = result.Status;
                     response.Comments = result.Comments;
