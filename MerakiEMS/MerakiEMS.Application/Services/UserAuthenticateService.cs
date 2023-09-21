@@ -255,14 +255,17 @@ namespace MerakiEMS.Application.Services
                 foreach (var result in res)
                 {
                     var response = new LeaveResponse();
+                    response.ID=result.ID;
+                    response.Name=result.Name;
                     response.UserID = result.UserID;
                     response.Status = result.Status;
+                    response.Comments = result.Comments;
                     response.Description = result.Description;
                     response.From = result.From?.ToString("yyyy-MM-dd");
                     response.To = result.To?.ToString("yyyy-MM-dd");
                     response.AdminRequestViewer = result.AdminRequestViewer;
-
                     response.CreatedAt = result.CreatedAt?.ToString("yyyy-MM-dd");
+                    response.UpdatedAt = result.UpdatedAt?.ToString("yyyy-MM-dd");
 
                     responses.Add(response);
 

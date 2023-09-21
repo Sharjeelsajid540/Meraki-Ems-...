@@ -1,9 +1,28 @@
 .secondary-btn-user{
-    margin-bottom:  0;
-    
-    margin-left: 91%;
-    margin-top: -40% !important;
+    margin-left: 88% !important;
     background-color:#0B2B50 !important;
     color: white;
     width: 10%;
 }
+.date-picker-input{
+    width: 250%;
+    height: 40px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: rgb(217, 218, 219);
+    
+}
+.select-date{
+    width: 225%;
+}
+.date-picker-icon {
+    position: absolute;
+    top: 45% !important;
+    right: 10px; /* Adjust the right position as needed */
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  .date-picker-container {
+    position: relative;
+    width: 100%;
+  }

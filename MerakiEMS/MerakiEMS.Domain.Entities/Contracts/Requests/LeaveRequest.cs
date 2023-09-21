@@ -8,9 +8,11 @@ namespace MerakiEMS.Domain.Entities.Contracts.Requests
 {
     public class LeaveRequest
     {
-
+        public int ID { get; set; }
 
         public int UserID { get; set; }
+
+        public string? Name { get; set; }
 
         public DateTime? From { get; set; }
 
@@ -24,7 +26,8 @@ namespace MerakiEMS.Domain.Entities.Contracts.Requests
 
         public string? Status { get; set; }
 
-
+        public string? Comments { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
 
 
