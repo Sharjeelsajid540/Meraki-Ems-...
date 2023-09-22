@@ -2,6 +2,8 @@ import React, { useState , useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import "./css/Respond.css"
+import axios from "axios";
 function LeavesList({ refreshData }) {
   const [attendanceData, setAttendanceData] = useState([]);
   const [goToPage, setGoToPage] = useState('');
@@ -9,18 +11,31 @@ function LeavesList({ refreshData }) {
   const [itemsPerPage] = useState(5);
   const [searchFilter, setSearchFilter] = useState(''); // State for the search filter
   const [filteredData, setFilteredData] = useState([]); // New state for filtered data
+  
+  
   const fetchAttendanceData = async () => {
-    try { 
-      const response = await fetch('https://localhost:7206/api/User/GetLeave');
-      const data = await response.json();
+    try {
+      var role = localStorage.getItem('loginData');
+      var roleData = JSON.parse(role);
+      var uid = roleData.id;
+  
+      const response = await axios.post(
+        'https://localhost:7206/api/User/GetAllLeaves' ,{
+        
+            id: uid 
+           }
+);     console.log(response);
+      const data = response.data;
+       // Assuming your data is returned as JSON
       console.log(data);
+  
       localStorage.setItem('LeaveData', JSON.stringify(data));
       setAttendanceData(data);
-    } 
-    catch (error) {
+    } catch (error) {
       console.error('Error fetching attendance data:', error);
     }
   };
+  
   useEffect(() => {
     fetchAttendanceData();
   }, [refreshData]);
@@ -74,7 +89,7 @@ function LeavesList({ refreshData }) {
             <th>To (Date)</th>
             <th>Description</th>
             <th>Created At</th>
-            <th>Request Viewer</th>
+            <th>Request Reviewer</th>
             <th>Status</th>
             <th>Comments</th>
             <th>Updated At</th>         

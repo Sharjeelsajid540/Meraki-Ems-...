@@ -35,6 +35,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Interfaces
         Task<List<Leave>> GetLeave();
         Task<List<Leave>> GetAllLeaves(int id);
         Task<List<ManagerListResponse>> MangerList();
+        Task<List<Leave>> GetAllLeaves(UserID user);
     }
     
 }
