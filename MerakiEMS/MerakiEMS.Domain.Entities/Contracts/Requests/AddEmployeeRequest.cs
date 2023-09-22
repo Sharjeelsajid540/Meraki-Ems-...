@@ -12,5 +12,12 @@ namespace MerakiEMS.Application.Contracts.Requests
         public string Password { get; set; }
         public int UserID { get; set; }
         public int RoleID { get; set; }
+        public string Email { get; set; }
+        public string CNIC { get; set; }
+        public string ContactNo { get; set; }
+        public string EContactNo { get; set; }
+        public int ManagerID { get; set; }
+        public string Address { get; set; }
+
     }
 }

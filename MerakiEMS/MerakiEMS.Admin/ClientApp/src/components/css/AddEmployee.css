@@ -1,15 +1,27 @@
-.addBtn{
-    background-color: #0B2B50 !important;
-    width: 100%;
-    margin-top: 30px;
-    font-weight: 600;
+.addBtn {
+  background-color: #0b2b50 !important;
+  width: 100%;
+  margin-top: 30px;
+  font-weight: 600;
 }
-.secondary-btn{
-    margin-bottom:  0px;
-    font-size: 1vw;
-    margin-left: 91%;
-    margin-top: -5% !important;
-    background-color:#0B2B50 !important;
-    color: white;
-    width: 12%;
+.secondary-btn {
+  margin-bottom: 0px;
+  font-size: 1vw;
+  margin-left: 91%;
+  margin-top: -5% !important;
+  background-color: #0b2b50 !important;
+  color: white;
+  width: 12%;
+}
+.form-label-addUser {
+  margin-right: 0px;
+}
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: -5px;
+  padding: 0px;
+}
+.form-control {
+  margin-bottom: 12px;
 }

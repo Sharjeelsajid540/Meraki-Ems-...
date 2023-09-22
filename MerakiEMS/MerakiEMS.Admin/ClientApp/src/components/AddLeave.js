@@ -17,13 +17,9 @@ import ShowLeavesUser from './ShowLeavesUser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
-
-
 const AddLeave = () => {
-
-
-  const[to, setTo]=useState(new Date());
-  const[from, setFrom]=useState(new Date());
+  const [to, setTo] = useState(new Date());
+  const [from, setFrom] = useState(new Date());
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

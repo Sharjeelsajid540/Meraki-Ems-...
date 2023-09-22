@@ -71,6 +71,12 @@ namespace MerakiEMS.Api.Controllers
             var response = await _authenticateService.GetRoleList();
             return response;
         }
+        [HttpGet]
+        [Route("ManagerList")]
+        public async Task<List<ManagerListResponse>> ManagerList(){
+            var response = await _authenticateService.GetManagerList();
+            return response;
+        }
         [HttpPost]
         [Route("UserCheckIn")]
         public async Task<CheckInResponse> AddUserAttendance(CheckInRequest req)
@@ -101,8 +107,15 @@ namespace MerakiEMS.Api.Controllers
             return response;
         }
         [HttpPost]
+        [Route("GetUser")]
+        public async Task<GetUsersResponse> GetUser(int id)
+        {
+            var response = await _authenticateService.GetUser(id);
+            return response;
+        }
+        [HttpPost]
         [Route("UpdateUser")]
-        public async Task<UpdateUserResponse> UpdateUser(User user)
+        public async Task<UpdateUserResponse> UpdateUser(UpdateUserRequest user)
         {
             var response = await _authenticateService.UpdateUser(user);
             return response;
