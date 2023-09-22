@@ -10,6 +10,7 @@ namespace MerakiEMS.Domain.Entities.Contracts.Response
     {
         public int ID { get; set; }
 
+        public string? Name { get; set; }
         public int UserID { get; set; }
 
         public string? From { get; set; }
@@ -22,6 +23,10 @@ namespace MerakiEMS.Domain.Entities.Contracts.Response
 
         public string? AdminRequestViewer { get; set; }
 
+        public string? Comments { get; set; }
+
         public string Status { get; set; }
+
+        public string? UpdatedAt { get; set; }
     }
 }

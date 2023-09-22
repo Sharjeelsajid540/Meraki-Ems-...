@@ -41,38 +41,41 @@ export const SideNavbar = () => {
           </h5>
         </NavLink>
 
-        {/* <NavLink className="menu-links" to="/leaves" activeclassname="is-active">
-              <h5 className="link-text">
-                <FontAwesomeIcon
-                  icon={faCalendarXmark}
-                  size="xs"
-                  className="menu-icons"
-                />
-              
-              {UserRole === "Admin" ?  "Leaves": "Leaves"}
-      
-              </h5>
-            </NavLink>
-            <NavLink className="menu-links" to="/tickets">
-              <h5 className="link-text">
-                <FontAwesomeIcon
-                  icon={faTicketSimple}
-                  size="xs"
-                  className="menu-icons"
-                />
-               {UserRole==="Admin"?"Raise Ticket":"Tickets"}
-              </h5>
-            </NavLink>
-            <NavLink className="menu-links" to="/feedback">
-              <h5 className="link-text">
-                <FontAwesomeIcon
-                  icon={faFilePen}
-                  size="xs"
-                  className="menu-icons"
-                />
-                {UserRole==="Admin"?"Feedback":"Give Feedback"}
-              </h5>
-            </NavLink> */}
+        <NavLink
+          className="menu-links"
+          to="/leaves"
+          activeclassname="is-active"
+        >
+          <h5 className="link-text">
+            <FontAwesomeIcon
+              icon={faCalendarXmark}
+              size="xs"
+              className="menu-icons"
+            />
+
+            {UserRole === "Admin" ? "Leaves" : "Leaves"}
+          </h5>
+        </NavLink>
+        {/* <NavLink className="menu-links" to="/tickets">
+          <h5 className="link-text">
+            <FontAwesomeIcon
+              icon={faTicketSimple}
+              size="xs"
+              className="menu-icons"
+            />
+            {UserRole === "Admin" ? "Raise Ticket" : "Tickets"}
+          </h5>
+        </NavLink>
+        <NavLink className="menu-links" to="/feedback">
+          <h5 className="link-text">
+            <FontAwesomeIcon
+              icon={faFilePen}
+              size="xs"
+              className="menu-icons"
+            />
+            {UserRole === "Admin" ? "Feedback" : "Give Feedback"}
+          </h5>
+        </NavLink> */}
         <NavLink
           className="menu-links"
           to={UserRole === "Admin" ? "/employees" : "/profile"}

@@ -156,10 +156,11 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             var CheckIn = _context.Leave.Where
             (s => s.ID == req.ID).FirstOrDefault();
 
-            CheckIn.UserID = req.UserID;
+            /*CheckIn.UserID = req.UserID;*/
             CheckIn.AdminRequestViewer = req.AdminRequestViewer;
             CheckIn.Status = req.Status;
             CheckIn.Comments = req.Comments;
+            CheckIn.UpdatedAt = DateTime.Now;
 
 
             await _context.SaveChangesAsync(); // Add the Leave entity to the context
@@ -171,13 +172,16 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
         public async Task<Leave> RequestLeave(LeaveRequest lev)
         {
             Leave leave = new Leave
-            {
+            {   ID =lev.ID,
                 UserID = lev.UserID,
+                Name = lev.Name,
                 From = lev.From,
                 To = lev.To,
                 Description = lev.Description,
+                Comments = lev.Comments,
+                UpdatedAt = lev.UpdatedAt,
                 CreatedAt = DateTime.Now,
-            AdminRequestViewer = "Ali",
+            AdminRequestViewer = "Pending",
             Status = "Pending"
             };
 
