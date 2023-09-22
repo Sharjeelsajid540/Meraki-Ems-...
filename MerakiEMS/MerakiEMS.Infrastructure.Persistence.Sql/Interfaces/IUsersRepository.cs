@@ -33,7 +33,6 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Interfaces
         Task<User> UpdateUser(UpdateUserRequest user);
         Task<User> DeleteUser(int id);
         Task<List<Leave>> GetLeave();
-        Task<List<Leave>> GetAllLeaves(int id);
         Task<List<ManagerListResponse>> MangerList();
         Task<List<Leave>> GetAllLeaves(UserID user);
     }
