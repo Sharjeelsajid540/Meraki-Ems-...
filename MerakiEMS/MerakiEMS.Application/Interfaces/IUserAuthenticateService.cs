@@ -29,6 +29,6 @@ namespace MerakiEMS.Application.Interfaces
         Task<UpdateUserResponse> UpdateUser(User user);
         Task<UpdateUserResponse> DeleteUser(int id);
         Task<List<LeaveResponse>> GetLeave();
-        Task<List<Leave>> GetAllLeaves(int id);
+        Task<List<LeaveResponse>> GetAllLeaves(UserID user);
     }
 }

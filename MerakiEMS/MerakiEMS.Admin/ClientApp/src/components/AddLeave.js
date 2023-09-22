@@ -22,8 +22,8 @@ import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 const AddLeave = () => {
 
 
-  const[to, setTo]=useState(new Date());
-  const[from, setFrom]=useState(new Date());
+  const[to, setTo]=useState();
+  const[from, setFrom]=useState();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -31,8 +31,6 @@ const AddLeave = () => {
   const [attendanceData, setAttendanceData] = useState([]);
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
-  const datePickerRef1 = useRef(null);
-  const datePickerRef2 = useRef(null);
   const [isLeaveAdded, setIsLeaveAdded] = useState(false);
 
   // Retrieve the stored current page number from localStorage
@@ -43,15 +41,11 @@ const AddLeave = () => {
 
   // Function to open the date picker when the icon is clicked
   const handleIconClick1 = () => {
-    if (datePickerRef1.current) {
-      datePickerRef1.current.setOpen(true);
-    }
+    setShow(true); // Show the modal containing the date picker
   };
 
   const handleIconClick2 = () => {
-    if (datePickerRef2.current) {
-      datePickerRef2.current.setOpen(true);
-    }
+    setShow(true); // Show the modal containing the date picker
   };
 
 
@@ -160,14 +154,13 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
           <Form.Label>From (Date)</Form.Label>
 
             <div className="date-picker-container">
-              <DatePicker
-                selected={selectedDate1}
-                onChange={(date) => setSelectedDate1(date)}
-                dateFormat="yyyy-MM-dd"
-                required
-                className="date-picker-input"
-                ref={datePickerRef1}
-              />
+            <DatePicker
+              selected={from}
+              onChange={(date) => setFrom(date)}
+              dateFormat="yyyy-MM-dd"
+              className="date-picker-input"
+              
+            />
               <span className="date-picker-icon" onClick={handleIconClick1}>
                 <FontAwesomeIcon icon={faCalendar} />
               </span>
@@ -177,17 +170,15 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
       </Col>
       <Col>
       <Form.Group controlId="formGridEmail2">
-          <Form.Label>From (Date)</Form.Label>
+          <Form.Label >From (Date)</Form.Label>
       
             <div className="date-picker-container">
-              <DatePicker
-                selected={selectedDate2}
-                onChange={(date) => setSelectedDate2(date)}
-                dateFormat="yyyy-MM-dd"
-                required
-                className="date-picker-input"
-                ref={datePickerRef2}
-              />
+            <DatePicker
+              selected={to}
+              onChange={(date) => setTo(date)}
+              dateFormat="yyyy-MM-dd"
+              className="date-picker-input"
+            />
               <span className="date-picker-icon" onClick={handleIconClick2}>
                 <FontAwesomeIcon icon={faCalendar} />
               </span>

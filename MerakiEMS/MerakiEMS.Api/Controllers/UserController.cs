@@ -100,13 +100,7 @@ namespace MerakiEMS.Api.Controllers
             var response = await _authenticateService.GetUsers();
             return response;
         }
-        [HttpPost]
-        [Route("UpdateUser")]
-        public async Task<UpdateUserResponse> UpdateUser(User user)
-        {
-            var response = await _authenticateService.UpdateUser(user);
-            return response;
-        }
+     
         [HttpDelete]
         [Route("DeleteUser")]
         
@@ -123,10 +117,17 @@ namespace MerakiEMS.Api.Controllers
             return response;
         }
         [HttpPost]
-        [Route("GetAllLeaves")]
-        public async Task<List<Leave>> GetAllLeaves(int id)
+        [Route("UpdateUser")]
+        public async Task<UpdateUserResponse> UpdateUser(User user)
         {
-            var response = await _authenticateService.GetAllLeaves(id);
+            var response = await _authenticateService.UpdateUser(user);
+            return response;
+        }
+        [HttpPost]
+        [Route("GetAllLeaves")]
+        public async Task<List<LeaveResponse>> GetAllLeaves(UserID user)
+        {
+            var response = await _authenticateService.GetAllLeaves(user);
             return response;
         }
     }
