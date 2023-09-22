@@ -49,31 +49,81 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
           
             foreach (var u in user)
             {
-                var userRole =  _context.UserRole.Where(s => s.UserID == u.ID).FirstOrDefault();
+                var userRoleid =  _context.UserRole.Where(s => s.UserID == u.ID).FirstOrDefault();
+                var userRole = _context.Role.Where(s => s.ID == userRoleid.RoleID).FirstOrDefault();
+
+                var manager =  _context.User.Where(s => s.ID == u.ManagerID).FirstOrDefault();
+
                 var response = new GetUsersResponse();
                 response.UserID = u.ID;
                 response.Name = u.Name;
-                response.Password = u.Password;
-                response.Role = userRole.RoleID;
+                response.CNIC = u.CNIC;
+                response.Address = u.Address;
+                response.ContactNo = u.ContactNo;
+                response.Email = u.Email;
+                response.EContactNo = u.EContactNo;
+                response.Manager = manager.Name;
+                response.ManagerID = manager.ManagerID;
+                response.Role = userRole.RoleName;
+                response.RoleID = userRole.ID;
                 users.Add(response);
             }
             return users;
         }
+        public async Task<GetUsersResponse> GetUser(int id)
+        {
+            
+            //User user = new User();
+            var user = await _context.User.Where(s => s.ID == id).FirstOrDefaultAsync();
 
-        public async Task<User> UpdateUser(User user)
+            
+                var userRoleid = _context.UserRole.Where(s => s.UserID == user.ID).FirstOrDefault();
+                var userRole = _context.Role.Where(s => s.ID == userRoleid.RoleID).FirstOrDefault();
+
+                var manager = _context.User.Where(s => s.ID == user.ManagerID).FirstOrDefault();
+
+                var response = new GetUsersResponse();
+                response.UserID = user.ID;
+                response.Name = user.Name;
+                response.CNIC = user.CNIC;
+                response.Address = user.Address;
+                response.ContactNo = user.ContactNo;
+                response.Email = user.Email;
+                response.EContactNo = user.EContactNo;
+                response.Manager = manager.Name;
+                response.ManagerID = manager.ManagerID;
+                response.Role = userRole.RoleName;
+                response.RoleID = userRole.ID;
+                
+            
+            return response;
+        }
+
+        public async Task<User> UpdateUser(UpdateUserRequest user)
         {
             try
             {
 
             
             var res = await _context.User.Where(s => s.ID == user.ID).FirstOrDefaultAsync();
-            
+
+                res.CNIC = user.CNIC;
                 res.Name = user.Name;
-                res.Password = user.Password;
+                res.Email = user.Email;
+                res.EContactNo = user.EContactNo;
+                res.ContactNo = user.ContactNo;
+                res.Address = user.Address;
+                res.ManagerID = user.ManagerID;
+                
 
             _context.User.Update(res);
             await _context.SaveChangesAsync();
-            return res;
+
+                var urole = await _context.UserRole.Where(s => s.UserID == user.ID).FirstOrDefaultAsync();
+                urole.RoleID = user.RoleID;
+                _context.UserRole.Update(urole);
+                 await _context.SaveChangesAsync();
+                return res;
             }
             catch (Exception ex) {
                 throw ex;
@@ -154,8 +204,15 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             UserRole role = new UserRole();
             user.Name = req.Name;
             user.Password = req.Password;
+            user.Email = req.Email;
+            user.Address = req.Address;
+            user.CNIC = req.CNIC;
+            user.ContactNo = req.ContactNo;
+            user.EContactNo = req.EContactNo;
+            user.ManagerID = req.ManagerID;
+            
             var check = await _context.User
-               .Where(s => s.Name == user.Name && s.Password == user.Password).FirstOrDefaultAsync();
+               .Where(s => s.Name == user.Name).FirstOrDefaultAsync();
             if(check == null)
             {
                 _context.User.Add(user);
@@ -189,6 +246,26 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
            
             var response = await _context.Role.ToListAsync();
             return response;
+        }
+       public async Task<List<ManagerListResponse>> MangerList()
+        {
+            var list = new List<ManagerListResponse>();
+            var response = await _context.UserRole.ToListAsync();
+            foreach ( var item in response)
+            {
+                if(item.RoleID == 1)
+                {
+                    var name = await _context.User.Where(s => s.ID == item.UserID).FirstOrDefaultAsync();
+                    ManagerListResponse manager = new ManagerListResponse();
+                    manager.ManagerID = item.UserID;
+                    manager.ManagerName = name.Name;
+                    list.Add(manager);
+
+                }
+
+
+            }
+            return list;
         }
         public async Task<List<UserAttendance>> AttendanceList()
         {

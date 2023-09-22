@@ -1,69 +1,16 @@
 import axios from "axios";
 const apiUrl = "https://localhost:7206/";
 
-
-
 /////////   Attendance List    ///////
-
 
 export const fetchAttendanceData = async (data) => {
   try {
     const response = await axios.post(apiUrl + "api/User/UserAttendance", data);
     if (response.status == 200) {
-      
-      
-            
-            localStorage.setItem('attendList', JSON.stringify(response.data));
-            
-            return response.data;
-          } 
-          else {
-            return false;
-          }
-     } catch (error) {
-    return error.response;
-  } 
-};
+      localStorage.setItem("attendList", JSON.stringify(response.data));
 
-export const fetchAllAttendanceData = async () => {
-  try {
-    const response = await axios.get(apiUrl + "api/User/AllUserAttendance");
-    if (response.status == 200) {
-      
-      
-            
-            localStorage.setItem('attendList', JSON.stringify(response.data));
-            
-            return response.data;
-          } 
-          else {
-            return false;
-          }
-     } catch (error) {
-    return error.response;
-  } 
-};
-
-
-
-/////////   CheckIn    ///////
-
-
-export const CheckInUser = async (data) => {
-  try {
-    const response = await axios.post(apiUrl + 'api/User/UserCheckIn', data);
-
-    if (response.status === 200) {
-      if(response.data.isRequestSuccessfull == "true"){
-        localStorage.setItem('AttendanceID', JSON.stringify(response.data));
-      }
-     
-      
-      localStorage.setItem('AttendanceID', JSON.stringify(response.data));
-      
       return response.data;
     } else {
-      
       return false;
     }
   } catch (error) {
@@ -71,29 +18,125 @@ export const CheckInUser = async (data) => {
   }
 };
 
+export const fetchAllAttendanceData = async () => {
+  try {
+    const response = await axios.get(apiUrl + "api/User/AllUserAttendance");
+    if (response.status == 200) {
+      localStorage.setItem("attendList", JSON.stringify(response.data));
 
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+/////////   CheckIn    ///////
+
+export const CheckInUser = async (data) => {
+  try {
+    const response = await axios.post(apiUrl + "api/User/UserCheckIn", data);
+
+    if (response.status === 200) {
+      if (response.data.isRequestSuccessfull == "true") {
+        localStorage.setItem("AttendanceID", JSON.stringify(response.data));
+      }
+
+      localStorage.setItem("AttendanceID", JSON.stringify(response.data));
+
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
 
 /////////   CheckOut    ///////
 export const CheckOutUser = async (data) => {
+  try {
+    const response = await axios.put(apiUrl + "api/User/UserCheckOut", data);
+    if (response.status === 200) {
+      // Check-out successful, update the state or perform any necessary actions
 
-try {
-  const response = await axios.put(
-    apiUrl + 'api/User/UserCheckOut',
-    data
-  );
-  if (response.status === 200) {
-    // Check-out successful, update the state or perform any necessary actions
-    
-   return response.data;
-    
-
-  } else {
-    return false;
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
   }
-} catch (error) {
-  return error.response;
-}
-}
+};
+
+///////////   Fetch All Users   //////////
+
+export const fetchAllUsersData = async () => {
+  try {
+    const response = await axios.get(apiUrl + "api/User/GetUsers");
+    if (response.status == 200) {
+      localStorage.setItem("usersList", JSON.stringify(response.data));
+
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+///////////   Fetch All Users   //////////
+
+export const fetchUserData = async (id) => {
+  try {
+    const response = await axios.post(apiUrl + `api/User/GetUser?id=${id}`);
+    if (response.status == 200) {
+      localStorage.setItem("userData", JSON.stringify(response.data));
+
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+///////////   Update User   //////////
+
+export const updateUsersData = async (data) => {
+  try {
+    const response = await axios.post(apiUrl + "api/User/UpdateUser", data);
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+///////////   Delete User   //////////
+
+export const deleteUser = async (id) => {
+  try {
+    const response = await axios.delete(
+      apiUrl + `api/User/DeleteUser?id=${id}`
+    );
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
 // export const userLogin = async (email, password) => {
 //   try {
 //     const resp = await axios.post(apiUrl + "api/Authetication/Login", {
@@ -243,7 +286,6 @@ export const RegisterUser = async (
   }
 };
 
-
 export const UpdateProducts = async (
   Id,
   ProductName,
@@ -252,28 +294,23 @@ export const UpdateProducts = async (
   description,
   image
 ) => {
-
-    const formData = new FormData();
-    formData.append("Id", Id);
-    formData.append("image", image);
-    formData.append("ProductName", ProductName);
-    formData.append("Price", price);
-    formData.append("Quantity", quantity);
-    formData.append("Description", description);
+  const formData = new FormData();
+  formData.append("Id", Id);
+  formData.append("image", image);
+  formData.append("ProductName", ProductName);
+  formData.append("Price", price);
+  formData.append("Quantity", quantity);
+  formData.append("Description", description);
 
   await axios({
     method: "put",
     url: apiUrl + "api/Product/UpdateProduct",
     data: formData,
     headers: { "Content-Type": "multipart/form-data" },
-  })
-  .then((response) => {
-   
-    return (response)
-
-  }) 
-
-  };
+  }).then((response) => {
+    return response;
+  });
+};
 
 export const UploadProducts = async (
   ProductName,
@@ -282,150 +319,124 @@ export const UploadProducts = async (
   description,
   image
 ) => {
+  const formData = new FormData();
+  formData.append("image", image);
+  formData.append("ProductName", ProductName);
+  formData.append("Price", price);
+  formData.append("Quantity", quantity);
+  formData.append("Description", description);
 
-    
-    const formData = new FormData();
-    formData.append("image", image);
-    formData.append("ProductName", ProductName);
-    formData.append("Price", price);
-    formData.append("Quantity", quantity);
-    formData.append("Description", description);
-
-
-
-
-    await axios({
+  await axios({
     method: "post",
     url: apiUrl + "api/Product/AddProduct",
     data: formData,
     headers: { "Content-Type": "multipart/form-data" },
-  })
-  .then((response) => {
-   
-    return (response)
+  }).then((response) => {
+    return response;
+  });
+};
+export const CreateUser = async (
+  firstName,
+  lastName,
+  email,
+  password,
+  gender,
+  role
+) => {
+  try {
+    const resp = await axios.post(apiUrl + "api/Authetication/AddAdmin", {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      gender: gender,
+      role: role,
+    });
 
-  })
-
-  };
-  export const CreateUser = async (
-    firstName,
-    lastName,
-    email,
-    password,
-    gender,role
-  ) => {
-    try {
-      const resp = await axios.post(apiUrl + "api/Authetication/AddAdmin", {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-        gender: gender,
-        role:role,
-      });
-  
-      if (resp.status == 200) {
-        return resp.data;
-      } else {
-        return false;
-      }
-    } catch (err) {
-      return err.response;
+    if (resp.status == 200) {
+      return resp.data;
+    } else {
+      return false;
     }
-  };
-  export const ChangeUser = async (
-    id,
-    firstName,
-    lastName,
-    email,
-    password,
-    gender,
-    role,
+  } catch (err) {
+    return err.response;
+  }
+};
+export const ChangeUser = async (
+  id,
+  firstName,
+  lastName,
+  email,
+  password,
+  gender,
+  role
+) => {
+  try {
+    const resp = await axios.put(apiUrl + "api/Authetication/UpdateUser", {
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      gender: gender,
+      role: role,
+    });
 
-  ) => {
-    try {
-      const resp = await axios.put(apiUrl + "api/Authetication/UpdateUser", {
-        id:id,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-        gender: gender,
-        role:role,
-      });
-  
-      if (resp.status == 200) {
-        return resp.data;
-      } else {
-        return false;
-      }
-    } catch (err) {
-      return err.response;
+    if (resp.status == 200) {
+      return resp.data;
+    } else {
+      return false;
     }
-  };
-  
+  } catch (err) {
+    return err.response;
+  }
+};
 
-  export const ChangeOrder = async (
-    id,
-    customerName,
-    customerEmail,
-    address,
-  
-   
+export const ChangeOrder = async (id, customerName, customerEmail, address) => {
+  try {
+    const resp = await axios.put(apiUrl + "api/Order/UpdateOrder", {
+      id: id,
+      address: address,
+      customerName: customerName,
+      customerEmail: customerEmail,
+    });
 
-
-
-  ) => {
-    try {
-      const resp = await axios.put(apiUrl + "api/Order/UpdateOrder", {
-        id:id,
-        address:address,
-        customerName:customerName,
-        customerEmail:customerEmail,
-      });
-  
-      if (resp.status == 200) {
-        return resp.data;
-      } else {
-        return false;
-      }
-    } catch (err) {
-      return err.response;
+    if (resp.status == 200) {
+      return resp.data;
+    } else {
+      return false;
     }
-  };
-  export const RemoveUser = async (id) => {
-    try {
-      const resp = await axios.put(apiUrl + "api/Authetication/RemoveUser", {
-    
-          id:id,
- 
-      });
-  
-      if (resp.status == 200) {
-        return resp.data;
-      } else {
-        return false;
-      }
-    } catch (err) {
-      return err.response;
-    }
-  };
-  export const RemoveProduct = async (id) => {
-    try {
-      const resp = await axios.put(apiUrl + "api/Product/RemoveProduct", {
-        
-  
-          id: id
+  } catch (err) {
+    return err.response;
+  }
+};
+export const RemoveUser = async (id) => {
+  try {
+    const resp = await axios.put(apiUrl + "api/Authetication/RemoveUser", {
+      id: id,
+    });
 
-        
-      });
-  
-      if (resp.status == 200) {
-        return resp.data;
-      } else {
-        return false;
-      }
-    } catch (err) {
-      return err.response;
+    if (resp.status == 200) {
+      return resp.data;
+    } else {
+      return false;
     }
-  };
+  } catch (err) {
+    return err.response;
+  }
+};
+export const RemoveProduct = async (id) => {
+  try {
+    const resp = await axios.put(apiUrl + "api/Product/RemoveProduct", {
+      id: id,
+    });
+
+    if (resp.status == 200) {
+      return resp.data;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    return err.response;
+  }
+};

@@ -1,5 +1,4 @@
-import React, { useState , useEffect } from 'react';
-
+import React, { useState, useEffect } from "react";
 
 function LeavesList() {
   const [attendanceData, setAttendanceData] = useState([]);
@@ -8,24 +7,18 @@ function LeavesList() {
   // [isChanged]
 
   const fetchAttendanceData = async () => {
-
-    
-
-
     try {
-      const response = await fetch('https://localhost:7206/api/User/GetLeave');
+      const response = await fetch("https://localhost:7206/api/User/GetLeave");
       const data = await response.json();
       setAttendanceData(data);
-      
     } catch (error) {
-      console.error('Error fetching attendance data:', error);
+      console.error("Error fetching attendance data:", error);
     }
   };
 
-
   useEffect(() => {
     fetchAttendanceData();
-  },[] );
+  }, []);
 
   return (
     <div>
@@ -39,7 +32,6 @@ function LeavesList() {
             <th>Description</th>
             <th>Status</th>
             <th>Created At</th>
-           
           </tr>
         </thead>
         <tbody>
@@ -51,10 +43,6 @@ function LeavesList() {
               <td>{entry.description}</td>
               <td>{entry.status}</td>
               <td>{entry.createdAt}</td>
-           
-
-      
-
             </tr>
           ))}
         </tbody>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
 
 function ShowLeaves() {
   const [attendanceData, setAttendanceData] = useState([]);
@@ -33,18 +33,21 @@ function ShowLeaves() {
             <th>Description</th>
             <th>Status</th>
             <th>Action</th>
-
           </tr>
         </thead>
         <tbody>
           {attendanceData.map((entry) => (
             <tr key={entry.id}>
               <td>{entry.employeeId}</td>
-              <td><Button variant="success">Edit</Button>{' '}</td>
-              <td><Button variant="success">Approve</Button>{' '}</td>
-              <td><Button variant="danger">Delete</Button>{' '}</td>
-
-
+              <td>
+                <Button variant="success">Edit</Button>{" "}
+              </td>
+              <td>
+                <Button variant="success">Approve</Button>{" "}
+              </td>
+              <td>
+                <Button variant="danger">Delete</Button>{" "}
+              </td>
             </tr>
           ))}
         </tbody>

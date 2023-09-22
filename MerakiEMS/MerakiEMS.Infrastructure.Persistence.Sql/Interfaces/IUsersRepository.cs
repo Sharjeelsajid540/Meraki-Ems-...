@@ -29,10 +29,12 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Interfaces
 
         Task<Leave> AdminLeaveRequest(AdminRequest req);
         Task<List<GetUsersResponse>> GetAllUsers();
-        Task<User> UpdateUser(User user);
+        Task<GetUsersResponse> GetUser(int id);
+        Task<User> UpdateUser(UpdateUserRequest user);
         Task<User> DeleteUser(int id);
         Task<List<Leave>> GetLeave();
         Task<List<Leave>> GetAllLeaves(int id);
+        Task<List<ManagerListResponse>> MangerList();
     }
     
 }
