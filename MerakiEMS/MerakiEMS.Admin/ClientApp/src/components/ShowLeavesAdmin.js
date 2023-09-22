@@ -7,8 +7,10 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import axios from 'axios';
-import './css/Respond.css';
-import DatePicker from 'react-datepicker';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import "./css/Respond.css"
+
 
 function ShowLeaves({ leaveId, onClose }) {
   const [attendanceData, setAttendanceData] = useState([]);
@@ -20,9 +22,24 @@ function ShowLeaves({ leaveId, onClose }) {
   const [selectedLeave, setSelectedLeave] = useState(null);
   const [goToPage, setGoToPage] = useState('');
   const [searchFilter, setSearchFilter] = useState(''); // State for the search filter
-  const [from, setFrom] = useState(new Date()); // Initialize "From" date state
-  const [to, setTo] = useState(new Date());     // Initialize "To" date state
+  const [leaveData, setLeaveData] = useState([]);
 
+  const [show1, setShow1] = useState(false);
+  const handleClose1 = () => setShow1(false);
+  const handleShow1 = () => setShow1(true);
+  useEffect(() => {
+    // Fetch leave data from your API or source
+    // Replace this with your actual API endpoint
+    fetch('https://localhost:7206/api/User/GetLeave')
+      .then((response) => response.json())
+      .then((data) => {
+        // Process the data as needed
+        setLeaveData(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching leave data:', error);
+      });
+  }, []);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -58,6 +75,7 @@ function ShowLeaves({ leaveId, onClose }) {
     try {
       const response = await fetch('https://localhost:7206/api/User/GetLeave');
       const data = await response.json();
+      console.log('Data received from API:', data);
       setAttendanceData(data);
     } catch (error) {
       console.error('Error fetching attendance data:', error);
@@ -101,20 +119,29 @@ function ShowLeaves({ leaveId, onClose }) {
     }
   };
 
-  useEffect(() => {
-    // When attendanceData changes, set the initial "From" and "To" dates
-    if (attendanceData.length > 0) {
-      const fromDate = attendanceData[0].from; // Assuming the "from" property holds the date
-      const toDate = attendanceData[0].to;     // Assuming the "to" property holds the date
-      
-      setFrom(new Date(fromDate)); // Convert the date string to a JavaScript Date object
-      setTo(new Date(toDate));
-    }
-  }, [attendanceData]);
-
-
   return (
     <div>
+     
+    <>
+      <Modal size="lg" show={show1} onHide={handleClose1}>
+          <Modal.Header closeButton>
+            <Modal.Title>Calendar</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <FullCalendar
+      plugins={[dayGridPlugin]}
+      initialView="dayGridMonth"
+      events={leaveData.map((leave) => ({
+        title: `${leave.name} (${leave.description})`, // Display leave name as the event title
+        start: leave.from, // Start date of the leave
+        end: leave.to, // End date of the leave
+      
+      }))}
+   
+    />
+      </Modal.Body>
+        </Modal>
+</>
       <>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -168,6 +195,9 @@ function ShowLeaves({ leaveId, onClose }) {
         </Modal>
       </>
       <h2>Leaves Request List</h2>
+       
+      <Button variant="secondary" className='show-calendar-btn' onClick={handleShow1}>Show Calendar</Button>{' '}
+     
       <br/> 
       {/* Search filter input */}
       <div className="search-filter">
@@ -189,7 +219,7 @@ function ShowLeaves({ leaveId, onClose }) {
             <th>To (Date)</th>
             <th>Description</th>
             <th>Created At</th>
-            <th>Request Viewer</th>
+            <th>Request Reviewer</th>
             <th>Status</th>
             <th>Comments</th>
             <th>Updated At</th>
@@ -201,28 +231,8 @@ function ShowLeaves({ leaveId, onClose }) {
             <tr key={entry.id}>
               <td>{entry.id}</td>
               <td>{entry.name}</td>
-             <td> 
-        <Col>
-          <Form.Group controlId="formGridFrom">
-            <Form.Label>From (Date)</Form.Label>
-            <DatePicker
-              selected={from}
-              onChange={(date) => setFrom(date)}
-              dateFormat="yyyy-MM-dd"
-            />
-          </Form.Group>
-        </Col>
-        </td>
-        <td><Col>
-          <Form.Group controlId="formGridFrom">
-            <Form.Label>From (Date)</Form.Label>
-            <DatePicker
-              selected={to}
-              onChange={(date) => setFrom(date)}
-              dateFormat="yyyy-MM-dd"
-            />
-          </Form.Group>
-        </Col></td>
+              <td>{entry.from}</td>
+              <td>{entry.to}</td>
               <td>{entry.description}</td>
               <td>{entry.createdAt}</td>
               <td>{entry.adminRequestViewer}</td>
@@ -241,6 +251,7 @@ function ShowLeaves({ leaveId, onClose }) {
                   Respond
                 </Button>{' '}
               </td>
+              
             </tr>
           ))}
         </tbody>

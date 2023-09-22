@@ -181,7 +181,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 Comments = lev.Comments,
                 UpdatedAt = lev.UpdatedAt,
                 CreatedAt = DateTime.Now,
-            AdminRequestViewer = "Pending",
+            AdminRequestViewer = "",
             Status = "Pending"
             };
 
@@ -192,13 +192,13 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 
         public async Task<List<Leave>> GetLeave()
         {
-            var response = await _context.Leave.OrderByDescending(s=> s.CreatedAt).ToListAsync();
+            var response = await _context.Leave.OrderByDescending(s=>  s.ID).ToListAsync();
             return response;
         }
 
-        public async Task<List<Leave>> GetAllLeaves(int id)
+        public async Task<List<Leave>> GetAllLeaves(UserID user)
         {
-            var response = await _context.Leave.Where(s=> s.UserID == id).OrderByDescending(s => s.CreatedAt).ToListAsync();
+            var response = await _context.Leave.Where(s=> s.UserID == user.ID).OrderByDescending(s => s.CreatedAt).ToListAsync();
             return response;
         }
 

@@ -32,5 +32,6 @@ namespace MerakiEMS.Application.Interfaces
         Task<List<LeaveResponse>> GetLeave();
         Task<List<Leave>> GetAllLeaves(int id);
         Task<List<ManagerListResponse>> GetManagerList();
+        Task<List<LeaveResponse>> GetAllLeaves(UserID user);
     }
 }
