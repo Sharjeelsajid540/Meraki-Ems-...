@@ -71,11 +71,15 @@ namespace MerakiEMS.Application.Services
             var response = await _usersRepository.GetAllUsers();
             return response;
         }
-
+        public async Task<GetUsersResponse> GetUser(int id)
+        {
+            var response = await _usersRepository.GetUser(id);
+            return response;
+        }
 
        
 
-        public async Task<UpdateUserResponse> UpdateUser(User user)
+        public async Task<UpdateUserResponse> UpdateUser(UpdateUserRequest user)
         {
             var response = new UpdateUserResponse();
             try
@@ -468,6 +472,12 @@ namespace MerakiEMS.Application.Services
             }
             
             
+        }
+
+        public async Task<List<ManagerListResponse>> GetManagerList()
+        {
+            var response = await _usersRepository.MangerList();
+            return response;
         }
     }
 }

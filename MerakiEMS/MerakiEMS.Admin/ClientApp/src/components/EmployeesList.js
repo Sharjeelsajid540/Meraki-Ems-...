@@ -1,46 +1,115 @@
-import React, { useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { SideNavbar } from "./SideNavbar";
+import { Profile } from "./Profile";
+import "./css/EmployeeList.css";
+import { GridTable } from "./GridTable";
+import { deleteUser, fetchAllUsersData } from "../Api/Api";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import "./css/AddEmployee.css";
-import { useState } from "react";
+import { updateUsersData } from "../Api/Api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import UsersListAdmin from "./UsersListAdmin";
-import Modal from "react-bootstrap/Modal";
 
-const AddEmployee = () => {
+export const EmployeesList = () => {
+  const [usersData, setUsersData] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState(null); // State to store the selected employee data
+  const [showModal, setShowModal] = useState(false);
+
   const [roleNames, setRoleNames] = useState([]);
+  const [userID, setUserID] = useState([]);
   const [managerNames, setManagerNames] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const [cnic, setCnic] = useState("");
   const [contactno, setContactNo] = useState("");
   const [econtactno, setEContactNo] = useState("");
   const [address, setAddress] = useState("");
   const [roleID, setRoleID] = useState("");
   const [managerID, setManagerID] = useState("");
+  const [managerName, setManagerName] = useState("");
   const [isChanged, setIsChanged] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   // Validation states
   const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [cnicError, setCnicError] = useState("");
   const [contactNoError, setContactNoError] = useState("");
   const [econtactNoError, setEContactNoError] = useState("");
 
-  const navigate = useNavigate();
+  const showDetails = (employee) => {
+    setSelectedEmployee(employee.row.original); // Set the selected employee data
+    setShowModal(true); // Show the modal
+    setName(employee.row.original.name);
+    setEmail(employee.row.original.email);
+    setCnic(employee.row.original.cnic);
+    setContactNo(employee.row.original.contactNo);
+    setEContactNo(employee.row.original.eContactNo);
+    setAddress(employee.row.original.address);
+    setRoleID(employee.row.original.role);
+    setManagerID(employee.row.original.managerID);
+    setManagerName(employee.row.original.manager);
+    setUserID(employee.row.original.userID);
+  };
 
-  const handleSubmit = async (e) => {
+  const columns = [
+    {
+      header: "Employee ID",
+      accessorKey: "userID",
+    },
+    {
+      header: "Name",
+      accessorKey: "name",
+    },
+    {
+      header: "Email",
+      accessorKey: "email",
+    },
+
+    {
+      header: "Contact No",
+      accessorKey: "contactNo",
+    },
+    {
+      header: "Role",
+      accessorKey: "role",
+    },
+    {
+      header: " ",
+      accessorKey: " ",
+      cell: (employee) => (
+        <Button
+          className="viewDetails"
+          variant="outline-secondary"
+          onClick={() => showDetails(employee)} // Call the showDetails function with the employee data
+        >
+          View Details
+        </Button>
+      ),
+    },
+  ];
+  const getRoleNamesFromLocalStorage = () => {
+    const roleNames = localStorage.getItem("RolesData");
+
+    return roleNames ? JSON.parse(roleNames) : [];
+  };
+  const getManagerNamesFromLocalStorage = () => {
+    const managerNames = localStorage.getItem("ManagersData");
+
+    return managerNames ? JSON.parse(managerNames) : [];
+  };
+
+  const handleUpdate = async (e) => {
     e.preventDefault();
     const data = {
+      id: userID,
       name,
       email,
-      password,
+
       cnic,
       contactno,
       econtactno,
@@ -54,15 +123,6 @@ const AddEmployee = () => {
       return;
     } else {
       setEmailError("");
-    }
-
-    if (!validatePassword(password)) {
-      setPasswordError(
-        "Password must contain at least 8 characters with a mix of lowercase and uppercase letters"
-      );
-      return;
-    } else {
-      setPasswordError("");
     }
 
     if (!validateCNIC(cnic)) {
@@ -93,37 +153,60 @@ const AddEmployee = () => {
     } else {
       data.roleID = 2;
     }
+    console.log(data);
 
-    await axios
-      .post("https://localhost:7206/api/User/AddUser", data)
-      .then((result) => {
-        if (result.data.isRequestSuccessful === true) {
-          clear();
-          toast.success("User has been Added");
-          setShow(false);
-        } else {
-          toast.error(result.data.successResponse);
-        }
-      })
-      .catch((error) => {
-        if (error.response.status === 401) {
-          toast.error("Session Expired!");
-
-          navigate("/");
-        } else {
-          toast.error(error);
-        }
-      });
+    updateUsersData(data).then((response) => {
+      if (response.isSuccess == true) {
+        toast.success("User Updated Successfulyy");
+        setShowModal(false);
+        setIsChanged(isChanged + 1);
+        setIsDisabled(true);
+      } else {
+        toast.error(response.successResponse);
+      }
+    });
   };
+
+  const confirmDelete = () => {
+    deleteUser(userID).then((response) => {
+      if (response.isSuccess === true) {
+        toast.success("User Deleted Successfully");
+        setShowModal(false);
+        setIsChanged(isChanged + 1);
+      } else {
+        toast.error(response.successResponse);
+      }
+      setShowDeleteModal(false); // Close the confirmation modal
+    });
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+  };
+  const handleDelete = async () => {
+    setShowDeleteModal(true);
+  };
+
+  useEffect(() => {
+    fetchAllUsersData().then((response) => {
+      if (response) {
+        setUsersData(response);
+      }
+    });
+
+    const storedRoleNames = getRoleNamesFromLocalStorage();
+    setRoleNames(storedRoleNames);
+
+    const storedManagerNames = getManagerNamesFromLocalStorage();
+    setManagerNames(storedManagerNames);
+  }, [isChanged]);
+
+  const data = useMemo(() => usersData, [usersData]);
 
   // Validation functions
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
-  };
-
-  const validatePassword = (password) => {
-    return /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password);
   };
 
   const validateCNIC = (cnic) => {
@@ -134,83 +217,39 @@ const AddEmployee = () => {
     return /^\d{4}-\d{7}$/.test(contactNo);
   };
 
-  const clear = () => {
-    setName("");
-    setContactNo("");
-    setEContactNo("");
-    setCnic("");
-    setEmail("");
-    setPassword("");
-    setRoleID("");
-    setManagerID("");
-    setAddress("");
+  const handleEdit = () => {
+    if (isDisabled) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
   };
-
-  useEffect(() => {
-    getRoles();
-    getManagers();
-  }, []);
-
-  const getManagers = async () => {
-    await axios
-      .get("https://localhost:7206/api/User/ManagerList")
-      .then((result) => {
-        localStorage.setItem("ManagersData", JSON.stringify(result.data));
-        setIsChanged(isChanged + 1);
-      });
-  };
-  const getManagerNamesFromLocalStorage = () => {
-    const managerNames = localStorage.getItem("ManagersData");
-
-    return managerNames ? JSON.parse(managerNames) : [];
-  };
-
-  const getRoles = async () => {
-    await axios
-      .get("https://localhost:7206/api/User/UserRole")
-      .then((result) => {
-        localStorage.setItem("RolesData", JSON.stringify(result.data));
-        setIsChanged(isChanged + 1);
-      });
-  };
-  const getRoleNamesFromLocalStorage = () => {
-    const roleNames = localStorage.getItem("RolesData");
-
-    return roleNames ? JSON.parse(roleNames) : [];
-  };
-
-  useEffect(() => {
-    const storedRoleNames = getRoleNamesFromLocalStorage();
-    setRoleNames(storedRoleNames);
-
-    const storedManagerNames = getManagerNamesFromLocalStorage();
-    setManagerNames(storedManagerNames);
-  }, [isChanged]);
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   return (
-    <div className="CustomerPage">
-      <Button
-        variant="secondary"
-        className="secondary-btn"
-        onClick={handleShow}
-      >
-        Add Employee
-      </Button>
-      <UsersListAdmin />
-      <br />
-      <div className="addEmployee">
-        <Modal show={show} onHide={handleClose} centered={true} size={"lg"}>
+    <>
+      <div>
+        <SideNavbar />
+        <Profile />
+        <div className="employeeList">
+          <h1>Employees List</h1>
+
+          <GridTable data={data} columns={columns} />
+        </div>
+        {/* Modal */}
+        <Modal
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          centered={true}
+          size={"xl"}
+        >
           <Modal.Header closeButton>
-            <Modal.Title>Add Employee</Modal.Title>
+            <Modal.Title>Employee Details</Modal.Title>
           </Modal.Header>
+
           <Modal.Body>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleUpdate}>
               <Row className="mt-1">
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <Form.Group as={Col} controlId="formGridName">
                     <Form.Label className="form-label-addUser">Name</Form.Label>
                     <Form.Control
@@ -218,11 +257,12 @@ const AddEmployee = () => {
                       placeholder="Enter Name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      disabled={isDisabled}
                       required
                     />
                   </Form.Group>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <Form.Group as={Col} controlId="formGridEmail">
                     <Form.Label className="form-label-addUser">
                       Email
@@ -232,6 +272,7 @@ const AddEmployee = () => {
                       placeholder="example@gmail.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      disabled={isDisabled}
                       required
                     />
                     {emailError && (
@@ -239,27 +280,7 @@ const AddEmployee = () => {
                     )}
                   </Form.Group>
                 </div>
-              </Row>
-
-              <Row className="mt-1">
-                <div className="col-md-6">
-                  <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label className="form-label-addUser">
-                      Password
-                    </Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                    {passwordError && (
-                      <div className="error-message">{passwordError}</div>
-                    )}
-                  </Form.Group>
-                </div>
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <Form.Group as={Col} controlId="formGridCNIC">
                     <Form.Label className="form-label-addUser">CNIC</Form.Label>
                     <Form.Control
@@ -267,6 +288,7 @@ const AddEmployee = () => {
                       placeholder="xxxxx-xxxxxxx-x"
                       value={cnic}
                       onChange={(e) => setCnic(e.target.value)}
+                      disabled={isDisabled}
                       required
                     />
                     {cnicError && (
@@ -277,7 +299,7 @@ const AddEmployee = () => {
               </Row>
 
               <Row className="mt-1">
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <Form.Group as={Col} controlId="formGridContactNo">
                     <Form.Label className="form-label-addUser">
                       Cotact No
@@ -287,6 +309,7 @@ const AddEmployee = () => {
                       placeholder="xxxx-xxxxxxx"
                       value={contactno}
                       onChange={(e) => setContactNo(e.target.value)}
+                      disabled={isDisabled}
                       required
                     />
                     {contactNoError && (
@@ -294,7 +317,7 @@ const AddEmployee = () => {
                     )}
                   </Form.Group>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <Form.Group as={Col} controlId="formGridEContactNo">
                     <Form.Label className="form-label-addUser">
                       Emergency Contact No
@@ -304,6 +327,7 @@ const AddEmployee = () => {
                       placeholder="xxxx-xxxxxxx"
                       value={econtactno}
                       onChange={(e) => setEContactNo(e.target.value)}
+                      disabled={isDisabled}
                       required
                     />
                     {econtactNoError && (
@@ -311,10 +335,7 @@ const AddEmployee = () => {
                     )}
                   </Form.Group>
                 </div>
-              </Row>
-
-              <Row className="mt-1">
-                <div className="col-md-12">
+                <div className="col-md-6">
                   <Form.Group as={Col} controlId="formGridAddress">
                     <Form.Label className="form-label-addUser">
                       Address
@@ -324,6 +345,7 @@ const AddEmployee = () => {
                       placeholder="Enter your Current Address"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
+                      disabled={isDisabled}
                       required
                     />
                   </Form.Group>
@@ -331,21 +353,23 @@ const AddEmployee = () => {
               </Row>
 
               <Row className="mt-1">
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <Form.Group as={Col} controlId="formGridState">
                     <Form.Label className="form-label-addUser">Role</Form.Label>
                     <Form.Select
                       value={roleID}
                       onChange={(e) => setRoleID(e.target.value)}
+                      disabled={isDisabled}
                       required
                     >
+                      <option>{roleID}</option>
                       {roleNames.map((role) => (
                         <option key={role.id}>{role.roleName}</option>
                       ))}
                     </Form.Select>
                   </Form.Group>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <Form.Group as={Col} controlId="formGridState">
                     <Form.Label className="form-label-addUser">
                       Manager
@@ -353,8 +377,10 @@ const AddEmployee = () => {
                     <Form.Select
                       value={managerID}
                       onChange={(e) => setManagerID(e.target.value)}
+                      disabled={isDisabled}
                       required
                     >
+                      <option>{managerName}</option>
                       {managerNames.map((role) => (
                         <option key={role.managerID} value={role.managerID}>
                           {role.managerName}
@@ -367,15 +393,56 @@ const AddEmployee = () => {
               <Form.Group className="mt-4" id="formGridCheckbox">
                 <Form.Check type="checkbox" label="Check me out" />
               </Form.Group>
-              <Button variant="primary" type="submit" className="addBtn">
-                Submit
-              </Button>
+              <Row className="mt-1">
+                <div className="col-md-3">
+                  <Button
+                    variant="outline-secondary"
+                    className="addBtn1"
+                    onClick={handleEdit}
+                  >
+                    {isDisabled ? "Edit" : "Cancel Edit"}
+                  </Button>
+                </div>
+                <div className="col-md-3 offset-3">
+                  <Button
+                    variant="outline-secondary"
+                    type="submit"
+                    className="addBtn1"
+                    disabled={isDisabled}
+                  >
+                    Update
+                  </Button>
+                </div>
+                <div className="col-md-3">
+                  <Button
+                    variant="outline-danger"
+                    className="addBtn2"
+                    onClick={handleDelete}
+                  >
+                    Delete Employee
+                  </Button>
+                </div>
+              </Row>
             </Form>
           </Modal.Body>
         </Modal>
+        <Modal show={showDeleteModal} onHide={cancelDelete} centered={true}>
+          <Modal.Header closeButton>
+            <Modal.Title>Delete Employee</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Are you sure you want to delete this employee?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={cancelDelete}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={confirmDelete}>
+              Yes, Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
-    </div>
+    </>
   );
 };
-
-export default AddEmployee;
