@@ -233,7 +233,7 @@ export const EmployeesList = () => {
         <div className="employeeList">
           <h1>Employees List</h1>
 
-          <GridTable data={data} columns={columns} />
+          <GridTable data={data} columns={columns} minHeight={"450px"} />
         </div>
         {/* Modal */}
         <Modal

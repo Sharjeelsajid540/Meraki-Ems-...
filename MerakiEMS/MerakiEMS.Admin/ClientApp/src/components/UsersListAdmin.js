@@ -9,7 +9,6 @@ function UsersListAdmin() {
 
   function calculateTotalHours(timeString) {
     if (!timeString) {
-      console.log("first");
       return 0; // Handle the case where timeString is undefined or empty
     }
 
@@ -85,7 +84,7 @@ function UsersListAdmin() {
   return (
     <div>
       <h2 className="headingList">Employees Attendance List</h2>
-      <GridTable data={data} columns={columns} />
+      <GridTable data={data} columns={columns} minHeight={"375px"} />
     </div>
   );
 }

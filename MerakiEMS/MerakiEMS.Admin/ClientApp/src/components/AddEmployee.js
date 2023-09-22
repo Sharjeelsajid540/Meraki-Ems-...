@@ -193,16 +193,17 @@ const AddEmployee = () => {
 
   return (
     <div className="CustomerPage">
-      <Button
-        variant="secondary"
-        className="secondary-btn"
-        onClick={handleShow}
-      >
-        Add Employee
-      </Button>
-      <UsersListAdmin />
-      <br />
       <div className="addEmployee">
+        <Button
+          variant="secondary"
+          className="secondary-btn"
+          onClick={handleShow}
+        >
+          Add Employee
+        </Button>
+        <UsersListAdmin />
+        <br />
+
         <Modal show={show} onHide={handleClose} centered={true} size={"lg"}>
           <Modal.Header closeButton>
             <Modal.Title>Add Employee</Modal.Title>
@@ -355,6 +356,9 @@ const AddEmployee = () => {
                       onChange={(e) => setManagerID(e.target.value)}
                       required
                     >
+                      <option value="" disabled>
+                        Select Manager
+                      </option>
                       {managerNames.map((role) => (
                         <option key={role.managerID} value={role.managerID}>
                           {role.managerName}

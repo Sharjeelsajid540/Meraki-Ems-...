@@ -1,12 +1,10 @@
 .employeeList {
   position: absolute;
-  margin: 10% 20%;
+  margin: 8% 20%;
   width: 75%;
   /* margin: 110px 0px 0px 17.5%; */
 }
-.table-div {
-  min-height: 375px;
-}
+
 .viewDetails {
   /* border: none; */
   padding: 4px 6px !important;
