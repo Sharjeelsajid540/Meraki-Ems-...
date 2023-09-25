@@ -24,7 +24,7 @@ export const EmployeesList = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-
+  const [image, setImage] = useState("");
   const [cnic, setCnic] = useState("");
   const [contactno, setContactNo] = useState("");
   const [econtactno, setEContactNo] = useState("");
@@ -40,6 +40,7 @@ export const EmployeesList = () => {
   const [cnicError, setCnicError] = useState("");
   const [contactNoError, setContactNoError] = useState("");
   const [econtactNoError, setEContactNoError] = useState("");
+  const [fileSizeError, setFileSizeError] = useState("");
 
   const showDetails = (employee) => {
     setSelectedEmployee(employee.row.original); // Set the selected employee data
@@ -54,6 +55,7 @@ export const EmployeesList = () => {
     setManagerID(employee.row.original.managerID);
     setManagerName(employee.row.original.manager);
     setUserID(employee.row.original.userID);
+    setImage(employee.row.original.image);
   };
 
   const columns = [
@@ -109,7 +111,7 @@ export const EmployeesList = () => {
       id: userID,
       name,
       email,
-
+      image,
       cnic,
       contactno,
       econtactno,
@@ -157,7 +159,7 @@ export const EmployeesList = () => {
 
     updateUsersData(data).then((response) => {
       if (response.isSuccess == true) {
-        toast.success("User Updated Successfulyy");
+        toast.success("User Updated Successfully");
         setShowModal(false);
         setIsChanged(isChanged + 1);
         setIsDisabled(true);
@@ -224,6 +226,28 @@ export const EmployeesList = () => {
       setIsDisabled(true);
     }
   };
+  const maxFileSize = 500 * 1024;
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      if (file.size > maxFileSize) {
+        setFileSizeError(" Maximum allowed size (500KB).");
+        e.target.value = null;
+        return;
+      } else {
+        setFileSizeError("");
+      }
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const base64Image = reader.result.split(",")[1];
+        setImage(base64Image);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <>
@@ -248,8 +272,29 @@ export const EmployeesList = () => {
 
           <Modal.Body>
             <Form onSubmit={handleUpdate}>
+              <div className="userImage2">
+                {image && (
+                  <img
+                    src={`data:image/jpeg;base64,${image}`}
+                    alt="User's Profile"
+                    className="profileImage2"
+                  />
+                )}
+                <Form.Group as={Col} controlId="formGridImage">
+                  <Form.Label className="form-label-addUser"></Form.Label>
+                  <Form.Control
+                    type="file"
+                    accept="image/*"
+                    disabled={isDisabled}
+                    onChange={handleImageChange}
+                  />
+                  {fileSizeError && (
+                    <div className="error-message">{fileSizeError}</div>
+                  )}
+                </Form.Group>
+              </div>
               <Row className="mt-1">
-                <div className="col-md-4">
+                <div className="col-md-4 offset-4">
                   <Form.Group as={Col} controlId="formGridName">
                     <Form.Label className="form-label-addUser">Name</Form.Label>
                     <Form.Control
@@ -280,7 +325,10 @@ export const EmployeesList = () => {
                     )}
                   </Form.Group>
                 </div>
-                <div className="col-md-4">
+              </Row>
+
+              <Row className="mt-1">
+                <div className="col-md-4 offset-4">
                   <Form.Group as={Col} controlId="formGridCNIC">
                     <Form.Label className="form-label-addUser">CNIC</Form.Label>
                     <Form.Control
@@ -296,10 +344,7 @@ export const EmployeesList = () => {
                     )}
                   </Form.Group>
                 </div>
-              </Row>
-
-              <Row className="mt-1">
-                <div className="col-md-3">
+                <div className="col-md-4">
                   <Form.Group as={Col} controlId="formGridContactNo">
                     <Form.Label className="form-label-addUser">
                       Cotact No
@@ -317,7 +362,10 @@ export const EmployeesList = () => {
                     )}
                   </Form.Group>
                 </div>
-                <div className="col-md-3">
+              </Row>
+
+              <Row className="mt-1">
+                <div className="col-md-3 offset-4">
                   <Form.Group as={Col} controlId="formGridEContactNo">
                     <Form.Label className="form-label-addUser">
                       Emergency Contact No
@@ -335,7 +383,7 @@ export const EmployeesList = () => {
                     )}
                   </Form.Group>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-5">
                   <Form.Group as={Col} controlId="formGridAddress">
                     <Form.Label className="form-label-addUser">
                       Address
@@ -351,9 +399,8 @@ export const EmployeesList = () => {
                   </Form.Group>
                 </div>
               </Row>
-
               <Row className="mt-1">
-                <div className="col-md-3">
+                <div className="col-md-3 offset-4">
                   <Form.Group as={Col} controlId="formGridState">
                     <Form.Label className="form-label-addUser">Role</Form.Label>
                     <Form.Select
@@ -390,7 +437,8 @@ export const EmployeesList = () => {
                   </Form.Group>
                 </div>
               </Row>
-              <Form.Group className="mt-4" id="formGridCheckbox">
+
+              <Form.Group className="mt-4 offset-4" id="formGridCheckbox">
                 <Form.Check type="checkbox" label="Check me out" />
               </Form.Group>
               <Row className="mt-1">

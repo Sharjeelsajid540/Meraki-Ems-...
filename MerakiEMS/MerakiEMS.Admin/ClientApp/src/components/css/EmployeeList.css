@@ -30,3 +30,19 @@
   margin-top: 100px;
   font-weight: 600;
 }
+.userImage2 {
+  display: inline;
+  max-height: 500px;
+  max-width: 500px;
+  width: auto;
+  height: auto;
+  position: absolute;
+}
+.profileImage2 {
+  display: inline;
+  max-height: 300px;
+  max-width: 300px;
+  height: 300px;
+  width: 250px;
+  border-radius: 12px;
+}

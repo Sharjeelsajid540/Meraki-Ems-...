@@ -26,30 +26,41 @@ const UserProfile = () => {
           <div className="userProfile2">
             <h2>User Profile</h2>
             <div className="userDetails">
-              <p>
-                <strong>Name:</strong> {userData.name}
-              </p>
-              <p>
-                <strong>Email:</strong> {userData.email}
-              </p>
-              <p>
-                <strong>Phone No:</strong> {userData.contactNo}
-              </p>
-              <p>
-                <strong>Emergency Phone No:</strong> {userData.eContactNo}
-              </p>
-              <p>
-                <strong>Address:</strong> {userData.address}
-              </p>
-              <p>
-                <strong>CNIC No:</strong> {userData.cnic}
-              </p>
-              <p>
-                <strong>Manager:</strong> {userData.manager}
-              </p>
-              <p>
-                <strong>Role:</strong> {userData.role}
-              </p>
+              <div className="userImage">
+                {userData.image && (
+                  <img
+                    src={`data:image/jpeg;base64,${userData.image}`}
+                    alt="User's Profile"
+                    className="profileImage"
+                  />
+                )}
+              </div>
+              <div className="Details">
+                <p>
+                  <strong>Name:</strong> {userData.name}
+                </p>
+                <p>
+                  <strong>Email:</strong> {userData.email}
+                </p>
+                <p>
+                  <strong>Phone No:</strong> {userData.contactNo}
+                </p>
+                <p>
+                  <strong>Emergency Phone No:</strong> {userData.eContactNo}
+                </p>
+                <p>
+                  <strong>Address:</strong> {userData.address}
+                </p>
+                <p>
+                  <strong>CNIC No:</strong> {userData.cnic}
+                </p>
+                <p>
+                  <strong>Manager:</strong> {userData.manager}
+                </p>
+                <p>
+                  <strong>Role:</strong> {userData.role}
+                </p>
+              </div>
             </div>
           </div>
         </div>

@@ -25,6 +25,7 @@ const AddEmployee = () => {
   const [roleID, setRoleID] = useState("");
   const [managerID, setManagerID] = useState("");
   const [isChanged, setIsChanged] = useState(0);
+  const [image, setImage] = useState("");
 
   // Validation states
   const [emailError, setEmailError] = useState("");
@@ -32,6 +33,7 @@ const AddEmployee = () => {
   const [cnicError, setCnicError] = useState("");
   const [contactNoError, setContactNoError] = useState("");
   const [econtactNoError, setEContactNoError] = useState("");
+  const [fileSizeError, setFileSizeError] = useState("");
 
   const navigate = useNavigate();
 
@@ -47,6 +49,7 @@ const AddEmployee = () => {
       address,
       roleID,
       managerID,
+      image,
     };
 
     if (!validateEmail(email)) {
@@ -177,6 +180,28 @@ const AddEmployee = () => {
     const roleNames = localStorage.getItem("RolesData");
 
     return roleNames ? JSON.parse(roleNames) : [];
+  };
+  const maxFileSize = 500 * 1024;
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      if (file.size > maxFileSize) {
+        setFileSizeError(" Maximum allowed size (500KB).");
+        e.target.value = null;
+        return;
+      } else {
+        setFileSizeError("");
+      }
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const base64Image = reader.result.split(",")[1];
+        setImage(base64Image);
+      };
+
+      reader.readAsDataURL(file);
+    }
   };
 
   useEffect(() => {
@@ -368,9 +393,26 @@ const AddEmployee = () => {
                   </Form.Group>
                 </div>
               </Row>
-              <Form.Group className="mt-4" id="formGridCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-              </Form.Group>
+              <Row className="mt-1">
+                <div className="col-md-4 ">
+                  <Form.Group className="mt-4" id="formGridCheckbox">
+                    <Form.Check type="checkbox" label="Check me out" />
+                  </Form.Group>
+                </div>
+                <div className="col-md-6 offset-2">
+                  <Form.Group as={Col} controlId="formGridImage">
+                    <Form.Label className="form-label-addUser"></Form.Label>
+                    <Form.Control
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                    />
+                    {fileSizeError && (
+                      <div className="error-message">{fileSizeError}</div>
+                    )}
+                  </Form.Group>
+                </div>
+              </Row>
               <Button variant="primary" type="submit" className="addBtn">
                 Submit
               </Button>
