@@ -33,5 +33,9 @@ namespace MerakiEMS.Application.Interfaces
         
         Task<List<ManagerListResponse>> GetManagerList();
         Task<List<LeaveResponse>> GetAllLeaves(UserID user);
+       Task<AddTicketResponse> AddTicket(Tickets ticket);
+        Task<List<GetTicketResponse>> GetAllTickets();
+        Task<List<GetTicketResponse>> GetTickets(int id);
+        Task<AddTicketResponse> UpdateTickets(UpdateTicketRequest req);
     }
 }

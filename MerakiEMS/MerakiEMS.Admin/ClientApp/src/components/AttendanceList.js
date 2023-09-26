@@ -232,7 +232,7 @@ function AttendanceList() {
             <div className="col-md-12">
               <h2>Employee Attendance</h2>
 
-              <GridTable data={data} columns={columns} minHeight={"371px"} />
+              <GridTable data={data} columns={columns} minHeight={"375px"} />
             </div>
           </div>
         </div>

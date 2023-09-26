@@ -143,5 +143,33 @@ namespace MerakiEMS.Api.Controllers
             var response = await _authenticateService.GetAllLeaves(user);
             return response;
         }
+        [HttpPost]
+        [Route("AddTicket")]
+        public async Task<AddTicketResponse> AddTicket(Tickets ticket)
+        {
+            var response = await _authenticateService.AddTicket(ticket);
+            return response;
+        }
+        [HttpGet]
+        [Route("GetAllTickets")]
+        public async Task<List<GetTicketResponse>> GetAllTickets()
+        {
+            var response = await _authenticateService.GetAllTickets();
+            return response;
+        }
+        [HttpPost]
+        [Route("GetTickets")]
+        public async Task<List<GetTicketResponse>> GetTickets(int id)
+        {
+            var response = await _authenticateService.GetTickets(id);
+            return response;
+        }
+        [HttpPut]
+        [Route("UpdateTicket")]
+        public async Task<AddTicketResponse> UpdateTicket(UpdateTicketRequest request)
+        {
+            var response = await _authenticateService.UpdateTickets(request);
+            return response;
+        }
     }
 }

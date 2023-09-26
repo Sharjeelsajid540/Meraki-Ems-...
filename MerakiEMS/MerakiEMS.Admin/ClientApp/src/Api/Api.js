@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 const apiUrl = "https://localhost:7206/";
 
 /////////   Attendance List    ///////
@@ -138,6 +138,36 @@ export const deleteUser = async (id) => {
   }
 };
 
+///////////   Add Ticket   //////////
+
+export const addTicket = async (data) => {
+  try {
+    const response = await axios.post(apiUrl + "api/User/AddTicket", data);
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+///////////   Add Ticket   //////////
+
+export const getTicket = async (id) => {
+  try {
+    const response = await axios.post(apiUrl + `api/User/GetTickets?id=${id}`);
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
 // export const userLogin = async (email, password) => {
 //   try {
 //     const resp = await axios.post(apiUrl + "api/Authetication/Login", {
@@ -159,15 +189,13 @@ export const deleteUser = async (id) => {
 
 /////// Update Leaves Api //////
 
-
-
 export const UpdateLeaveStatus = async (data) => {
   const [id, setID] = useState("");
   try {
-
-    const response = await axios.put(apiUrl + "api/User/AdminRequest" + id,
-    data);
-     
+    const response = await axios.put(
+      apiUrl + "api/User/AdminRequest" + id,
+      data
+    );
 
     if (response.status == 200) {
       return response.data;
@@ -178,7 +206,6 @@ export const UpdateLeaveStatus = async (data) => {
     return err.response;
   }
 };
-
 
 export const GetOrders = async () => {
   try {

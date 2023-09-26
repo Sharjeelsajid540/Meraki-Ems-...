@@ -1,0 +1,9 @@
+.ticketContainer {
+  position: absolute;
+  margin: 8% 20%;
+  width: 75%;
+  /* margin: 110px 0px 0px 17.5%; */
+}
+.ticketHeading {
+  margin-bottom: 30px;
+}
