@@ -19,6 +19,7 @@ namespace MerakiEMS.Domain.Entities.Contracts.Response
         public string Address { get; set; }
         public string Manager { get; set; }
         public int ManagerID { get; set; }
+        public string Image { get; set; }
 
 
     }

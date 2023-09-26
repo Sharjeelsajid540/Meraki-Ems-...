@@ -155,83 +155,84 @@ function AttendanceList() {
 
   return (
     <>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-6">
-            <div>
-              <h2>Check-In</h2>
-              <button
-                className={`btn btn-1 ${
-                  isCheckInDisabled ? "btn-clicked" : ""
-                }`}
-                onClick={handleCheckIn}
-                disabled={isCheckInDisabled}
-              >
-                {isCheckInDisabled ? "Checked IN ✓" : "CheckIn"}
-              </button>
+      <div className="attendanceList">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6">
+              <div>
+                <h2>Check-In</h2>
+                <button
+                  className={`btn btn-1 ${
+                    isCheckInDisabled ? "btn-clicked" : ""
+                  }`}
+                  onClick={handleCheckIn}
+                  disabled={isCheckInDisabled}
+                >
+                  {isCheckInDisabled ? "Checked IN ✓" : "CheckIn"}
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="col-md-6">
-            <div>
-              <h2>Check-Out</h2>
-              <button
-                className={`btn btn-1 ${
-                  isCheckOutDisabled ? "btn-clicked" : ""
-                }`}
-                onClick={handleCheckOut}
-                disabled={isCheckOutDisabled}
-              >
-                {isCheckOutDisabled ? "Checked Out   ✓" : "CheckOut"}
-              </button>
-              <Modal
-                show={showCheckInModal}
-                onHide={() => setShowCheckInModal(false)}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>Confirm Check-In</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Are you sure you want to Check-In?</Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    variant="secondary"
-                    onClick={() => setShowCheckInModal(false)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button variant="primary" onClick={confirmCheckIn}>
-                    OK
-                  </Button>
-                </Modal.Footer>
-              </Modal>
+            <div className="col-md-6">
+              <div>
+                <h2>Check-Out</h2>
+                <button
+                  className={`btn btn-1 ${
+                    isCheckOutDisabled ? "btn-clicked" : ""
+                  }`}
+                  onClick={handleCheckOut}
+                  disabled={isCheckOutDisabled}
+                >
+                  {isCheckOutDisabled ? "Checked Out   ✓" : "CheckOut"}
+                </button>
+                <Modal
+                  show={showCheckInModal}
+                  onHide={() => setShowCheckInModal(false)}
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Confirm Check-In</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>Are you sure you want to Check-In?</Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      variant="secondary"
+                      onClick={() => setShowCheckInModal(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button variant="primary" onClick={confirmCheckIn}>
+                      OK
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
 
-              <Modal
-                show={showCheckOutModal}
-                onHide={() => setShowCheckOutModal(false)}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>Confirm Check-Out</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Are you sure you want to Check-Out?</Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    variant="secondary"
-                    onClick={() => setShowCheckOutModal(false)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button variant="primary" onClick={confirmCheckOut}>
-                    OK
-                  </Button>
-                </Modal.Footer>
-              </Modal>
+                <Modal
+                  show={showCheckOutModal}
+                  onHide={() => setShowCheckOutModal(false)}
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Confirm Check-Out</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>Are you sure you want to Check-Out?</Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      variant="secondary"
+                      onClick={() => setShowCheckOutModal(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button variant="primary" onClick={confirmCheckOut}>
+                      OK
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div>
+          <div className="row">
+            <div className="col-md-12">
               <h2>Employee Attendance</h2>
-              <GridTable data={data} columns={columns} />
+
+              <GridTable data={data} columns={columns} minHeight={"371px"} />
             </div>
           </div>
         </div>

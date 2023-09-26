@@ -21,9 +21,8 @@ function Home() {
       <div className="CustomerPage">
         <SideNavbar />
         <Profile />
-        <div className="addEmployee">
-          {UserRole == "Admin" ? <AddEmployee /> : <AttendanceList />}
-        </div>
+
+        {UserRole == "Admin" ? <AddEmployee /> : <AttendanceList />}
       </div>
     </>
   );

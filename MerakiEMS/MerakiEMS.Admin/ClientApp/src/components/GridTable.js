@@ -7,7 +7,7 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 
-export const GridTable = ({ data, columns }) => {
+export const GridTable = ({ data, columns, minHeight }) => {
   const [filtering, setFiltering] = useState("");
 
   const table = useReactTable({
@@ -27,7 +27,7 @@ export const GridTable = ({ data, columns }) => {
   return (
     <>
       <div>
-        <div className="table-div">
+        <div style={{ minHeight: minHeight }}>
           <div className="globar-filter">
             <input
               className="filter-input"
@@ -100,7 +100,7 @@ export const GridTable = ({ data, columns }) => {
                 {table.getPageCount()}
               </strong>
             </span>
-            <span className="FooterOptions">
+            {/* <span className="FooterOptions">
               | Go to page:
               <input
                 type="number"
@@ -109,6 +109,23 @@ export const GridTable = ({ data, columns }) => {
                   const page = e.target.value ? Number(e.target.value) - 1 : 0;
                   table.setPageIndex(page);
                 }}
+                className="border p-1 rounded w-16"
+              />
+            </span> */}
+            <span className="FooterOptions">
+              | Go to page:
+              <input
+                type="number"
+                defaultValue={table.getState().pagination.pageIndex + 1}
+                onChange={(e) => {
+                  const inputValue = Number(e.target.value);
+                  const totalPages = table.getPageCount();
+                  if (inputValue >= 1 && inputValue <= totalPages) {
+                    table.setPageIndex(inputValue - 1);
+                  }
+                }}
+                min="1"
+                max={table.getPageCount()}
                 className="border p-1 rounded w-16"
               />
             </span>

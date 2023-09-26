@@ -17,5 +17,6 @@ namespace MerakiEMS.Domain.Entities.Contracts.Requests
         public string Address { get; set; }
         public int ManagerID { get; set; }
         public int RoleID { get; set; }
+        public string Image { get; set; }
     }
 }

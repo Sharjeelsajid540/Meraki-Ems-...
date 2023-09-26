@@ -18,6 +18,7 @@ namespace MerakiEMS.Domain.Entities.Models
         public string Address { get; set; }
         public int ManagerID { get; set; }
         public int TotalLeaves { get; set; }
+        public string Image { get; set; }
 
 
     }

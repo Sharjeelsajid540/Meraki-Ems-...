@@ -54,12 +54,7 @@ body {
   background-color: #0b2b50;
   border-radius: 10px;
 }
-.addEmployee {
-  position: absolute;
-  margin: 7% 20%;
-  width: 75%;
-  /* margin: 110px 0px 0px 17.5%; */
-}
+
 h5,
 .h5 {
   font-size: 0.9rem !important;

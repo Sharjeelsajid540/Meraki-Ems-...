@@ -66,6 +66,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 response.ManagerID = manager.ManagerID;
                 response.Role = userRole.RoleName;
                 response.RoleID = userRole.ID;
+                response.Image = u.Image;
                 users.Add(response);
             }
             return users;
@@ -94,6 +95,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 response.ManagerID = manager.ManagerID;
                 response.Role = userRole.RoleName;
                 response.RoleID = userRole.ID;
+            response.Image = user.Image;
                 
             
             return response;
@@ -114,6 +116,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 res.ContactNo = user.ContactNo;
                 res.Address = user.Address;
                 res.ManagerID = user.ManagerID;
+                res.Image = user.Image;
                 
 
             _context.User.Update(res);
@@ -214,6 +217,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             user.ContactNo = req.ContactNo;
             user.EContactNo = req.EContactNo;
             user.ManagerID = req.ManagerID;
+            user.Image = req.Image;
             
             var check = await _context.User
                .Where(s => s.Name == user.Name).FirstOrDefaultAsync();

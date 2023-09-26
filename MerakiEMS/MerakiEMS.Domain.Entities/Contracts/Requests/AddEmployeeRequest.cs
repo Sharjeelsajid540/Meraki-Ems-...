@@ -18,6 +18,7 @@ namespace MerakiEMS.Application.Contracts.Requests
         public string EContactNo { get; set; }
         public int ManagerID { get; set; }
         public string Address { get; set; }
+        public string Image { get; set; }
 
     }
 }
