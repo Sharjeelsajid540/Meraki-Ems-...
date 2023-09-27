@@ -7,3 +7,28 @@
 .ticketHeading {
   margin-bottom: 30px;
 }
+.action {
+  padding: 3px 5px !important;
+  width: 80px;
+}
+.action:hover {
+  background-color: #0b2b50 !important;
+}
+.approved {
+  background-color: #51b051;
+  color: white;
+}
+.declined {
+  background-color: rgb(209, 79, 79);
+  color: white;
+}
+.pending {
+  background-color: lightgray;
+  color: black;
+}
+.status {
+  padding: 3px 5px !important;
+  width: 80px;
+  border: none;
+  border-radius: 6px;
+}

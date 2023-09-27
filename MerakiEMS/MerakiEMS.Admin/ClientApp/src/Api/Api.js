@@ -153,11 +153,41 @@ export const addTicket = async (data) => {
   }
 };
 
-///////////   Add Ticket   //////////
+///////////   Get Tickets   //////////
 
 export const getTicket = async (id) => {
   try {
     const response = await axios.post(apiUrl + `api/User/GetTickets?id=${id}`);
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+///////////   Get All Tickets   //////////
+
+export const getAllTickets = async () => {
+  try {
+    const response = await axios.get(apiUrl + "api/User/GetAllTickets");
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+///////////   Update Tickets   //////////
+
+export const updateTickets = async (data) => {
+  try {
+    const response = await axios.put(apiUrl + "api/User/UpdateTicket", data);
     if (response.status == 200) {
       return response.data;
     } else {

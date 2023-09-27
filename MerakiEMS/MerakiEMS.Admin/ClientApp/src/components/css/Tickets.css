@@ -16,3 +16,21 @@
   color: white;
   width: 12%;
 }
+.statusDiv {
+  height: 33px;
+  width: 90px;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.approved {
+  background-color: #51b051;
+  color: white;
+}
+.declined {
+  background-color: rgb(209, 79, 79);
+  color: white;
+}
+.pending {
+  background-color: lightgray;
+  color: black;
+}

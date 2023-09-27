@@ -484,7 +484,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
         }
         public async Task<List<Tickets>> GetAllTickets()
         {
-            var response = await _context.Tickets.ToListAsync();
+            var response = await _context.Tickets.OrderByDescending(s => s.CreatedAt).ToListAsync();
             if(response == null)
             {
                 return null;

@@ -70,10 +70,7 @@ const Tickets = () => {
       header: "Priority",
       accessorKey: "priority",
     },
-    {
-      header: "Status",
-      accessorKey: "status",
-    },
+
     {
       header: "Created At",
       accessorKey: "createdAt",
@@ -86,20 +83,29 @@ const Tickets = () => {
       header: "Reviewed BY",
       accessorKey: "reviewer",
     },
+    {
+      header: "Status",
+      accessorKey: "status",
+      cell: (ticket) => (
+        <div
+          className={`statusDiv  ${ticket.row.original.status.toLowerCase()}`}
+        >
+          {ticket.row.original.status}
+        </div>
+      ),
+    },
   ];
 
   useEffect(() => {
     var id = userData.id;
     getTicket(id).then((response) => {
       if (response) {
-        console.log(response);
         setTicketData(response);
-        console.log(ticketData);
       }
     });
   }, [isChanged]);
   const data = useMemo(() => ticketData, [ticketData]);
-  console.log(data);
+
   return (
     <>
       <SideNavbar />
