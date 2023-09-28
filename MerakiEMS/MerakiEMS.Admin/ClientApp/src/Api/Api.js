@@ -76,7 +76,7 @@ export const CheckOutUser = async (data) => {
 
 export const fetchAllUsersData = async () => {
   try {
-    const response = await axios.get(apiUrl + "api/User/GetUsers");
+    const response = await axios.get(apiUrl + "api/User/GetAllUsers");
     if (response.status == 200) {
       localStorage.setItem("usersList", JSON.stringify(response.data));
 

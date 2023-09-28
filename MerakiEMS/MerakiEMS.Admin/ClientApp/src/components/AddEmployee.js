@@ -93,8 +93,10 @@ const AddEmployee = () => {
 
     if (roleID === "Admin") {
       data.roleID = 1;
-    } else {
+    } else if (roleID === "User") {
       data.roleID = 2;
+    } else {
+      data.roleID = 3;
     }
 
     await axios
@@ -381,7 +383,7 @@ const AddEmployee = () => {
                       onChange={(e) => setManagerID(e.target.value)}
                       required
                     >
-                       <option value="" disabled>
+                      <option value="" disabled>
                         Select Manager
                       </option>
                       {managerNames.map((role) => (

@@ -152,8 +152,10 @@ export const EmployeesList = () => {
 
     if (roleID === "Admin") {
       data.roleID = 1;
-    } else {
+    } else if (roleID === "User") {
       data.roleID = 2;
+    } else {
+      data.roleID = 3;
     }
     console.log(data);
 
