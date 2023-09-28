@@ -1,27 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import axios from 'axios';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import "./css/Respond.css"
-
+import React, { useState, useEffect } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import axios from "axios";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import "./css/Respond.css";
 
 function ShowLeaves({ leaveId, onClose }) {
   const [attendanceData, setAttendanceData] = useState([]);
   const [filteredData, setFilteredData] = useState([]); // New state for filtered data
-  const [adminRequestViewer, setAdminRequestViewer] = useState('');
-  const [status, setStatus] = useState('');
-  const [comments, setComments] = useState('');
+  const [adminRequestViewer, setAdminRequestViewer] = useState("");
+  const [status, setStatus] = useState("");
+  const [comments, setComments] = useState("");
   const [students, setUsers] = useState([]);
   const [selectedLeave, setSelectedLeave] = useState(null);
-  const [goToPage, setGoToPage] = useState('');
-  const [searchFilter, setSearchFilter] = useState(''); // State for the search filter
+  const [goToPage, setGoToPage] = useState("");
+  const [searchFilter, setSearchFilter] = useState(""); // State for the search filter
   const [leaveData, setLeaveData] = useState([]);
 
   const [show1, setShow1] = useState(false);
@@ -30,14 +29,14 @@ function ShowLeaves({ leaveId, onClose }) {
   useEffect(() => {
     // Fetch leave data from your API or source
     // Replace this with your actual API endpoint
-    fetch('https://localhost:7206/api/User/GetLeave')
+    fetch("https://localhost:7206/api/User/GetLeave")
       .then((response) => response.json())
       .then((data) => {
         // Process the data as needed
         setLeaveData(data);
       })
       .catch((error) => {
-        console.error('Error fetching leave data:', error);
+        console.error("Error fetching leave data:", error);
       });
   }, []);
 
@@ -48,16 +47,14 @@ function ShowLeaves({ leaveId, onClose }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
 
-  const uID = localStorage.getItem('loginData');
+  const uID = localStorage.getItem("loginData");
   const usID = JSON.parse(uID);
 
-  const leave = localStorage.getItem('LeaveData');
+  const leave = localStorage.getItem("LeaveData");
   const lv = JSON.parse(leave);
-  console.log(lv);
 
   useEffect(() => {
     fetchAttendanceData();
-    
   }, []);
 
   useEffect(() => {
@@ -73,37 +70,37 @@ function ShowLeaves({ leaveId, onClose }) {
 
   const fetchAttendanceData = async () => {
     try {
-      const response = await fetch('https://localhost:7206/api/User/GetLeave');
+      const response = await fetch("https://localhost:7206/api/User/GetLeave");
       const data = await response.json();
-      console.log('Data received from API:', data);
+
       setAttendanceData(data);
     } catch (error) {
-      console.error('Error fetching attendance data:', error);
+      console.error("Error fetching attendance data:", error);
     }
   };
 
   const Load = async () => {
-    const result = await axios.get('https://localhost:7206/api/User/GetLeave');
+    const result = await axios.get("https://localhost:7206/api/User/GetLeave");
     setUsers(result.data);
   };
 
   const update = async (event) => {
     event.preventDefault();
     try {
-      await axios.put('https://localhost:7206/api/User/AdminRequest', {
+      await axios.put("https://localhost:7206/api/User/AdminRequest", {
         id: selectedLeave.id,
         status: status,
         adminRequestViewer: usID.name,
         comments: comments,
       });
-      toast.success('Request has been Updated');
+      toast.success("Request has been Updated");
       setSelectedLeave(null);
-      setStatus('');
-      setComments('');
+      setStatus("");
+      setComments("");
       handleClose();
       fetchAttendanceData();
     } catch (err) {
-      toast.error('Error occurred!');
+      toast.error("Error occurred!");
     }
   };
 
@@ -114,34 +111,34 @@ function ShowLeaves({ leaveId, onClose }) {
 
   // Change page
   const paginate = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= Math.ceil(filteredData.length / itemsPerPage)) {
+    if (
+      pageNumber >= 1 &&
+      pageNumber <= Math.ceil(filteredData.length / itemsPerPage)
+    ) {
       setCurrentPage(pageNumber);
     }
   };
 
   return (
     <div>
-     
-    <>
-      <Modal size="lg" show={show1} onHide={handleClose1}>
+      <>
+        <Modal size="lg" show={show1} onHide={handleClose1}>
           <Modal.Header closeButton>
             <Modal.Title>Calendar</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <FullCalendar
-      plugins={[dayGridPlugin]}
-      initialView="dayGridMonth"
-      events={leaveData.map((leave) => ({
-        title: `${leave.name} (${leave.description})`, // Display leave name as the event title
-        start: leave.from, // Start date of the leave
-        end: leave.to, // End date of the leave
-      
-      }))}
-   
-    />
-      </Modal.Body>
+            <FullCalendar
+              plugins={[dayGridPlugin]}
+              initialView="dayGridMonth"
+              events={leaveData.map((leave) => ({
+                title: `${leave.name} (${leave.description})`, // Display leave name as the event title
+                start: leave.from, // Start date of the leave
+                end: leave.to, // End date of the leave
+              }))}
+            />
+          </Modal.Body>
         </Modal>
-</>
+      </>
       <>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -180,8 +177,7 @@ function ShowLeaves({ leaveId, onClose }) {
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              &nbsp;
-              &nbsp;
+              &nbsp; &nbsp;
               <Button
                 className="secondary-btn-respond"
                 variant="success"
@@ -195,20 +191,22 @@ function ShowLeaves({ leaveId, onClose }) {
         </Modal>
       </>
       <h2>Leaves Request List</h2>
-       
-      <Button variant="secondary" className='show-calendar-btn' onClick={handleShow1}>Show Calendar</Button>{' '}
-     
-      <br/> 
+      <Button
+        variant="secondary"
+        className="show-calendar-btn"
+        onClick={handleShow1}
+      >
+        Show Calendar
+      </Button>{" "}
+      <br />
       {/* Search filter input */}
       <div className="search-filter">
-      <Form.Control
-        type="text"
-        placeholder="Search"
-        value={searchFilter}
-        onChange={(e) => setSearchFilter(e.target.value)}
-            
-      />
-        
+        <Form.Control
+          type="text"
+          placeholder="Search"
+          value={searchFilter}
+          onChange={(e) => setSearchFilter(e.target.value)}
+        />
       </div>
       <table className="table">
         <thead>
@@ -249,9 +247,8 @@ function ShowLeaves({ leaveId, onClose }) {
                   }}
                 >
                   Respond
-                </Button>{' '}
+                </Button>{" "}
               </td>
-              
             </tr>
           ))}
         </tbody>
@@ -276,8 +273,8 @@ function ShowLeaves({ leaveId, onClose }) {
                 <button
                   onClick={() => paginate(index + 1)}
                   className={`page-link ${
-                    index + 1 === currentPage ? 'active' : ''
-                  } ${index + 1 > 10 ? 'new-page-button' : ''}`}
+                    index + 1 === currentPage ? "active" : ""
+                  } ${index + 1 > 10 ? "new-page-button" : ""}`}
                 >
                   {index + 1}
                 </button>
@@ -307,7 +304,10 @@ function ShowLeaves({ leaveId, onClose }) {
           <button
             className="go-to-page-button"
             onClick={() => {
-              if (goToPage >= 1 && goToPage <= Math.ceil(filteredData.length / itemsPerPage)) {
+              if (
+                goToPage >= 1 &&
+                goToPage <= Math.ceil(filteredData.length / itemsPerPage)
+              ) {
                 paginate(parseInt(goToPage));
               }
             }}

@@ -4,6 +4,8 @@ import AddEmployee from "./components/AddEmployee";
 import LeaveRender from "./components/LeaveRender";
 import { EmployeesList } from "./components/EmployeesList";
 import UserProfile from "./components/UserProfile";
+import Tickets from "./components/Tickets";
+import ManageTickets from "./components/ManageTickets";
 
 const AppRoutes = [
   {
@@ -34,6 +36,14 @@ const AppRoutes = [
   {
     path: "/profile",
     element: <UserProfile />,
+  },
+  {
+    path: "/tickets",
+    element: <Tickets />,
+  },
+  {
+    path: "/tickets/admin",
+    element: <ManageTickets />,
   },
 ];
 

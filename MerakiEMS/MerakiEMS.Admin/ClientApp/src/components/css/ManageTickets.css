@@ -1,0 +1,46 @@
+.ticketContainer {
+  position: absolute;
+  margin: 8% 20%;
+  width: 75%;
+  /* margin: 110px 0px 0px 17.5%; */
+}
+.ticketHeading {
+  margin-bottom: 30px;
+}
+.action {
+  padding: 3px 5px !important;
+  width: 80px;
+}
+.action:hover {
+  background-color: #0b2b50 !important;
+}
+.approved {
+  background-color: #51b051;
+  color: white;
+}
+.declined {
+  background-color: rgb(209, 79, 79);
+  color: white;
+}
+.pending {
+  background-color: lightgray;
+  color: black;
+}
+.status {
+  padding: 3px 5px !important;
+  width: 80px;
+  border: none;
+  border-radius: 6px;
+}
+.medium {
+  color: orange;
+}
+.critical {
+  color: rgb(255, 60, 0);
+}
+.high {
+  color: rgb(226, 99, 61);
+}
+.low {
+  color: rgb(140, 216, 58);
+}

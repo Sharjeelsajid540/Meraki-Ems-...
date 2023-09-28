@@ -56,17 +56,20 @@ export const SideNavbar = () => {
             {UserRole === "Admin" ? "Leaves" : "Leaves"}
           </h5>
         </NavLink>
-        {/* <NavLink className="menu-links" to="/tickets">
+        <NavLink
+          className="menu-links"
+          to={UserRole === "Admin" ? "/tickets/admin" : "/tickets"}
+        >
           <h5 className="link-text">
             <FontAwesomeIcon
               icon={faTicketSimple}
               size="xs"
               className="menu-icons"
             />
-            {UserRole === "Admin" ? "Raise Ticket" : "Tickets"}
+            {UserRole === "Admin" ? "Tickets" : "Raise Ticket"}
           </h5>
         </NavLink>
-        <NavLink className="menu-links" to="/feedback">
+        {/*<NavLink className="menu-links" to="/feedback">
           <h5 className="link-text">
             <FontAwesomeIcon
               icon={faFilePen}

@@ -460,14 +460,68 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             {
                 return null;
             }
-            
-            
-            
 
+        }
+        public async Task<AddTicketResponse> AddTicket(Tickets ticket)
+        {
+            try
+            {
+                ticket.Status = "Pending";
+                ticket.CreatedAt = DateTime.Now;
+                ticket.UpdatedAt = DateTime.Now;
+                _context.Tickets.Add(ticket);
+                AddTicketResponse res = new AddTicketResponse();
+                await _context.SaveChangesAsync();
+                return res;
 
+            }
+            catch(Exception ex)
+            {
+                throw (ex);
+                return null;
+            }
             
-           
-
+        }
+        public async Task<List<Tickets>> GetAllTickets()
+        {
+            var response = await _context.Tickets.OrderByDescending(s => s.CreatedAt).ToListAsync();
+            if(response == null)
+            {
+                return null;
+            }
+            else
+            {
+                return response;
+            }
+        }
+        public async Task<List<Tickets>> GetTickets(int id)
+        {
+            var response = await _context.Tickets.Where(s => s.RequesterID == id).ToListAsync();
+            if (response == null)
+            {
+                return null;
+            }
+            else
+            {
+                return response;
+            }
+        }
+        public async Task<AddTicketResponse> UpdateTickets(UpdateTicketRequest req)
+        {
+            AddTicketResponse res = new AddTicketResponse();
+            var response = await _context.Tickets.Where(s => s.ID == req.ID).FirstOrDefaultAsync();
+            if (response == null)
+            {
+                return null;
+            }
+            else
+            {
+                response.Status = req.Status;
+                response.Reviewer = req.Reviewer;
+                response.UpdatedAt = DateTime.Now;
+                await _context.SaveChangesAsync();
+                return res;
+            }
         }
 
 
