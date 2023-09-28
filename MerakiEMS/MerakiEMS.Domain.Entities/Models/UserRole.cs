@@ -10,7 +10,7 @@ namespace MerakiEMS.Domain.Entities.Models
     {
         public int Id { get; set; }
         public int UserID { get; set; }
-        public int RoleID { get; set; }
+        public int? RoleID { get; set; }
 
        
     }

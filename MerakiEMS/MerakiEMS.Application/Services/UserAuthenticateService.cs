@@ -1,4 +1,5 @@
 ﻿
+using MailKit.Security;
 using MerakiEMS.Application.Contracts.Requests;
 using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Application.Interfaces;
@@ -7,6 +8,12 @@ using MerakiEMS.Domain.Entities.Contracts.Response;
 using MerakiEMS.Domain.Entities.Models;
 using MerakiEMS.Infrastructure.Persistence.Sql.Interfaces;
 using System.Data;
+using MimeKit;
+using System.Net.Mail;
+using MailKit.Net.Smtp;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Xml.Linq;
+
 
 namespace MerakiEMS.Application.Services
 {
@@ -19,26 +26,7 @@ namespace MerakiEMS.Application.Services
             _usersRepository = usersRepository;
         }
 
-        //public async Task<ApiResponse<string>>AuthenticateUser(RegisterRequest request)
-        //{
-        //    var response = new ApiResponse<string>();
-        //    try
-        //    {
-        //        Users entityUser = new();
-        //        {
-        //            entityUser.Email = request.Email;
-        //            entityUser.Password = request.Password;
-        //            entityUser.Username = request.Username;
-        //            entityUser.IsActive = true;
-        //        }
-        //        var res = await _usersRepository.CheckUser(entityUser);
-
-        //        if (res != null)
-        //        {
-        //            var token = await _usersRepository.GenerateToken(res);
-        //            response.IsRequestSuccessful = true;
-        //            response.SuccessResponse = "User Registered Successfully";
-        //            response.Token = token;
+        
 
 
 
@@ -167,7 +155,8 @@ namespace MerakiEMS.Application.Services
             }
             return item;
         }
-        public async Task<List<GetUsersResponse>> GetUsers()
+        
+        public async Task<List<GetUsersResponse>> GetAllUsers()
         {
             var response = await _usersRepository.GetAllUsers();
             return response;
@@ -178,7 +167,62 @@ namespace MerakiEMS.Application.Services
             return response;
         }
 
-       
+      
+        public async Task<EmailResult> SendLeaveEmail(EmailID email)
+        {
+            var postt = await _usersRepository.SendLeaveEmail(email);
+
+            if (postt == null)
+            {
+                return new EmailResult { Success = false, Message = "Email sending failed: User not found." };
+            }
+
+            // Construct the subject
+            string subject = $"Leave Request for {postt.Description}";
+
+            // Construct the body
+            string body = $"<div>Dear {postt.ManagerName},<br></div>";
+            body += $"<div><strong>{postt.EmpName}</strong> would like to request leave<br> from <strong>{postt.From:MM-dd-yyyy} to {postt.To:MM-dd-yyyy}</strong>.<br></div>";
+            body += "Please review the leave request and let him know if any further information is required.<br>";
+            body += $"<div><strong> Meraki IT Support</strong></div>";
+
+
+
+
+
+            // Send the email using the subject and body
+            try
+            {
+                var emaill = new MimeMessage();
+                emaill.From.Add(MailboxAddress.Parse("taybb512@gmail.com"));
+                emaill.To.Add(MailboxAddress.Parse(postt.Email)); // Use the manager's email here
+                emaill.Subject = subject;
+                emaill.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };
+
+                using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                    smtp.Authenticate("taybb512@gmail.com", "wkuoybrzpqxgyjaw");     
+                    smtp.Send(emaill);
+                    smtp.Disconnect(true);
+                }
+
+                return new EmailResult { Success = true, Message = "Email sent successfully." };
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                return new EmailResult { Success = false, Message = "Email sending failed: " + ex.Message };
+            }
+        }
+
+
+
+
+
+
+
+
 
         public async Task<UpdateUserResponse> UpdateUser(UpdateUserRequest user)
         {
@@ -207,32 +251,7 @@ namespace MerakiEMS.Application.Services
 
         }
 
-        public async Task<UpdateUserResponse> DeleteUser(int id)
-        {
-            var response = new UpdateUserResponse();
-            try
-            {
-                var res = await _usersRepository.DeleteUser(id);
-                if (res == null)
-                {
-                    response.SuccessMessage = "Invalid User ID!";
-
-                }
-                else
-                {
-                    response.IsSuccess = true;
-                    response.SuccessMessage = "User Deleted Successfully";
-                }
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.SuccessMessage += ex.Message;
-
-            }
-            return response;
-
-        }
+        
 
         public async Task<ApiResponse<string>> RequestLeave(LeaveRequest lev)
         {
@@ -295,6 +314,38 @@ namespace MerakiEMS.Application.Services
             return response;
 
         }
+
+        public async Task<UpdateUserResponse> DeleteUser(int id)
+        {
+            var response = new UpdateUserResponse();
+            try
+            {
+                var res = await _usersRepository.DeleteUser(id);
+                if (res == null)
+                {
+                    response.SuccessMessage = "Invalid User ID!";
+
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.SuccessMessage = "User Deleted Successfully";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.SuccessMessage += ex.Message;
+
+            }
+            return response;
+
+        }
+
+        
+
+
+
         public async Task<List<Role>> GetRoleList()
         {
             var response = await _usersRepository.RoleList();
@@ -328,10 +379,9 @@ namespace MerakiEMS.Application.Services
                 return responses;
 
             }
-
         }
 
-        public async Task<List<LeaveResponse>> GetAllLeaves(UserID user)
+           public async Task<List<LeaveResponse>> GetAllLeaves(UserID user)
         {
         
                 List<LeaveResponse> responses = new List<LeaveResponse>();

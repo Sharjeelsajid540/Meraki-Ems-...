@@ -96,20 +96,20 @@ function LeavesList({ refreshData }) {
           </tr>
         </thead>
         <tbody>
-          {currentItems.map((entry) => (
-            <tr key={entry.id}>
-              <td>{entry.id}</td>
-              <td>{entry.name}</td>
-              <td>{entry.from}</td>
-              <td>{entry.to}</td>
-              <td>{entry.description}</td> 
-              <td>{entry.createdAt}</td>
-              <td>{entry.adminRequestViewer}</td>
-              <td>{entry.status}</td>
-              <td>{entry.comments}</td>
-              <td>{entry.updatedAt}</td>
-            </tr>
-          ))}
+        {filteredData.map((entry) => (
+  <tr key={entry.id}>
+    <td>{entry.id}</td>
+    <td>{entry.name}</td>
+    <td>{entry.from}</td>
+    <td>{entry.to}</td>
+    <td>{entry.description}</td> 
+    <td>{entry.createdAt}</td>
+    <td>{entry.adminRequestViewer}</td>
+    <td>{entry.status}</td>
+    <td>{entry.comments}</td>
+    <td>{entry.updatedAt}</td>
+  </tr>
+))}
         </tbody>
       </table>
        {/* Pagination */}

@@ -381,7 +381,7 @@ const AddEmployee = () => {
                       onChange={(e) => setManagerID(e.target.value)}
                       required
                     >
-                      <option value="" disabled>
+                       <option value="" disabled>
                         Select Manager
                       </option>
                       {managerNames.map((role) => (

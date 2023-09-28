@@ -39,6 +39,9 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Interfaces
         Task<List<Tickets>> GetAllTickets();
         Task<List<Tickets>> GetTickets(int id);
         Task <AddTicketResponse> UpdateTickets(UpdateTicketRequest req);
+
+        Task<LeaveEmailResponse> SendLeaveEmail(EmailID email);
+
     }
     
 }

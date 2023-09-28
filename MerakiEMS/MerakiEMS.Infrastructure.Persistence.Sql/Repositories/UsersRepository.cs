@@ -11,6 +11,8 @@ using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
 using System.Security.Cryptography;
+using Org.BouncyCastle.Ocsp;
+using System;
 
 
 namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
@@ -49,10 +51,10 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
           
             foreach (var u in user)
             {
-                var userRoleid =  _context.UserRole.Where(s => s.UserID == u.ID).FirstOrDefault();
-                var userRole = _context.Role.Where(s => s.ID == userRoleid.RoleID).FirstOrDefault();
+                var userRoleid =  await _context.UserRole.Where(s => s.UserID == u.ID).FirstOrDefaultAsync();
+                var userRole = await _context.Role.Where(s => s.ID == userRoleid.RoleID).FirstOrDefaultAsync();
 
-                var manager =  _context.User.Where(s => s.ID == u.ManagerID).FirstOrDefault();
+                var manager = await _context.User.Where(s => s.ID == u.ManagerID).FirstOrDefaultAsync();
 
                 var response = new GetUsersResponse();
                 response.UserID = u.ID;
@@ -62,8 +64,12 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 response.ContactNo = u.ContactNo;
                 response.Email = u.Email;
                 response.EContactNo = u.EContactNo;
-                response.Manager = manager.Name;
-                response.ManagerID = manager.ManagerID;
+                response.Manager = manager==null?null:manager.Name;
+                response.ManagerID = manager==null?null:manager.ManagerID;
+                response.Role = userRole==null?null:userRole.RoleName;
+                response.RoleID =userRole==null?null:userRole.ID;
+                response.Manager = manager==null?null:manager.Name;
+                response.ManagerID = manager==null?null:manager.ManagerID;
                 response.Role = userRole.RoleName;
                 response.RoleID = userRole.ID;
                 response.Image = u.Image;
@@ -91,14 +97,58 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 response.ContactNo = user.ContactNo;
                 response.Email = user.Email;
                 response.EContactNo = user.EContactNo;
-                response.Manager = manager.Name;
-                response.ManagerID = manager.ManagerID;
+                response.Manager = manager==null?null:manager.Name;
+                response.ManagerID = manager==null?null:manager.ManagerID;
                 response.Role = userRole.RoleName;
                 response.RoleID = userRole.ID;
             response.Image = user.Image;
                 
             
             return response;
+        }
+
+        public async Task<LeaveEmailResponse> SendLeaveEmail(EmailID req)
+        {
+            // Retrieve the user data
+            var userr = await _context.User
+                .Where(u => u.ID == req.ID)
+                .FirstOrDefaultAsync();
+
+            // Check if the user has a manager (assuming ManagerID is nullable)
+            if (userr != null)
+            {
+                // Retrieve the manager's data based on ManagerID
+                var manager = await _context.User
+                    .Where(u => u.ID == userr.ManagerID)
+                    .FirstOrDefaultAsync();
+
+                if (manager != null)
+                {
+                    // Retrieve the leave data for the user
+                    var leaveData = await _context.Leave
+                        .Where(x => x.UserID == req.ID) // Assuming UserID is used to link leaves to users
+                        .FirstOrDefaultAsync();
+
+                    if (leaveData != null)
+                    {
+                        // Construct the response
+                        var response = new LeaveEmailResponse();
+                        response.ID = req.ID;
+                        response.Email = manager.Email;
+                        response.ManagerName = manager.Name;
+                        response.EmpName = leaveData.Name;
+                        response.Description = leaveData.Description;
+                        response.From = req.From;
+                        response.To = req.To;
+                       
+
+                        return response;
+                    }
+                }
+            }
+
+            return null;
+             
         }
 
         public async Task<User> UpdateUser(UpdateUserRequest user)
@@ -159,16 +209,15 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             var CheckIn = _context.Leave.Where
             (s => s.ID == req.ID).FirstOrDefault();
 
-            /*CheckIn.UserID = req.UserID;*/
             CheckIn.AdminRequestViewer = req.AdminRequestViewer;
             CheckIn.Status = req.Status;
             CheckIn.Comments = req.Comments;
             CheckIn.UpdatedAt = DateTime.Now;
 
 
-            await _context.SaveChangesAsync(); // Add the Leave entity to the context
-             // Save changes to the database
-            return CheckIn; // Return the added Leave entity
+            await _context.SaveChangesAsync(); 
+             
+            return CheckIn; 
         }
 
 
@@ -188,10 +237,13 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             Status = "Pending"
             };
 
-            _context.Leave.Add(leave); // Add the Leave entity to the context
-            await _context.SaveChangesAsync(); // Save changes to the database
-            return leave; // Return the added Leave entity
+            _context.Leave.Add(leave); 
+            await _context.SaveChangesAsync(); 
+            return leave; 
         }
+
+       
+
 
         public async Task<List<Leave>> GetLeave()
         {
@@ -199,9 +251,11 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             return response;
         }
 
+
+
         public async Task<List<Leave>> GetAllLeaves(UserID user)
         {
-            var response = await _context.Leave.Where(s=> s.UserID == user.ID).OrderByDescending(s => s.CreatedAt).ToListAsync();
+            var response = await _context.Leave.Where(s=> s.UserID == user.ID).OrderByDescending(s => s.From).ToListAsync();
             return response;
         }
 
@@ -233,7 +287,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 }
                 else
                 {
-                    role.UserID = userr.ID;
+                    role.UserID = userr==null?0:userr.ID;
                     role.RoleID = req.RoleID;
                 }
                 _context.UserRole.Add(role);
@@ -244,10 +298,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             else
             {
                 return null;
-            }
-            
-            
-            
+            }            
         }
         public async Task<List<Role>> RoleList()
         {
@@ -255,7 +306,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             var response = await _context.Role.ToListAsync();
             return response;
         }
-       public async Task<List<ManagerListResponse>> MangerList()
+        public async Task<List<ManagerListResponse>> MangerList()
         {
             var list = new List<ManagerListResponse>();
             var response = await _context.UserRole.ToListAsync();
@@ -303,20 +354,21 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             return null;
         }
 
+        
 
 
         public async Task<LoginResponse> CheckLogin(User user)
-{
-    LoginResponse response = new LoginResponse();
-    var userr = await _context.User
-    .Where(s=> s.Name== user.Name && s.Password==user.Password).FirstOrDefaultAsync();
-    if(userr == null)
-    {
-        return null;
-    }
-    else
-    {
-        response.Name=userr.Name;
+        {
+        LoginResponse response = new LoginResponse();
+         var userr = await _context.User
+        .Where(s=> s.Name== user.Name && s.Password==user.Password).FirstOrDefaultAsync();
+         if(userr == null)
+         {
+            return null;
+          }
+         else
+        {
+                response.Name=userr.Name;
                 response.Id = userr.ID;
                 
             }

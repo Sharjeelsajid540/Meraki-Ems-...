@@ -1,10 +1,14 @@
-﻿using MerakiEMS.Application.Contracts.Requests;
+﻿using MailKit.Security;
+using MerakiEMS.Application.Contracts.Requests;
 using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Application.Interfaces;
 using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
 using MerakiEMS.Domain.Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
+using System.Net.Mail;
+using MailKit.Net.Smtp;
 
 namespace MerakiEMS.Api.Controllers
 {
@@ -28,6 +32,8 @@ namespace MerakiEMS.Api.Controllers
 
             return response;
         }
+       
+
 
         [HttpPut]
         [Route("AdminRequest")]
@@ -100,12 +106,20 @@ namespace MerakiEMS.Api.Controllers
             return response;
         }
         [HttpGet]
-        [Route("GetUsers")]
+        [Route("GetAllUsers")]
         public async Task<List<GetUsersResponse>> GetAllUsers()
         {
-            var response = await _authenticateService.GetUsers();
+            var response = await _authenticateService.GetAllUsers();
             return response;
         }
+        [HttpPost]
+        [Route("SendEmail")]
+        public async Task<EmailResult> SendLeaveEmail(EmailID email)
+        {
+            var response = await _authenticateService.SendLeaveEmail(email);
+            return response;
+        }
+
         [HttpPost]
         [Route("GetUser")]
         public async Task<GetUsersResponse> GetUser(int id)
@@ -136,6 +150,7 @@ namespace MerakiEMS.Api.Controllers
             var response = await _authenticateService.GetLeave();
             return response;
         }
+       
         [HttpPost]
         [Route("GetAllLeaves")]
         public async Task<List<LeaveResponse>> GetAllLeaves(UserID user)
