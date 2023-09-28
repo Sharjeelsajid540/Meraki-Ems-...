@@ -34,3 +34,15 @@
   background-color: lightgray;
   color: black;
 }
+.medium {
+  color: orange;
+}
+.critical {
+  color: rgb(255, 60, 0);
+}
+.high {
+  color: rgb(226, 99, 61);
+}
+.low {
+  color: rgb(140, 216, 58);
+}

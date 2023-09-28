@@ -46,6 +46,11 @@ const ManageTickets = () => {
     {
       header: "Priority",
       accessorKey: "priority",
+      cell: (ticket) => (
+        <div className={`${ticket.row.original.priority.toLowerCase()}`}>
+          {ticket.row.original.priority}
+        </div>
+      ),
     },
 
     {
