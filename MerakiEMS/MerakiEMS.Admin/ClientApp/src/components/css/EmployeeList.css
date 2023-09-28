@@ -7,11 +7,12 @@
 
 .viewDetails {
   /* border: none; */
-  padding: 4px 6px !important;
-}
-.viewDetails:hover {
   background-color: #0b2b50 !important;
+  
 }
+/* .viewDetails:hover {
+  padding: 4px 6px !important;
+} */
 .addBtn1 {
   /* background-color: #0b2b50 !important; */
   width: 100%;

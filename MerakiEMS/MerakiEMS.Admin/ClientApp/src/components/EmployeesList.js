@@ -86,7 +86,7 @@ export const EmployeesList = () => {
       cell: (employee) => (
         <Button
           className="viewDetails"
-          variant="outline-secondary"
+          variant="secondary"
           onClick={() => showDetails(employee)} // Call the showDetails function with the employee data
         >
           View Details

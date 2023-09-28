@@ -19,9 +19,9 @@ import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 const AddLeave = () => {
 
-
-  const[to, setTo]=useState();
-  const[from, setFrom]=useState();
+  const[id,setID]=useState();
+  const [from, setFrom] = useState(null);
+  const [to, setTo] = useState(null);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -69,49 +69,95 @@ const AddLeave = () => {
     var role = localStorage.getItem('loginData');
     var roleData = JSON.parse(role);
 
-    const handleSubmit = async (e)=>{
-        e.preventDefault();
-        localStorage.setItem('currentPage', currentPage);
-        const uID = localStorage.getItem('loginData');
-        const usID = JSON.parse(uID);
-        console.log(usID.id);
-        const data={
-            name:roleData.name,
-            userID:usID.id,
-            from:from,
-            to:to,
-            description:description
-           
-        };
-        
-           
-      
-const response = await axios.post("https://localhost:7206/api/User/AddLeave",data)
-.then((result) => {
     
-    if (result.data.isRequestSuccessful === true){
       
-      toast.success("Request has been Added");
-      refreshShowLeavesUser();
-      setIsLeaveAdded(true);
-      clear();
-      
+            // Send the email
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  localStorage.setItem('currentPage', currentPage);
+  const uID = localStorage.getItem('loginData');
+  const usID = JSON.parse(uID);
+  console.log(usID.id);
+
+  // Extract the date part from 'from' and 'to' using .toISOString()
+let fromDate = from ? new Date(from) : null;
+let toDate = to ? new Date(to) : null;
+
+// Add one day to 'from' and 'to' dates if they are not null
+if (fromDate) {
+  fromDate.setDate(fromDate.getDate() + 1);
+}
+if (toDate) {
+  toDate.setDate(toDate.getDate() + 1);
+}
+
+// Format the dates as ISO strings
+const formattedFromDate = fromDate ? fromDate.toISOString().split('T')[0] : null;
+const formattedToDate = toDate ? toDate.toISOString().split('T')[0] : null;
+
+const data = {
+  name: roleData.name,
+  userID: usID.id,
+  from: formattedFromDate,
+  to: formattedToDate,
+  description: description,
+};
+
+
+
+
+            
+try {
+  const response = await axios.post("https://localhost:7206/api/User/AddLeave", data);
+            
+  if (response.data.isRequestSuccessful === true) {
+    // Leave request added successfully
+    toast.success("Request has been Added");
+    refreshShowLeavesUser();
+    setIsLeaveAdded(true);
+    clear();
+            
+      // Now, fetch the latest leave data
+      const latestLeaveResponse = await axios.post("https://localhost:7206/api/User/GetAllLeaves", {
+      id: usID.id
+      });
+
+        const res = await latestLeaveResponse.data; // Access the data property
+
+        if (res.length > 0) {
+          const latestLeave = res[0]; // Get the first item as the latest leave
+
+          // Send an email with the latest leave data
+        const emailData = {
+          id: usID.id,
+          from: latestLeave.from,
+          to: latestLeave.to,
+          description:latestLeave.description
+          // Define the email content using the latestLeave data
+          // You can use the 'to', 'subject', and 'body' properties as needed
+           };
+            
+        // Send the email
+        await axios.post("https://localhost:7206/api/User/SendEmail", emailData);
+      } else {
+        toast.error("Failed to retrieve the latest leave data.");
+      }
+    } else {
+      toast.error(response.data.successResponse);
     }
-    else{
-      toast.error(result.data.successResponse)
-    }
-  })
-  .catch((error) => {
+  } catch (error) {
     if (error.response.status === 401) {
       toast.error("Session Expired!");
-      
       navigate("/");
     } else {
       toast.error(error);
     }
-  });
-    }
-
+  }
+};
+            
+          
+    
+    
     localStorage.setItem('currentPage', currentPage);
 
     const clear = () => {
@@ -156,6 +202,7 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
               selected={from}
               onChange={(date) => setFrom(date)}
               dateFormat="yyyy-MM-dd"
+              utcOffset={-300}
               className="date-picker-input"
               
             />
@@ -175,6 +222,7 @@ const response = await axios.post("https://localhost:7206/api/User/AddLeave",dat
               selected={to}
               onChange={(date) => setTo(date)}
               dateFormat="yyyy-MM-dd"
+              utcOffset={-300}
               className="date-picker-input"
             />
               <span className="date-picker-icon" onClick={handleIconClick2}>

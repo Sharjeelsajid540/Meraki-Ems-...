@@ -17,7 +17,7 @@ namespace MerakiEMS.Application.Interfaces
         //Task<ApiResponse<string>> AuthenticateUser(RegisterRequest request);
         Task<LoginResponse> LoginUser(LoginRequest request);
         Task<ApiResponse<string>> AddUser(AddEmployeeRequest req);
-        Task<List<Role>>GetRoleList();
+        Task<List<Role>> GetRoleList();
         Task<CheckInResponse> InsertAttendance(CheckInRequest req);
         Task<CheckoutResponse> UpdateAttendance(CheckOutRequest req);
         Task<List<AttendanceListResponse>> GetAttendanceList();
@@ -25,17 +25,19 @@ namespace MerakiEMS.Application.Interfaces
 
         Task<ApiResponse<string>> RequestLeave(LeaveRequest lev);
         Task<AdminLeaveResponse> AdminLeaveRequest(AdminRequest req);
-        Task<List<GetUsersResponse>> GetUsers();
+        Task<List<GetUsersResponse>> GetAllUsers();
         Task<GetUsersResponse> GetUser(int id);
         Task<UpdateUserResponse> UpdateUser(UpdateUserRequest user);
         Task<UpdateUserResponse> DeleteUser(int id);
         Task<List<LeaveResponse>> GetLeave();
-        
+
         Task<List<ManagerListResponse>> GetManagerList();
         Task<List<LeaveResponse>> GetAllLeaves(UserID user);
        Task<AddTicketResponse> AddTicket(Tickets ticket);
         Task<List<GetTicketResponse>> GetAllTickets();
         Task<List<GetTicketResponse>> GetTickets(int id);
         Task<AddTicketResponse> UpdateTickets(UpdateTicketRequest req);
+
+        Task<EmailResult> SendLeaveEmail(EmailID email);
     }
 }
