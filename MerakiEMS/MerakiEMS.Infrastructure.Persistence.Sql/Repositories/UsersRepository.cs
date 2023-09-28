@@ -312,7 +312,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             var response = await _context.UserRole.ToListAsync();
             foreach ( var item in response)
             {
-                if(item.RoleID == 1)
+                if(item.RoleID == 1 || item.RoleID ==3)
                 {
                     var name = await _context.User.Where(s => s.ID == item.UserID).FirstOrDefaultAsync();
                     ManagerListResponse manager = new ManagerListResponse();
