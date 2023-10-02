@@ -29,9 +29,10 @@ export const EmployeesList = () => {
   const [contactno, setContactNo] = useState("");
   const [econtactno, setEContactNo] = useState("");
   const [address, setAddress] = useState("");
-  const [roleID, setRoleID] = useState("");
-  const [managerID, setManagerID] = useState("");
-  const [managerName, setManagerName] = useState("");
+  const [roleID, setRoleID] = useState();
+
+  const [managerID, setManagerID] = useState();
+
   const [isChanged, setIsChanged] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -51,9 +52,10 @@ export const EmployeesList = () => {
     setContactNo(employee.row.original.contactNo);
     setEContactNo(employee.row.original.eContactNo);
     setAddress(employee.row.original.address);
-    setRoleID(employee.row.original.role);
+    setRoleID(employee.row.original.roleID);
+
     setManagerID(employee.row.original.managerID);
-    setManagerName(employee.row.original.manager);
+
     setUserID(employee.row.original.userID);
     setImage(employee.row.original.image);
   };
@@ -149,15 +151,6 @@ export const EmployeesList = () => {
     } else {
       setEContactNoError("");
     }
-
-    if (roleID === "Admin") {
-      data.roleID = 1;
-    } else if (roleID === "User") {
-      data.roleID = 2;
-    } else {
-      data.roleID = 3;
-    }
-    console.log(data);
 
     updateUsersData(data).then((response) => {
       if (response.isSuccess == true) {
@@ -411,9 +404,10 @@ export const EmployeesList = () => {
                       disabled={isDisabled}
                       required
                     >
-                      <option>{roleID}</option>
                       {roleNames.map((role) => (
-                        <option key={role.id}>{role.roleName}</option>
+                        <option key={role.id} value={role.id}>
+                          {role.roleName}
+                        </option>
                       ))}
                     </Form.Select>
                   </Form.Group>
@@ -429,7 +423,6 @@ export const EmployeesList = () => {
                       disabled={isDisabled}
                       required
                     >
-                      <option>{managerName}</option>
                       {managerNames.map((role) => (
                         <option key={role.managerID} value={role.managerID}>
                           {role.managerName}
