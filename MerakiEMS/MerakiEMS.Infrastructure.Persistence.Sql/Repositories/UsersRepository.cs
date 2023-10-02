@@ -69,7 +69,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 response.Role = userRole==null?null:userRole.RoleName;
                 response.RoleID =userRole==null?null:userRole.ID;
                 response.Manager = manager==null?null:manager.Name;
-                response.ManagerID = manager==null?null:manager.ManagerID;
+                response.ManagerID = u.ManagerID;
                 response.Role = userRole.RoleName;
                 response.RoleID = userRole.ID;
                 response.Image = u.Image;

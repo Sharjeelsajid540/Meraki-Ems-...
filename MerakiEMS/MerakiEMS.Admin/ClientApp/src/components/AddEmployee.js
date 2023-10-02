@@ -91,14 +91,6 @@ const AddEmployee = () => {
       setEContactNoError("");
     }
 
-    if (roleID === "Admin") {
-      data.roleID = 1;
-    } else if (roleID === "User") {
-      data.roleID = 2;
-    } else {
-      data.roleID = 3;
-    }
-
     await axios
       .post("https://localhost:7206/api/User/AddUser", data)
       .then((result) => {
@@ -206,17 +198,16 @@ const AddEmployee = () => {
     }
   };
 
-  useEffect(() => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => {
     const storedRoleNames = getRoleNamesFromLocalStorage();
     setRoleNames(storedRoleNames);
 
     const storedManagerNames = getManagerNamesFromLocalStorage();
     setManagerNames(storedManagerNames);
-  }, [isChanged]);
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+    setShow(true);
+  };
 
   return (
     <div className="CustomerPage">
@@ -366,9 +357,12 @@ const AddEmployee = () => {
                       value={roleID}
                       onChange={(e) => setRoleID(e.target.value)}
                       required
+                      id="formGridState1"
                     >
                       {roleNames.map((role) => (
-                        <option key={role.id}>{role.roleName}</option>
+                        <option key={role.id} value={role.id}>
+                          {role.roleName}
+                        </option>
                       ))}
                     </Form.Select>
                   </Form.Group>
@@ -382,6 +376,7 @@ const AddEmployee = () => {
                       value={managerID}
                       onChange={(e) => setManagerID(e.target.value)}
                       required
+                      id="formGridState2"
                     >
                       <option value="" disabled>
                         Select Manager
