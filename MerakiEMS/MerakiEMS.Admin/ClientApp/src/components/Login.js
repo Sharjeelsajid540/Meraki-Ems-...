@@ -22,7 +22,7 @@ const Login = () => {
         "https://localhost:7206/api/User/Login",
         {
           name: name,
-          password: password,
+          password: password
         }
       );
       if (response.data.isSuccess === true) {

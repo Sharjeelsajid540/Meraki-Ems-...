@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using System.Net.Mail;
 using MailKit.Net.Smtp;
+using MerakiEMS.Application.Services;
+using UAParser;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace MerakiEMS.Api.Controllers
 {
@@ -26,13 +29,28 @@ namespace MerakiEMS.Api.Controllers
         }
         [HttpPost]
         [Route("AddLeave")]
-        public async Task<ApiResponse<string>> LeaveRequestByAdmin(LeaveRequest lev)
+        public async Task<ApiResponse<string>> LeaveRequestByAdmin(LeaveRequest req)
         {
-            var response = await _authenticateService.RequestLeave(lev);
+            var response = await _authenticateService.RequestLeave(req);
 
             return response;
         }
-       
+
+        [HttpPost]
+        [Route("AddPerform")]
+        public async Task<ApiResponse<string>> AddPerform(PerformanceRequest req)
+        {
+            var response = await _authenticateService.AddPerform(req);
+
+            return response;
+        }
+        [HttpGet]
+        [Route("GetPerformance")]
+        public async Task<List<PerformanceResponse>> GetPerform()
+        {
+            var response = await _authenticateService.GetPerform();
+            return response;
+        }
 
 
         [HttpPut]
@@ -72,14 +90,15 @@ namespace MerakiEMS.Api.Controllers
         }
         [HttpGet]
         [Route("UserRole")]
-        public async Task<List <Role>> GetRole()
+        public async Task<List<Role>> GetRole()
         {
             var response = await _authenticateService.GetRoleList();
             return response;
         }
         [HttpGet]
         [Route("ManagerList")]
-        public async Task<List<ManagerListResponse>> ManagerList(){
+        public async Task<List<ManagerListResponse>> ManagerList()
+        {
             var response = await _authenticateService.GetManagerList();
             return response;
         }
@@ -87,10 +106,13 @@ namespace MerakiEMS.Api.Controllers
         [Route("UserCheckIn")]
         public async Task<CheckInResponse> AddUserAttendance(CheckInRequest req)
         {
+
+            
             var response = await _authenticateService.InsertAttendance(req);
+
             return response;
         }
-       
+
         [HttpGet]
         [Route("AllUserAttendance")]
         public async Task<List<AttendanceListResponse>> GetUserAttendance()
@@ -134,25 +156,25 @@ namespace MerakiEMS.Api.Controllers
             var response = await _authenticateService.UpdateUser(user);
             return response;
         }
-     
+
         [HttpDelete]
         [Route("DeleteUser")]
-        
-         public async Task<UpdateUserResponse> DeleteUser(int id)
+
+        public async Task<UpdateUserResponse> DeleteUser(int id)
         {
             var response = await _authenticateService.DeleteUser(id);
             return response;
         }
         [HttpGet]
-        [Route("GetLeave")]
+        [Route("GetAllLeave")]
         public async Task<List<LeaveResponse>> GetLeave()
         {
             var response = await _authenticateService.GetLeave();
             return response;
         }
-       
+
         [HttpPost]
-        [Route("GetAllLeaves")]
+        [Route("GetLeave")]
         public async Task<List<LeaveResponse>> GetAllLeaves(UserID user)
         {
             var response = await _authenticateService.GetAllLeaves(user);
@@ -184,6 +206,42 @@ namespace MerakiEMS.Api.Controllers
         public async Task<AddTicketResponse> UpdateTicket(UpdateTicketRequest request)
         {
             var response = await _authenticateService.UpdateTickets(request);
+            return response;
+        }
+        [HttpGet]
+        [Route("Test")]
+        public async Task<string> Test()
+        {
+            var response = "Successful";
+            return response;
+        }
+
+        [HttpGet]
+        [Route("ComputerName")]
+        public string GetComputerName()
+        {
+            return Environment.MachineName;
+        }
+        [HttpPost]
+        [Route("CheckCheckIn")]
+        public async Task<CheckStatusResponse> CheckCheckIn(CheckStatusRequest req)
+        {
+            var response = await _authenticateService.CheckCheckIn(req);
+            return response;
+        }
+
+        [HttpPost]
+        [Route("CheckCheckOut")]
+        public async Task<CheckStatusResponse> CheckCheckOut(CheckStatusRequest req)
+        {
+            var response = await _authenticateService.CheckCheckOut(req);
+            return response;
+        }
+        [HttpGet]
+        [Route("UserList")]
+        public async Task<List<UserListResponse>> UserList()
+        {
+            var response = await _authenticateService.GetUserList();
             return response;
         }
     }

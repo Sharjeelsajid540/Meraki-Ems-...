@@ -20,5 +20,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Context
         public DbSet<Leave> Leave { get; set; }
         public DbSet<Tickets> Tickets { get; set; }
         public DbSet<Leave> UserID { get; set; }
+
+        public DbSet<Performance> Performance { get; set; }
     }
 }

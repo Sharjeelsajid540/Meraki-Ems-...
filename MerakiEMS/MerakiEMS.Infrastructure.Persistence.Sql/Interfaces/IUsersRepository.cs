@@ -41,7 +41,13 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Interfaces
         Task <AddTicketResponse> UpdateTickets(UpdateTicketRequest req);
 
         Task<LeaveEmailResponse> SendLeaveEmail(EmailID email);
+        Task<Performance> AddPerform(PerformanceRequest req);
 
+        Task<List<Performance>> GetPerform();
+        Task<CheckStatusResponse> CheckCheckIn(CheckStatusRequest req);
+        Task<CheckStatusResponse> CheckCheckOut(CheckStatusRequest req);
+
+        Task<List<UserListResponse>> UserList();
     }
     
 }

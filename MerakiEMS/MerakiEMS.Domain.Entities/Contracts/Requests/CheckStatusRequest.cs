@@ -6,15 +6,8 @@ using System.Threading.Tasks;
 
 namespace MerakiEMS.Domain.Entities.Contracts.Requests
 {
-    public class CheckInRequest
+    public class CheckStatusRequest
     {
-        //public DateTime CheckInTime { get; set; }
-        
-        public int UserID { get; set; } 
-
-       
-
-       
-       
+        public int UserID { get; set; }
     }
 }

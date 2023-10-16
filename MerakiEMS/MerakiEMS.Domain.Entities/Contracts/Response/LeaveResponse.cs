@@ -26,6 +26,7 @@ namespace MerakiEMS.Domain.Entities.Contracts.Response
         public string? Comments { get; set; }
 
         public string Status { get; set; }
+        public string? LeaveType { get; set; }
 
         public string? UpdatedAt { get; set; }
     }

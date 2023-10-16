@@ -7,13 +7,9 @@ using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
 using MerakiEMS.Domain.Entities.Models;
 using MerakiEMS.Infrastructure.Persistence.Sql.Interfaces;
-using System.Data;
 using MimeKit;
-using System.Net.Mail;
-using MailKit.Net.Smtp;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using System.Xml.Linq;
-
+using Microsoft.AspNetCore.Http;
+using UAParser;
 
 namespace MerakiEMS.Application.Services
 {
@@ -30,25 +26,7 @@ namespace MerakiEMS.Application.Services
 
 
 
-        //        }
-        //        else
-        //        {
-        //            response.IsRequestSuccessful = false;
-        //            response.Errors = new List<string> { { $"User Already Exist!" } };
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.IsRequestSuccessful = false;
-        //        response.Errors = new List<string> { { $"Something went wrong Error:  Please check Message for more details" } };
-
-
-        //    }
-        //        return response;
-
-
-
-        //}
+       
 
 
 
@@ -167,7 +145,7 @@ namespace MerakiEMS.Application.Services
             return response;
         }
 
-      
+
         public async Task<EmailResult> SendLeaveEmail(EmailID email)
         {
             var postt = await _usersRepository.SendLeaveEmail(email);
@@ -177,46 +155,43 @@ namespace MerakiEMS.Application.Services
                 return new EmailResult { Success = false, Message = "Email sending failed: User not found." };
             }
 
-            // Construct the subject
-            string subject = $"Leave Request for {postt.Description}";
+            // Construct the body template
+            string bodyTemplate = $"<div>Dear,<br></div>";
+            bodyTemplate += $"<div><strong>{postt.EmpName}</strong> would like to request leave<br> from <strong>{postt.From:MM-dd-yyyy} to {postt.To:MM-dd-yyyy}</strong>.<br></div>";
+            bodyTemplate += "Please review the leave request and let him know if any further information is required.<br>";
+            bodyTemplate += $"<div><strong> Meraki IT Support</strong></div>";
 
-            // Construct the body
-            string body = $"<div>Dear {postt.ManagerName},<br></div>";
-            body += $"<div><strong>{postt.EmpName}</strong> would like to request leave<br> from <strong>{postt.From:MM-dd-yyyy} to {postt.To:MM-dd-yyyy}</strong>.<br></div>";
-            body += "Please review the leave request and let him know if any further information is required.<br>";
-            body += $"<div><strong> Meraki IT Support</strong></div>";
-
-
-
-
-
-            // Send the email using the subject and body
-            try
+            // Iterate through the list of email addresses and send individual emails
+            foreach (var recipientEmail in postt.Emails)
             {
-                var emaill = new MimeMessage();
-                emaill.From.Add(MailboxAddress.Parse("taybb512@gmail.com"));
-                emaill.To.Add(MailboxAddress.Parse(postt.Email)); // Use the manager's email here
-                emaill.Subject = subject;
-                emaill.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };
+                // Create a unique subject for each email
+                string subject = $"Leave Request for {postt.Description} - {recipientEmail}";
 
-                using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+                try
                 {
-                    smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-                    smtp.Authenticate("taybb512@gmail.com", "wkuoybrzpqxgyjaw");     
-                    smtp.Send(emaill);
-                    smtp.Disconnect(true);
+                    var emaill = new MimeMessage();
+                    emaill.From.Add(MailboxAddress.Parse("taybb512@gmail.com"));
+                    emaill.To.Add(MailboxAddress.Parse(recipientEmail)); // Use the recipient's email here
+                    emaill.Subject = subject;
+                    emaill.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = bodyTemplate };
+
+                    using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+                    {
+                        smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                        smtp.Authenticate("taybb512@gmail.com", "wkuoybrzpqxgyjaw");
+                        smtp.Send(emaill);
+                        smtp.Disconnect(true);
+                    }
                 }
+                catch (Exception ex)
+                {
+                    // Log the exception or handle it as needed
+                    return new EmailResult { Success = false, Message = "Email sending failed: " + ex.Message };
+                }
+            }
 
-                return new EmailResult { Success = true, Message = "Email sent successfully." };
-            }
-            catch (Exception ex)
-            {
-                // Log the exception or handle it as needed
-                return new EmailResult { Success = false, Message = "Email sending failed: " + ex.Message };
-            }
+            return new EmailResult { Success = true, Message = "Emails sent successfully." };
         }
-
-
 
 
 
@@ -253,17 +228,17 @@ namespace MerakiEMS.Application.Services
 
         
 
-        public async Task<ApiResponse<string>> RequestLeave(LeaveRequest lev)
+        public async Task<ApiResponse<string>> RequestLeave(LeaveRequest req)
         {
             var response = new ApiResponse<string>();
-            if (lev == null)
+            if (req == null)
             {
                 response.IsRequestSuccessful = false;
                 response.SuccessResponse = "User fields can not be empty!";
             }
             else
             {
-                var postt = await _usersRepository.RequestLeave(lev);
+                var postt = await _usersRepository.RequestLeave(req);
                 if (postt == null)
                 {
                     response.IsRequestSuccessful = false;
@@ -273,7 +248,7 @@ namespace MerakiEMS.Application.Services
                 else
                 {
                     response.IsRequestSuccessful = true;
-                    response.SuccessResponse = "User added successfully";
+                    response.SuccessResponse = "Leave added successfully";
                 }
 
             }
@@ -282,7 +257,36 @@ namespace MerakiEMS.Application.Services
 
         }
 
-    
+        public async Task<ApiResponse<string>> AddPerform(PerformanceRequest req)
+        {
+            var response = new ApiResponse<string>();
+            if (req == null)
+            {
+                response.IsRequestSuccessful = false;
+                response.SuccessResponse = "Comments can not be empty!";
+            }
+            else
+            {
+                var postt = await _usersRepository.AddPerform(req);
+                if (postt == null)
+                {
+                    response.IsRequestSuccessful = false;
+                    response.SuccessResponse = "User Already Exists!";
+
+                }
+                else
+                {
+                    response.IsRequestSuccessful = true;
+                    response.SuccessResponse = "Comments added successfully";
+                }
+
+            }
+
+            return response;
+
+        }
+
+
 
 
 
@@ -353,35 +357,50 @@ namespace MerakiEMS.Application.Services
         }
         public async Task<List<AttendanceListResponse>> GetAttendanceList()
         {
-            List<AttendanceListResponse> responses = new List<AttendanceListResponse>();
-
-            var res = await _usersRepository.AttendanceList();
-            if (res == null)
+            try
             {
-                return null;
-            }
-            else
-            {
+                List<AttendanceListResponse> responses = new List<AttendanceListResponse>();
 
-                foreach (var result in res)
+                // Call the repository method to get attendance data
+                var res = await _usersRepository.AttendanceList();
+
+                if (res == null)
                 {
-                    var response = new AttendanceListResponse();
-                    response.Name = result.Name;
-                    response.ID = result.ID;
-                    response.UserID = result.UserID;
-                    response.CheckInTime = result.CheckInTime?.ToString("HH:mm:ss");
-                    response.CreatedAt = result.CreatedAt?.ToString("MM-dd-yyyy");
-                    response.CheckOutTime = result.CheckOutTime?.ToString("HH:mm:ss");
-                    response.WorkingHours = result.WorkingHours?.ToString(@"hh\:mm\:ss");
-                    responses.Add(response);
-
+                    // Handle the case where no data is retrieved from the repository (e.g., log a message)
+                    return null;
                 }
-                return responses;
+                else
+                {
+                    foreach (var result in res)
+                    {
+                        var response = new AttendanceListResponse();
+                        response.Name = result.Name;
+                        response.ID = result.ID;
+                        response.UserID = result.UserID;
+                        response.CheckInTime = result.CheckInTime?.ToString("HH:mm:ss");
+                        response.CreatedAt = result.CreatedAt.ToString("MM-dd-yyyy");
+                        response.CheckOutTime = result.CheckOutTime?.ToString("HH:mm:ss");
+                        response.WorkingHours = result.WorkingHours?.ToString(@"hh\:mm\:ss");                      
+                        response.IPAddress = result.IPAddress;
+                        response.ComputerName = result.ComputerName;
+                        response.IsLate = result.IsLate;
+                        response.IsHourCompleted = result.IsHourCompleted;
 
+                        responses.Add(response);
+                    }
+
+                    return responses;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions appropriately (e.g., log the exception)
+                throw ex;
             }
         }
 
-           public async Task<List<LeaveResponse>> GetAllLeaves(UserID user)
+
+        public async Task<List<LeaveResponse>> GetAllLeaves(UserID user)
         {
         
                 List<LeaveResponse> responses = new List<LeaveResponse>();
@@ -446,6 +465,7 @@ namespace MerakiEMS.Application.Services
                     response.AdminRequestViewer = result.AdminRequestViewer;
                     response.CreatedAt = result.CreatedAt?.ToString("yyyy-MM-dd");
                     response.UpdatedAt = result.UpdatedAt?.ToString("yyyy-MM-dd");
+                    response.LeaveType = result.LeaveType;
 
                     responses.Add(response);
 
@@ -486,7 +506,7 @@ namespace MerakiEMS.Application.Services
                     response.ID = result.ID;
                     response.UserID = result.UserID;
                     response.CheckInTime = result.CheckInTime?.ToString("HH:mm:ss");
-                    response.CreatedAt = result.CreatedAt?.ToString("MM-dd-yyyy");
+                    response.CreatedAt = result.CreatedAt.ToString("MM-dd-yyyy");
                     response.CheckOutTime = result.CheckOutTime?.ToString("HH:mm:ss");
                     response.WorkingHours = result.WorkingHours?.ToString(@"hh\:mm\:ss");
                     responses.Add(response);
@@ -535,32 +555,45 @@ namespace MerakiEMS.Application.Services
         public async Task<CheckInResponse> InsertAttendance(CheckInRequest req)
         {
             CheckInResponse response = new CheckInResponse();
-            var res = await _usersRepository.InsertAttendance(req);
-            if (res != null)
+
+            try
             {
-                if(res.SuccessMessage == "Already CheckedIN!")
+                
+                var res = await _usersRepository.InsertAttendance(req);
+
+                if (res != null)
                 {
-                    response.SuccessMessage = res.SuccessMessage;
-                    response.IsRequestSuccessfull = "false";
-                    response.AttendanceID = res.AttendanceID;
-                    
+                    if (res.SuccessMessage == "Already CheckedIN!")
+                    {
+                        response.SuccessMessage = res.SuccessMessage;
+                        response.IsRequestSuccessfull = "false";
+                        response.AttendanceID = res.AttendanceID;
+                    }
+                    else
+                    {
+                        response.AttendanceID = res.AttendanceID;
+                        response.SuccessMessage = "CheckIn Successful";
+                        response.IsRequestSuccessfull = "true";
+                    }
                 }
                 else
                 {
-                    response.AttendanceID = res.AttendanceID;
-                    response.SuccessMessage = "CheckIn Successfull";
-                    response.IsRequestSuccessfull = "true";
+                    response.IsRequestSuccessfull = "false";
+                    response.SuccessMessage = "Already CheckedIn!";
+                    response.Errors = new List<string> { "Something Went wrong" };
                 }
-               
             }
-            else
+            catch (Exception ex)
             {
+                // Handle exceptions as needed
                 response.IsRequestSuccessfull = "false";
-                response.SuccessMessage = "Already CheckedIn!";
-                response.Errors = new List<string> { "Something Went wrong" };
+                response.SuccessMessage = "Error occurred";
+                response.Errors = new List<string> { ex.Message };
             }
+
             return response;
         }
+
 
 
         public async Task<AdminLeaveResponse> AdminLeaveRequest(AdminRequest req)
@@ -571,14 +604,14 @@ namespace MerakiEMS.Application.Services
                 var res = await _usersRepository.AdminLeaveRequest(req);
                 if (res != null)
                 {
-                    response.SuccessMessage = "CheckOut Successfull";
+                    response.SuccessMessage = "Request Updated Successfull";
                     response.IsRequestSuccessfull = "true";
 
                 }
                 else
                 {
                     response.IsRequestSuccessfull = "false";
-                    response.SuccessMessage = "CheckOut Failed!";
+                    response.SuccessMessage = "Leave Request Failed!";
                 }
                 return response;
             }
@@ -629,6 +662,65 @@ namespace MerakiEMS.Application.Services
         {
             var response = await _usersRepository.MangerList();
             return response;
+        }
+        public async Task<List<UserListResponse>> GetUserList()
+        {
+            var response = await _usersRepository.UserList();
+            return response;
+        }
+
+        public async Task<List<PerformanceResponse>> GetPerform()
+        {
+            List<PerformanceResponse> responses = new List<PerformanceResponse>();
+            try
+            {
+                var res = await _usersRepository.GetPerform();
+                if (res == null)
+                {
+                    return null;
+                }
+                else
+                {
+
+                    foreach (var result in res)
+                    {
+                        var response = new PerformanceResponse();
+                        response.ID = result.ID;
+                        response.UserID = result.UserID;
+                        response.EmployeeName = result.EmployeeName;
+                        response.Severity = result.Severity;
+                        response.Date = result.Date?.ToString(("yyyy-MM-dd"));
+                        response.Comments = result.Comments;
+                        
+
+                        responses.Add(response);
+
+                    }
+
+
+                    return responses;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+        }
+        public async Task<CheckStatusResponse> CheckCheckIn(CheckStatusRequest req)
+        {
+                var res = await _usersRepository.CheckCheckIn(req);
+                return res;
+
+        }
+
+        public async Task<CheckStatusResponse> CheckCheckOut(CheckStatusRequest req)
+        {
+            var res = await _usersRepository.CheckCheckOut(req);
+            return res;
+
         }
     }
 }

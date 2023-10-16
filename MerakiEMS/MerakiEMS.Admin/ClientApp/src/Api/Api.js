@@ -9,7 +9,8 @@ export const fetchAttendanceData = async (data) => {
     const response = await axios.post(apiUrl + "api/User/UserAttendance", data);
     if (response.status == 200) {
       localStorage.setItem("attendList", JSON.stringify(response.data));
-
+      
+     
       return response.data;
     } else {
       return false;
@@ -24,7 +25,7 @@ export const fetchAllAttendanceData = async () => {
     const response = await axios.get(apiUrl + "api/User/AllUserAttendance");
     if (response.status == 200) {
       localStorage.setItem("attendList", JSON.stringify(response.data));
-
+     
       return response.data;
     } else {
       return false;
@@ -45,8 +46,8 @@ export const CheckInUser = async (data) => {
         localStorage.setItem("AttendanceID", JSON.stringify(response.data));
       }
 
-      localStorage.setItem("AttendanceID", JSON.stringify(response.data));
-
+      
+      console.log(response.data);
       return response.data;
     } else {
       return false;
@@ -56,12 +57,35 @@ export const CheckInUser = async (data) => {
   }
 };
 
-/////////   CheckOut    ///////
+////////   CheckOut    ///////
 export const CheckOutUser = async (data) => {
   try {
     const response = await axios.put(apiUrl + "api/User/UserCheckOut", data);
     if (response.status === 200) {
-      // Check-out successful, update the state or perform any necessary actions
+   
+      console.log(response.data);
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+
+/////////   CheckIn    ///////
+
+export const CheckOutStatus = async (data) => {
+  try {
+    const response = await axios.post(apiUrl + "api/User/CheckCheckOut", data);
+
+    if (response.status === 200) {
+      if (response.status == "true") {
+        
+      }
+
+      // localStorage.setItem("AttendanceID", JSON.stringify(response.data));
 
       return response.data;
     } else {
@@ -71,6 +95,31 @@ export const CheckOutUser = async (data) => {
     return error.response;
   }
 };
+
+
+/////////   CheckIn    ///////
+
+export const CheckInStatus = async (data) => {
+  try {
+    const response = await axios.post(apiUrl + "api/User/CheckCheckIn", data);
+
+    if (response.status === 200) {
+      if (response.data.isRequestSuccessfull == "true") {
+        
+      }
+
+      // localStorage.setItem("AttendanceID", JSON.stringify(response.data));
+
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+
 
 ///////////   Fetch All Users   //////////
 
@@ -198,24 +247,7 @@ export const updateTickets = async (data) => {
   }
 };
 
-// export const userLogin = async (email, password) => {
-//   try {
-//     const resp = await axios.post(apiUrl + "api/Authetication/Login", {
-//       email: email,
-//       password: password,
-//     });
-//     if (resp.data.id > 0) {
-//       localStorage.setItem("user", JSON.stringify(resp.data));
-//     }
-//     if (resp.status == 200) {
-//       return resp.data;
-//     } else {
-//       return false;
-//     }
-//   } catch (err) {
-//     return err.response;
-//   }
-// };
+
 
 /////// Update Leaves Api //////
 

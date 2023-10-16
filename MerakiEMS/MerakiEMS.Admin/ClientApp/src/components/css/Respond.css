@@ -9,6 +9,7 @@
   background-color:#0B2B50 !important;
   color: white;
   margin-left: 88%;
+  margin-bottom: 2%;
 }
 
 /* Add this CSS to your stylesheet */
@@ -74,4 +75,7 @@
   
   .search-filter{
     width: 30%;
+  }
+  .name{
+    margin-top: -5%;
   }

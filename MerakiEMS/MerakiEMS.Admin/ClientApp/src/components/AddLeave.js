@@ -30,6 +30,7 @@ const AddLeave = () => {
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
   const [isLeaveAdded, setIsLeaveAdded] = useState(false);
+  const[LeaveType,setLeaveType]=useState();
 
   // Retrieve the stored current page number from localStorage
   const storedPageNumber = localStorage.getItem('currentPage');
@@ -49,7 +50,7 @@ const AddLeave = () => {
 
   const fetchAttendanceData = async () => {
     try {
-    const response = await fetch('https://localhost:7206/api/User/GetLeave');
+    const response = await fetch('https://localhost:7206/api/User/GetAllLeave');
     const data = await response.json();
     setAttendanceData(data);
     
@@ -74,7 +75,6 @@ const AddLeave = () => {
             // Send the email
 const handleSubmit = async (e) => {
   e.preventDefault();
-  localStorage.setItem('currentPage', currentPage);
   const uID = localStorage.getItem('loginData');
   const usID = JSON.parse(uID);
   console.log(usID.id);
@@ -101,6 +101,7 @@ const data = {
   from: formattedFromDate,
   to: formattedToDate,
   description: description,
+  LeaveType:LeaveType
 };
 
 
@@ -118,7 +119,7 @@ try {
     clear();
             
       // Now, fetch the latest leave data
-      const latestLeaveResponse = await axios.post("https://localhost:7206/api/User/GetAllLeaves", {
+      const latestLeaveResponse = await axios.post("https://localhost:7206/api/User/GetLeave", {
       id: usID.id
       });
 
@@ -136,7 +137,7 @@ try {
           // Define the email content using the latestLeave data
           // You can use the 'to', 'subject', and 'body' properties as needed
            };
-            
+          console.log(emailData)
         // Send the email
         await axios.post("https://localhost:7206/api/User/SendEmail", emailData);
       } else {
@@ -215,7 +216,7 @@ try {
       </Col>
       <Col>
       <Form.Group controlId="formGridEmail2">
-          <Form.Label >From (Date)</Form.Label>
+          <Form.Label >To (Date)</Form.Label>
       
             <div className="date-picker-container">
             <DatePicker
@@ -233,7 +234,24 @@ try {
         </Form.Group>
       </Col>
     </Row>
-
+              <Row className="mt-3">
+                <Form.Group as={Col} controlId="formGridStatus">
+                  <Form.Label>Leave Type</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={LeaveType}
+                    onChange={(e) => setLeaveType(e.target.value)}
+                    required
+                  >
+                    <option value="">Select Type</option>
+                    <option value="Casual">Casual</option>
+                    <option value="Sick">Sick</option>
+                    <option value="Annual">Annual</option>
+                    <option value="Half Day">Half Day</option>
+                    <option value="For Hours">For Hours</option>
+                  </Form.Control>
+                </Form.Group>
+              </Row>
       <Row className="mt-3">
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>Description</Form.Label>
