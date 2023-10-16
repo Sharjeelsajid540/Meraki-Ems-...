@@ -20,7 +20,8 @@ namespace MerakiEMS.Domain.Entities.Contracts.Response
         public string? Manager { get; set; }
         public int? ManagerID { get; set; }
         public string? Image { get; set; }
-        
+        public string? Message { get; set; }
+
 
 
     }

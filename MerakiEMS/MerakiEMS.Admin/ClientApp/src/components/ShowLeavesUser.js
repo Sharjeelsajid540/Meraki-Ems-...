@@ -4,14 +4,54 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import "./css/Respond.css"
 import axios from "axios";
+import { GridTable } from "./GridTable";
 function LeavesList({ refreshData }) {
   const [attendanceData, setAttendanceData] = useState([]);
   const [goToPage, setGoToPage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(8);
   const [searchFilter, setSearchFilter] = useState(''); // State for the search filter
   const [filteredData, setFilteredData] = useState([]); // New state for filtered data
   
+  const columns = [
+
+    {
+      header: "Name",
+      accessorKey: "name", // Replace with the correct accessorKey for the "Name" field
+    },
+    {
+      header: "From (Date)",
+      accessorKey: "from", // Replace with the correct accessorKey for the "From (Date)" field
+    },
+    {
+      header: "To (Date)",
+      accessorKey: "to", // Replace with the correct accessorKey for the "To (Date)" field
+    },
+    {
+      header: "Description",
+      accessorKey: "description", // Replace with the correct accessorKey for the "Description" field
+    },
+    {
+      header: "Created At",
+      accessorKey: "createdAt", // Replace with the correct accessorKey for the "Created At" field
+    },
+    {
+      header: "Reviewed By",
+      accessorKey: "adminRequestViewer", // Replace with the correct accessorKey for the "Request Reviewer" field
+    },
+    {
+      header: "Status",
+      accessorKey: "status", // Replace with the correct accessorKey for the "Status" field
+    },
+    {
+      header: "Comments",
+      accessorKey: "comments", // Replace with the correct accessorKey for the "Comments" field
+    },
+    {
+      header: "Updated At",
+      accessorKey: "updatedAt", // Replace with the correct accessorKey for the "Updated At" field
+    }
+  ];
   
   const fetchAttendanceData = async () => {
     try {
@@ -20,14 +60,14 @@ function LeavesList({ refreshData }) {
       var uid = roleData.id;
   
       const response = await axios.post(
-        'https://localhost:7206/api/User/GetAllLeaves' ,{
+        'https://localhost:7206/api/User/GetLeave' ,{
         
             id: uid 
            }
-);     console.log(response);
+);    
       const data = response.data;
        // Assuming your data is returned as JSON
-      console.log(data);
+      
   
       localStorage.setItem('LeaveData', JSON.stringify(data));
       setAttendanceData(data);
@@ -40,28 +80,9 @@ function LeavesList({ refreshData }) {
     fetchAttendanceData();
   }, [refreshData]);
 
-  useEffect(() => {
-    // When the searchFilter or attendanceData changes, apply the filter
-    const filtered = attendanceData.filter((entry) => {
-      return (
-        entry.id.toString().includes(searchFilter) ||
-        entry.name.toLowerCase().includes(searchFilter.toLowerCase())
-      );
-    });
-    setFilteredData(filtered);
-  }, [searchFilter, attendanceData]);
 
-  // Pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = attendanceData.slice(indexOfFirstItem, indexOfLastItem);
 
-   // Change page
-   const paginate = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= Math.ceil(attendanceData.length / itemsPerPage)) {
-      setCurrentPage(pageNumber);
-    }
-  };
+  
 
   
 
@@ -70,113 +91,11 @@ function LeavesList({ refreshData }) {
     <div>
       <h2>Leaves Status List</h2>
       <br/> 
-      <div className="search-filter">
-      <Form.Control
-        type="text"
-        placeholder="Search"
-        value={searchFilter}
-        onChange={(e) => setSearchFilter(e.target.value)}
-            
-      />
-        
+      
+      <GridTable data={attendanceData} columns={columns} />
+       
       </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>From (Date)</th>
-            <th>To (Date)</th>
-            <th>Description</th>
-            <th>Created At</th>
-            <th>Request Reviewer</th>
-            <th>Status</th>
-            <th>Comments</th>
-            <th>Updated At</th>         
-          </tr>
-        </thead>
-        <tbody>
-        {filteredData.map((entry) => (
-  <tr key={entry.id}>
-    <td>{entry.id}</td>
-    <td>{entry.name}</td>
-    <td>{entry.from}</td>
-    <td>{entry.to}</td>
-    <td>{entry.description}</td> 
-    <td>{entry.createdAt}</td>
-    <td>{entry.adminRequestViewer}</td>
-    <td>{entry.status}</td>
-    <td>{entry.comments}</td>
-    <td>{entry.updatedAt}</td>
-  </tr>
-))}
-        </tbody>
-      </table>
-       {/* Pagination */}
-       <div className="pagination-container">
-        <ul className="pagination">
-          {currentPage > 1 && (
-            <li className="page-item">
-              <button
-                onClick={() => paginate(currentPage - 1)}
-                className="page-link"
-              >
-                Prev
-              </button>
-            </li>
-          )}
-          {Array(Math.ceil(attendanceData.length / itemsPerPage))
-            .fill()
-            .map((_, index) => (
-              <li key={index} className="page-item">
-                <button
-                  onClick={() => paginate(index + 1)}
-                  className={`page-link ${
-                    index + 1 === currentPage ? 'active' : ''
-                  } ${index + 1 > 10 ? 'new-page-button' : ''}`}
-                >
-                  {index + 1}
-                </button>
-              </li>
-            ))}
-          {currentPage < Math.ceil(attendanceData.length / itemsPerPage) && (
-            <li className="page-item">
-              <button
-                onClick={() => paginate(currentPage + 1)}
-                className="page-link"
-              >
-                Next
-              </button>
-            </li>
-          )}
-        </ul>
-        {/* Go to Page input */}
-        <div className="go-to-page">
-          <span>Go to Page:&nbsp;</span>
-          <input
-            type="number"
-            min="1"
-            max={Math.ceil(attendanceData.length / itemsPerPage)}
-            value={goToPage}
-            onChange={(e) => setGoToPage(e.target.value)}
-          />
-          <button
-            className="go-to-page-button"
-            onClick={() => {
-              if (goToPage >= 1 && goToPage <= Math.ceil(attendanceData.length / itemsPerPage)) {
-                paginate(parseInt(goToPage));
-              }
-            }}
-          >
-            Go
-          </button>
-        </div>
-        {/* Page x of y */}
-        <div className="page-info">
-          Page {currentPage} of {Math.ceil(attendanceData.length / itemsPerPage)}
-        </div>
-      </div>
-    </div>
+  
   );
 }
 export default LeavesList;

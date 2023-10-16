@@ -206,6 +206,7 @@ const AddEmployee = () => {
 
     const storedManagerNames = getManagerNamesFromLocalStorage();
     setManagerNames(storedManagerNames);
+    console.log(storedManagerNames);
     setShow(true);
   };
 

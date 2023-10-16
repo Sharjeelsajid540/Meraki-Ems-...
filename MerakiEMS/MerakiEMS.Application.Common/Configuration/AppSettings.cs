@@ -16,6 +16,7 @@ namespace MerakiEMS.Application.Common.Configuration
         public ConnectionStrings ConnectionStrings { get; set; }
         public Upload Upload { get; set; }
         public CorsPolicyConfig CorsPolicyConfig { get; set; }
+        public AttendanceConfig AttendanceConfig { get; set; }
     }
 
     public class ConnectionStrings
@@ -33,5 +34,13 @@ namespace MerakiEMS.Application.Common.Configuration
         public string AllowedOrigin { get; set; }
 
     }
+    public class AttendanceConfig
+    {
+        public string ArrivalTime { get; set; }
+
+        public int DutyHours { get; set; }
+
+    }
+
 
 }

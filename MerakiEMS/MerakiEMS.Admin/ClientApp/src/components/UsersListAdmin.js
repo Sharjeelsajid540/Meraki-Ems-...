@@ -7,6 +7,8 @@ import "./css/UserListAdmin.css";
 function UsersListAdmin() {
   const [attendanceData, setAttendanceData] = useState([]);
 
+  
+
   function calculateTotalHours(timeString) {
     if (!timeString) {
       return 0; // Handle the case where timeString is undefined or empty
@@ -31,9 +33,17 @@ function UsersListAdmin() {
       return "green";
     }
   }
-
-  // Define a function to render the "Working Hours" cell with conditional formatting
-  const renderWorkingHoursCell = (cell) => {
+  // function isLateColor(isLate) {
+  //   console.log(isLate)
+  //   if (isLate === false) {
+  //     return "red";
+  //   } else {
+  //     return "green";
+  //   }
+  // }
+  
+   // Define a function to render the "Working Hours" cell with conditional formatting
+   const renderWorkingHoursCell = (cell) => {
     const cellValue = cell.getValue();
 
     // Calculate total hours from the "HH:MM:SS" format (with error handling)
@@ -44,10 +54,15 @@ function UsersListAdmin() {
 
     return <span className={colorClass}>{cellValue}</span>;
   };
+
+
+  
+
+ 
   const columns = [
     {
-      header: "Employee ID",
-      accessorKey: "userID",
+      header: "Date",
+      accessorKey: "createdAt",
     },
     {
       header: "Name",
@@ -65,12 +80,37 @@ function UsersListAdmin() {
       header: "Working Hours",
       accessorKey: "workingHours",
       cell: renderWorkingHoursCell,
-    },
+    }
+  ,
     {
-      header: "Date",
-      accessorKey: "createdAt",
+      header: "Is Hours Completed",
+      accessorKey: "isHourCompleted",
+      cell: ( value ) => (
+       
+        <strong>
+        <span style={{ color: value.getValue('isHourCompleted') ? 'red' : 'green' }}>
+      { value.getValue('isHourCompleted') ? 'Yes' : 'No'}
+    </span>
+    </strong>
+    )  ,
     },
+  
+    {
+      header: "Is Late",
+      accessorKey: "isLate",
+      cell: ( value ) => (
+       
+        <strong>
+        <span style={{ color: value.getValue('isLate') ? 'red' : 'green' }}>
+      { value.getValue('isLate') ? 'Late' : 'On Time'}
+    </span>
+    </strong>
+        
+        ),
+    }
+    
   ];
+  
   useEffect(() => {
     fetchAllAttendanceData().then((response) => {
       if (response) {
@@ -84,7 +124,7 @@ function UsersListAdmin() {
   return (
     <div>
       <h2 className="headingList">Employees Attendance List</h2>
-      <GridTable data={data} columns={columns} minHeight={"375px"} />
+      <GridTable data={data} columns={columns} minHeight={"300px"} />
     </div>
   );
 }

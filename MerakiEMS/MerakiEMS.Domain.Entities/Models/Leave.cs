@@ -27,7 +27,7 @@ namespace MerakiEMS.Domain.Entities.Models
         public string? Status { get; set; }
 
         public string? Comments { get; set; }
-
+        public string? LeaveType { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }
 }

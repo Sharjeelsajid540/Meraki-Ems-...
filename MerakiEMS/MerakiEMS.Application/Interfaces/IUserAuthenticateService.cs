@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
+using Microsoft.AspNetCore.Http;
 
 namespace MerakiEMS.Application.Interfaces
 {
@@ -23,7 +24,7 @@ namespace MerakiEMS.Application.Interfaces
         Task<List<AttendanceListResponse>> GetAttendanceList();
         Task<List<AttendanceListResponse>> GetSingleAttendanceList(UserAttendanceRequest req);
 
-        Task<ApiResponse<string>> RequestLeave(LeaveRequest lev);
+        Task<ApiResponse<string>> RequestLeave(LeaveRequest req);
         Task<AdminLeaveResponse> AdminLeaveRequest(AdminRequest req);
         Task<List<GetUsersResponse>> GetAllUsers();
         Task<GetUsersResponse> GetUser(int id);
@@ -39,5 +40,14 @@ namespace MerakiEMS.Application.Interfaces
         Task<AddTicketResponse> UpdateTickets(UpdateTicketRequest req);
 
         Task<EmailResult> SendLeaveEmail(EmailID email);
+
+        Task<ApiResponse<string>> AddPerform(PerformanceRequest req);
+
+        Task<List<PerformanceResponse>> GetPerform();
+        Task<CheckStatusResponse> CheckCheckIn(CheckStatusRequest req);
+
+        Task<CheckStatusResponse> CheckCheckOut(CheckStatusRequest req);
+
+        Task<List<UserListResponse>> GetUserList();
     }
 }

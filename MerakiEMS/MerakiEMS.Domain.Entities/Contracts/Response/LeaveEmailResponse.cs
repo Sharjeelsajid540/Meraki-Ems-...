@@ -21,7 +21,7 @@ namespace MerakiEMS.Domain.Entities.Contracts.Response
 
         public string EmpName { get; set; }
 
-
+        public List<string> Emails { get; set; }
 
         public Boolean IsSuccess { get; set; }
         public string SuccessMessage { get; set; }

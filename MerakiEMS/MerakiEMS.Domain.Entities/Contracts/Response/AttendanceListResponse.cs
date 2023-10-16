@@ -15,5 +15,11 @@ namespace MerakiEMS.Domain.Entities.Contracts.Response
         public string? CheckOutTime { get; set; }
         public string? WorkingHours { get; set; }
         public string? CreatedAt { get; set; }
+        public bool? IsLate { get; set; }
+        public bool? IsHourCompleted { get; set; }
+        public string? ComputerName { get; set; }
+        public string? IPAddress { get; set; }
+
+       
     }
 }

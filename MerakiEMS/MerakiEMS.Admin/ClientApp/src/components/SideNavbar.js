@@ -43,7 +43,7 @@ export const SideNavbar = () => {
 
         <NavLink
           className="menu-links"
-          to="/leaves"
+          to={"/leaves"}
           activeclassname="is-active"
         >
           <h5 className="link-text">
@@ -56,9 +56,19 @@ export const SideNavbar = () => {
             {UserRole === "Admin" ? "Leaves" : "Leaves"}
           </h5>
         </NavLink>
-        <NavLink
+        {UserRole === "Admin" && (
+  <NavLink className="menu-links" to="/perform">
+    <h5 className="link-text">
+      <FontAwesomeIcon icon={faTicketSimple} size="xs" className="menu-icons" />
+      Performance
+    </h5>
+  </NavLink>
+)}
+ 
+          {/* <NavLink
           className="menu-links"
-          to={UserRole === "Admin" ? "/tickets/admin" : "/tickets"}
+          to={"/home"}
+          // to={UserRole === "Admin" ? "/tickets/admin" : "/tickets"}
         >
           <h5 className="link-text">
             <FontAwesomeIcon
@@ -68,7 +78,7 @@ export const SideNavbar = () => {
             />
             {UserRole === "Admin" ? "Tickets" : "Raise Ticket"}
           </h5>
-        </NavLink>
+        </NavLink> */}
         {/*<NavLink className="menu-links" to="/feedback">
           <h5 className="link-text">
             <FontAwesomeIcon
@@ -79,15 +89,16 @@ export const SideNavbar = () => {
             {UserRole === "Admin" ? "Feedback" : "Give Feedback"}
           </h5>
         </NavLink> */}
-        <NavLink
+        {/* <NavLink
           className="menu-links"
-          to={UserRole === "Admin" ? "/employees" : "/profile"}
+          to={"/home"}
+          // to={UserRole === "Admin" ? "/employees" : "/profile"}
         >
           <h5 className="link-text">
             <FontAwesomeIcon icon={faUser} size="xs" className="menu-icons" />
             {UserRole === "Admin" ? "Employees" : "Profile"}
           </h5>
-        </NavLink>
+        </NavLink> */}
       </div>
       <div className="logout">
         <NavLink

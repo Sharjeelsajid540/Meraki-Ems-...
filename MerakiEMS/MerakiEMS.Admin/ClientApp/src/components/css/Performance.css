@@ -1,0 +1,9 @@
+.employeeList {
+    position: absolute;
+    margin: 8% 20%;
+    width: 75%;
+    /* margin: 110px 0px 0px 17.5%; */
+  }
+  .secondary-btn{
+    margin-bottom: 5%;
+  }

@@ -10,15 +10,16 @@ import axios from "axios";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import "./css/Respond.css";
+import { GridTable } from "./GridTable";
 
-function ShowLeaves({ leaveId, onClose }) {
+function ShowLeaves() {
   const [attendanceData, setAttendanceData] = useState([]);
   const [filteredData, setFilteredData] = useState([]); // New state for filtered data
   const [adminRequestViewer, setAdminRequestViewer] = useState("");
   const [status, setStatus] = useState("");
   const [comments, setComments] = useState("");
   const [students, setUsers] = useState([]);
-  const [selectedLeave, setSelectedLeave] = useState(null);
+  const [selectedLeave, setSelectedLeave] = useState();
   const [goToPage, setGoToPage] = useState("");
   const [searchFilter, setSearchFilter] = useState(""); // State for the search filter
   const [leaveData, setLeaveData] = useState([]);
@@ -26,10 +27,11 @@ function ShowLeaves({ leaveId, onClose }) {
   const [show1, setShow1] = useState(false);
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => setShow1(true);
+  
   useEffect(() => {
     // Fetch leave data from your API or source
     // Replace this with your actual API endpoint
-    fetch("https://localhost:7206/api/User/GetLeave")
+    fetch("https://localhost:7206/api/User/GetAllLeave")
       .then((response) => response.json())
       .then((data) => {
         // Process the data as needed
@@ -45,7 +47,7 @@ function ShowLeaves({ leaveId, onClose }) {
   const handleShow = () => setShow(true);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(10)
 
   const uID = localStorage.getItem("loginData");
   const usID = JSON.parse(uID);
@@ -53,39 +55,99 @@ function ShowLeaves({ leaveId, onClose }) {
   const leave = localStorage.getItem("LeaveData");
   const lv = JSON.parse(leave);
 
+  // Define your columns here
+const columns = [
+  
+  {
+    header: "Name",
+    accessorKey: "name", // Replace with the correct accessorKey for the "Name" field
+  },
+  {
+    header: "From (Date)",
+    accessorKey: "from", // Replace with the correct accessorKey for the "From (Date)" field
+  },
+  {
+    header: "To (Date)",
+    accessorKey: "to", // Replace with the correct accessorKey for the "To (Date)" field
+  },
+  {
+    header: "Description",
+    accessorKey: "description", // Replace with the correct accessorKey for the "Description" field
+  },
+  {
+    header: "Created At",
+    accessorKey: "createdAt", // Replace with the correct accessorKey for the "Created At" field
+  },
+  {
+    header: "Reviewed By",
+    accessorKey: "adminRequestViewer", // Replace with the correct accessorKey for the "Request Reviewer" field
+  },
+  
+  {
+    header: "Leave Type",
+    accessorKey: "leaveType", // Replace with the correct accessorKey for the "Updated At" field
+  },
+  {
+    header: "Status",
+    accessorKey: "status", // Replace with the correct accessorKey for the "Status" field
+  },
+  {
+    header: "Comments",
+    accessorKey: "comments", // Replace with the correct accessorKey for the "Comments" field
+  },
+  {
+    header: "Updated At",
+    accessorKey: "updatedAt", // Replace with the correct accessorKey for the "Updated At" field
+  },
+  {
+    header: "Action",
+ 
+    cell: (entry) => (
+      <button
+        className="secondary-btn-respond"
+        variant="success"
+        onClick={() => {
+         setSelectedLeave(entry.cell.row.original);
+          // console.log(entry.cell.row.original.id); // Log the id here
+          handleShow();
+        }}
+       // disabled={new Date(entry.from) <= new Date()}
+      >
+        Respond
+      </button>
+    ),
+  },
+];
+
   useEffect(() => {
     fetchAttendanceData();
   }, []);
 
-  useEffect(() => {
-    // When the searchFilter or attendanceData changes, apply the filter
-    const filtered = attendanceData.filter((entry) => {
-      return (
-        entry.id.toString().includes(searchFilter) ||
-        entry.name.toLowerCase().includes(searchFilter.toLowerCase())
-      );
-    });
-    setFilteredData(filtered);
-  }, [searchFilter, attendanceData]);
+
 
   const fetchAttendanceData = async () => {
     try {
-      const response = await fetch("https://localhost:7206/api/User/GetLeave");
+      const response = await fetch("https://localhost:7206/api/User/GetAllLeave");
       const data = await response.json();
+      
 
       setAttendanceData(data);
     } catch (error) {
       console.error("Error fetching attendance data:", error);
+      
     }
   };
 
   const Load = async () => {
-    const result = await axios.get("https://localhost:7206/api/User/GetLeave");
+    const result = await axios.get("https://localhost:7206/api/User/GetAllLeave");
     setUsers(result.data);
   };
 
   const update = async (event) => {
     event.preventDefault();
+    
+
+  
     try {
       await axios.put("https://localhost:7206/api/User/AdminRequest", {
         id: selectedLeave.id,
@@ -93,6 +155,7 @@ function ShowLeaves({ leaveId, onClose }) {
         adminRequestViewer: usID.name,
         comments: comments,
       });
+      
       toast.success("Request has been Updated");
       setSelectedLeave(null);
       setStatus("");
@@ -104,22 +167,7 @@ function ShowLeaves({ leaveId, onClose }) {
     }
   };
 
-  // Pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
-
-  // Change page
-  const paginate = (pageNumber) => {
-    if (
-      pageNumber >= 1 &&
-      pageNumber <= Math.ceil(filteredData.length / itemsPerPage)
-    ) {
-      setCurrentPage(pageNumber);
-    }
-  };
-
-  return (
+   return (
     <div>
       <>
         <Modal size="lg" show={show1} onHide={handleClose1}>
@@ -166,6 +214,7 @@ function ShowLeaves({ leaveId, onClose }) {
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label>Comments</Form.Label>
                   <Form.Control
+                  as="textarea"
                     type="name"
                     placeholder="Enter Comments"
                     value={comments}
@@ -190,7 +239,7 @@ function ShowLeaves({ leaveId, onClose }) {
           </Modal.Body>
         </Modal>
       </>
-      <h2>Leaves Request List</h2>
+      <h2 className="name">Leaves Request List</h2>
       <Button
         variant="secondary"
         className="show-calendar-btn"
@@ -199,127 +248,11 @@ function ShowLeaves({ leaveId, onClose }) {
         Show Calendar
       </Button>{" "}
       <br />
-      {/* Search filter input */}
-      <div className="search-filter">
-        <Form.Control
-          type="text"
-          placeholder="Search"
-          value={searchFilter}
-          onChange={(e) => setSearchFilter(e.target.value)}
-        />
-      </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>From (Date)</th>
-            <th>To (Date)</th>
-            <th>Description</th>
-            <th>Created At</th>
-            <th>Request Reviewer</th>
-            <th>Status</th>
-            <th>Comments</th>
-            <th>Updated At</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.map((entry) => (
-            <tr key={entry.id}>
-              <td>{entry.id}</td>
-              <td>{entry.name}</td>
-              <td>{entry.from}</td>
-              <td>{entry.to}</td>
-              <td>{entry.description}</td>
-              <td>{entry.createdAt}</td>
-              <td>{entry.adminRequestViewer}</td>
-              <td>{entry.status}</td>
-              <td>{entry.comments}</td>
-              <td>{entry.updatedAt}</td>
-              <td>
-                <Button
-                  className="secondary-btn-respond"
-                  variant="success"
-                  onClick={() => {
-                    setSelectedLeave(entry);
-                    handleShow();
-                  }}
-                >
-                  Respond
-                </Button>{" "}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {/* Pagination */}
-      <div className="pagination-container">
-        <ul className="pagination">
-          {currentPage > 1 && (
-            <li className="page-item">
-              <button
-                onClick={() => paginate(currentPage - 1)}
-                className="page-link"
-              >
-                Prev
-              </button>
-            </li>
-          )}
-          {Array(Math.ceil(filteredData.length / itemsPerPage))
-            .fill()
-            .map((_, index) => (
-              <li key={index} className="page-item">
-                <button
-                  onClick={() => paginate(index + 1)}
-                  className={`page-link ${
-                    index + 1 === currentPage ? "active" : ""
-                  } ${index + 1 > 10 ? "new-page-button" : ""}`}
-                >
-                  {index + 1}
-                </button>
-              </li>
-            ))}
-          {currentPage < Math.ceil(filteredData.length / itemsPerPage) && (
-            <li className="page-item">
-              <button
-                onClick={() => paginate(currentPage + 1)}
-                className="page-link"
-              >
-                Next
-              </button>
-            </li>
-          )}
-        </ul>
-        {/* Go to Page input */}
-        <div className="go-to-page">
-          <span>Go to Page:&nbsp;</span>
-          <input
-            type="number"
-            min="1"
-            max={Math.ceil(filteredData.length / itemsPerPage)}
-            value={goToPage}
-            onChange={(e) => setGoToPage(e.target.value)}
-          />
-          <button
-            className="go-to-page-button"
-            onClick={() => {
-              if (
-                goToPage >= 1 &&
-                goToPage <= Math.ceil(filteredData.length / itemsPerPage)
-              ) {
-                paginate(parseInt(goToPage));
-              }
-            }}
-          >
-            Go
-          </button>
-        </div>
-        {/* Page x of y */}
-        <div className="page-info">
-          Page {currentPage} of {Math.ceil(filteredData.length / itemsPerPage)}
-        </div>
-      </div>
+      
+      <GridTable data={attendanceData} columns={columns} />
+
+     
+      
     </div>
   );
 }
