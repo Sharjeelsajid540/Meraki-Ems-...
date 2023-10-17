@@ -244,5 +244,6 @@ namespace MerakiEMS.Api.Controllers
             var response = await _authenticateService.GetUserList();
             return response;
         }
+        
     }
 }

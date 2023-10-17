@@ -1,82 +1,60 @@
 import React, { useState, useEffect, useMemo } from "react";
 import "./css/CheckBtn.css";
-import { CheckInUser, CheckOutUser, fetchAttendanceData, CheckInStatus,CheckOutStatus } from "../Api/Api";
+import {
+  CheckInUser,
+  CheckOutUser,
+  fetchAttendanceData,
+  CheckInStatus,
+  CheckOutStatus,
+} from "../Api/Api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GridTable } from "./GridTable";
-import moment from "moment-timezone";
+
 import { Button, Modal } from "react-bootstrap";
 import "./css/AttendanceList.css";
-
-
 
 function AttendanceList() {
   const id = localStorage.getItem("loginData");
   var idData = JSON.parse(id);
-  
+
   const attendId = localStorage.getItem("attendList");
   var attenddID = JSON.parse(attendId);
   // const attendanceID = attendID ? attendID.attendanceID : null;
- 
+
   const [attendanceData, setAttendanceData] = useState([]);
   const [isChanged, setIsChanged] = useState(0);
   const [showCheckInModal, setShowCheckInModal] = useState(false);
   const [showCheckOutModal, setShowCheckOutModal] = useState(false);
   const [hasCheckedIn, setHasCheckedIn] = useState(false);
   const [hasCheckedOut, setHasCheckedOut] = useState(false);
-  const [checkInButtonDisabled, setCheckInButtonDisabled] = useState(false);
-  const [checkOutButtonDisabled, setCheckOutButtonDisabled] = useState(false);
 
-
-
- 
-
- 
-  
-  
- 
- 
-  
-  useEffect(() => {
-    const data = {
-      userID: idData.id,
-
-     
-    };
-    const checkCheckInStatus = async (data) => {
-      try {
-        const response = await CheckInStatus(data);
-        if (response.status === true) {
-          setHasCheckedIn(true);
-          setCheckInButtonDisabled(false)
-        }
-      } catch (error) {
-        console.error("Error checking check-in status:", error);
+  const checkCheckInStatus = async (data) => {
+    try {
+      const response = await CheckInStatus(data);
+      if (response.status === true) {
+        setHasCheckedIn(true);
+      } else {
+        setHasCheckedIn(false);
       }
-    };
-  
-    const checkCheckOutStatus = async (data) => {
-      try {
-        const response = await CheckOutStatus(data);
-        if (response.status === true) {
-          setHasCheckedOut(false);
-          setCheckOutButtonDisabled(true); // Reset the button when user hasn't checked out
-        }
-      } catch (error) {
-        console.error("Error checking check-out status:", error);
+    } catch (error) {
+      console.error("Error checking check-in status:", error);
+    }
+  };
+
+  const checkCheckOutStatus = async (data) => {
+    try {
+      const response = await CheckOutStatus(data);
+      if (response.status === false) {
+        setHasCheckedOut(true);
+        // Reset the button when user hasn't checked out
+      } else {
+        setHasCheckedOut(false);
       }
-    };
-  
-
- 
-
-
-
-    checkCheckInStatus(data);
-    checkCheckOutStatus(data);
-  }, []);
-
-
+    } catch (error) {
+      console.error("Error checking check-out status:", error);
+    }
+  };
 
   const columns = [
     {
@@ -95,29 +73,20 @@ function AttendanceList() {
       header: "Working Hours",
       accessorKey: "workingHours",
     },
-    
-    
   ];
 
   const confirmCheckIn = async () => {
-   
-
     try {
       const data = {
         userID: idData.id,
-  
-       
       };
       const response = await CheckInUser(data);
       if (response && response.isRequestSuccessfull === "true") {
         toast.success(response.successMessage);
-        setCheckInButtonDisabled(true);
+
         setIsChanged(isChanged + 1);
-        
-       
       } else if (response && response.isRequestSuccessfull === "false") {
         toast.error(response.successMessage);
-        
       } else if (response && response.errors) {
         console.log(response.errors);
         toast.error("Something Went Wrong");
@@ -133,23 +102,19 @@ function AttendanceList() {
   };
 
   const confirmCheckOut = async () => {
-    
-      const data = {
-        attendanceID: attenddID.id,
-        userID: idData.id,
-      };
-    
-    console.log("----------------",data)
+    const data = {
+      attendanceID: attenddID.id,
+      userID: idData.id,
+    };
+
     const response = await CheckOutUser(data);
     try {
       if (response.isRequestSuccessfull == "true") {
         toast.success(response.successMessage);
-        setCheckOutButtonDisabled(true);
+
         setIsChanged(isChanged + 1);
-        
       } else if (response && response.isRequestSuccessfull == "false") {
         toast.error(response.successMessage);
-        
       } else if (response && response.errors) {
         toast.error("Something Went Wrong");
       } else {
@@ -160,7 +125,6 @@ function AttendanceList() {
     }
 
     setShowCheckOutModal(false);
-  
   };
 
   const handleCheckIn = () => {
@@ -168,7 +132,7 @@ function AttendanceList() {
       setShowCheckInModal(true);
     }
   };
-  
+
   const handleCheckOut = () => {
     if (!hasCheckedOut) {
       setShowCheckOutModal(true);
@@ -185,6 +149,8 @@ function AttendanceList() {
         setAttendanceData(response);
       }
     });
+    checkCheckInStatus(data);
+    checkCheckOutStatus(data);
   }, [isChanged]);
 
   const data = useMemo(() => attendanceData, [attendanceData]);
@@ -200,8 +166,8 @@ function AttendanceList() {
                 <button
                   className={`btn btn-1 ${hasCheckedIn ? "btn-clicked" : ""}`}
                   onClick={handleCheckIn}
-                  disabled={checkInButtonDisabled}
-                  >
+                  disabled={hasCheckedIn}
+                >
                   {hasCheckedIn ? "Checked IN ✓" : "CheckIn"}
                 </button>
               </div>
@@ -212,10 +178,10 @@ function AttendanceList() {
                 <button
                   className={`btn btn-1 ${hasCheckedOut ? "btn-clicked" : ""}`}
                   onClick={handleCheckOut}
-                  disabled={checkOutButtonDisabled}
+                  disabled={hasCheckedOut}
                 >
                   {hasCheckedOut ? "Checked Out ✓" : "CheckOut"}
-                  </button>
+                </button>
                 <Modal
                   show={showCheckInModal}
                   onHide={() => setShowCheckInModal(false)}
@@ -263,8 +229,6 @@ function AttendanceList() {
           <div className="row">
             <div className="col-md-12">
               <h2>Employee Attendance</h2>
-              
-           
 
               <GridTable data={data} columns={columns} minHeight={"375px"} />
             </div>

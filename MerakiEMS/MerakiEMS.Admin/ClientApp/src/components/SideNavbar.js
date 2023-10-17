@@ -56,16 +56,16 @@ export const SideNavbar = () => {
             {UserRole === "Admin" ? "Leaves" : "Leaves"}
           </h5>
         </NavLink>
-        {UserRole === "Admin" && (
+        {/* {UserRole === "Admin" && (
   <NavLink className="menu-links" to="/perform">
     <h5 className="link-text">
       <FontAwesomeIcon icon={faTicketSimple} size="xs" className="menu-icons" />
       Performance
     </h5>
   </NavLink>
-)}
- 
-          {/* <NavLink
+)} */}
+
+        {/* <NavLink
           className="menu-links"
           to={"/home"}
           // to={UserRole === "Admin" ? "/tickets/admin" : "/tickets"}

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-const apiUrl = "https://localhost:7206/";
+const apiUrl = "http://www.meraki-ams.local/";
 
 /////////   Attendance List    ///////
 
@@ -9,8 +9,7 @@ export const fetchAttendanceData = async (data) => {
     const response = await axios.post(apiUrl + "api/User/UserAttendance", data);
     if (response.status == 200) {
       localStorage.setItem("attendList", JSON.stringify(response.data));
-      
-     
+
       return response.data;
     } else {
       return false;
@@ -25,7 +24,7 @@ export const fetchAllAttendanceData = async () => {
     const response = await axios.get(apiUrl + "api/User/AllUserAttendance");
     if (response.status == 200) {
       localStorage.setItem("attendList", JSON.stringify(response.data));
-     
+
       return response.data;
     } else {
       return false;
@@ -46,7 +45,6 @@ export const CheckInUser = async (data) => {
         localStorage.setItem("AttendanceID", JSON.stringify(response.data));
       }
 
-      
       console.log(response.data);
       return response.data;
     } else {
@@ -62,8 +60,6 @@ export const CheckOutUser = async (data) => {
   try {
     const response = await axios.put(apiUrl + "api/User/UserCheckOut", data);
     if (response.status === 200) {
-   
-      console.log(response.data);
       return response.data;
     } else {
       return false;
@@ -73,8 +69,7 @@ export const CheckOutUser = async (data) => {
   }
 };
 
-
-/////////   CheckIn    ///////
+/////////   CheckOutStatus    ///////
 
 export const CheckOutStatus = async (data) => {
   try {
@@ -82,7 +77,6 @@ export const CheckOutStatus = async (data) => {
 
     if (response.status === 200) {
       if (response.status == "true") {
-        
       }
 
       // localStorage.setItem("AttendanceID", JSON.stringify(response.data));
@@ -96,8 +90,7 @@ export const CheckOutStatus = async (data) => {
   }
 };
 
-
-/////////   CheckIn    ///////
+/////////   CheckInStatus    ///////
 
 export const CheckInStatus = async (data) => {
   try {
@@ -105,7 +98,6 @@ export const CheckInStatus = async (data) => {
 
     if (response.status === 200) {
       if (response.data.isRequestSuccessfull == "true") {
-        
       }
 
       // localStorage.setItem("AttendanceID", JSON.stringify(response.data));
@@ -119,9 +111,52 @@ export const CheckInStatus = async (data) => {
   }
 };
 
+///////////   Add Leave    //////////
 
+export const addLeave = async (data) => {
+  try {
+    const response = await axios.post(apiUrl + "api/User/AddLeave", data);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
 
-///////////   Fetch All Users   //////////
+///////////   Fetch Leave    //////////
+
+export const fetchLeave = async (data) => {
+  try {
+    const response = await axios.post(apiUrl + "api/User/GetLeave", data);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+///////////   Send Leave Email    //////////
+
+export const sendEmail = async (data) => {
+  try {
+    const response = await axios.post(apiUrl + "api/User/SendEmail", data);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+///////////   Fetch All Users Data   //////////
 
 export const fetchAllUsersData = async () => {
   try {
@@ -138,7 +173,7 @@ export const fetchAllUsersData = async () => {
   }
 };
 
-///////////   Fetch All Users   //////////
+///////////   Fetch Single User Data   //////////
 
 export const fetchUserData = async (id) => {
   try {
@@ -246,8 +281,6 @@ export const updateTickets = async (data) => {
     return error.response;
   }
 };
-
-
 
 /////// Update Leaves Api //////
 

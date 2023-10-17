@@ -1,35 +1,37 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import axios from 'axios';
-import { GridTable } from './GridTable';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import { SideNavbar } from './SideNavbar';
-import Modal from 'react-bootstrap/Modal';
-import Col from 'react-bootstrap/Col';
-import { Profile } from './Profile';
-import './css/Performance.css';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useMemo, useEffect } from "react";
+import axios from "axios";
+import { GridTable } from "./GridTable";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import { SideNavbar } from "./SideNavbar";
+import Modal from "react-bootstrap/Modal";
+import Col from "react-bootstrap/Col";
+import { Profile } from "./Profile";
+import "./css/Performance.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const Performance = () => {
   const [performanceData, setPerformanceData] = useState([]);
-  const [severity, setSeverityType] = useState(''); // Initialize as an empty string
-  const [comments, setComments] = useState(''); // Initialize as an empty string
+  const [severity, setSeverityType] = useState(""); // Initialize as an empty string
+  const [comments, setComments] = useState(""); // Initialize as an empty string
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const [selectedUserName, setSelectedUserName] = useState(''); // Selected user name
+  const [selectedUserName, setSelectedUserName] = useState(""); // Selected user name
   const [usersNames, setUsersNames] = useState([]);
   const [isChanged, setIsChanged] = useState(0);
 
   const fetchPerformanceData = async () => {
     try {
-      const response = await fetch('https://localhost:7206/api/User/GetPerformance');
+      const response = await fetch(
+        "http://www.meraki-ams.local/api/User/GetPerformance"
+      );
       const data = await response.json();
       setPerformanceData(data);
     } catch (error) {
-      console.error('Error fetching performance data:', error);
+      console.error("Error fetching performance data:", error);
     }
   };
 
@@ -41,7 +43,7 @@ const Performance = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const uID = localStorage.getItem('loginData');
+    const uID = localStorage.getItem("loginData");
     const usID = JSON.parse(uID);
 
     const data = {
@@ -51,17 +53,20 @@ const Performance = () => {
     };
 
     try {
-      const response = await axios.post('https://localhost:7206/api/User/AddPerform', data);
+      const response = await axios.post(
+        "http://www.meraki-ams.local/api/User/AddPerform",
+        data
+      );
 
       if (response.data.isRequestSuccessful === true) {
-        toast.success('Performance Added');
+        toast.success("Performance Added");
         refreshShowLeavesUser();
         clear();
       }
     } catch (error) {
       if (error.response.status === 401) {
-        toast.error('Session Expired!');
-        navigate('/');
+        toast.error("Session Expired!");
+        navigate("/");
       } else {
         toast.error(error);
       }
@@ -69,14 +74,16 @@ const Performance = () => {
   };
 
   const getUsers = async () => {
-    await axios.get('https://localhost:7206/api/User/UserList').then((result) => {
-      localStorage.setItem('UsersData', JSON.stringify(result.data));
-      setIsChanged(isChanged + 1);
-    });
+    await axios
+      .get("http://www.meraki-ams.local/api/User/UserList")
+      .then((result) => {
+        localStorage.setItem("UsersData", JSON.stringify(result.data));
+        setIsChanged(isChanged + 1);
+      });
   };
 
   const getUsersNamesFromLocalStorage = () => {
-    const usersNames = localStorage.getItem('UsersData');
+    const usersNames = localStorage.getItem("UsersData");
 
     return usersNames ? JSON.parse(usersNames) : [];
   };
@@ -88,9 +95,9 @@ const Performance = () => {
   };
 
   const clear = () => {
-    setSeverityType('');
-    setComments('');
-    setSelectedUserName(''); // Clear the selected user name
+    setSeverityType("");
+    setComments("");
+    setSelectedUserName(""); // Clear the selected user name
   };
 
   useEffect(() => {
@@ -100,21 +107,20 @@ const Performance = () => {
 
   const columns = [
     {
-      header: 'Employee Name',
-      accessorKey: 'employeeName',
+      header: "Employee Name",
+      accessorKey: "employeeName",
     },
     {
-      header: 'Severity',
-      accessorKey: 'severity',
+      header: "Severity",
+      accessorKey: "severity",
     },
     {
-      header: 'Date',
-      accessorKey: 'date',
+      header: "Date",
+      accessorKey: "date",
     },
     {
-      header: 'Comments',
-      accessorKey: 'comments',
-      
+      header: "Comments",
+      accessorKey: "comments",
     },
   ];
 
@@ -181,32 +187,35 @@ const Performance = () => {
                 </Form.Group>
               </Row>
               <Row className="mt-3">
-                
-
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>Comments</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={4}
-            placeholder="Enter Comments"
-            value={comments}
-            onChange={(e) => setComments(e.target.value)}
-            required
-          />
-        </Form.Group>
-      </Row>
-      <Button variant="primary" type="submit" className='addBtn' onClick={handleClose}>
-        Submit
-      </Button>
-    </Form>
-    </Modal.Body>
-    </Modal>
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form.Label>Comments</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={4}
+                    placeholder="Enter Comments"
+                    value={comments}
+                    onChange={(e) => setComments(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+              </Row>
+              <Button
+                variant="primary"
+                type="submit"
+                className="addBtn"
+                onClick={handleClose}
+              >
+                Submit
+              </Button>
+            </Form>
+          </Modal.Body>
+        </Modal>
+      </div>
+      <div className="employeeList">
+        <h2 className="headingList">Employees Performance</h2>
+        <GridTable data={data} columns={columns} minHeight={"300px"} />
+      </div>
     </div>
-    <div className='employeeList'>
-      <h2 className="headingList">Employees Performance</h2>
-      <GridTable data={data} columns={columns} minHeight={'300px'} />
-    </div>
-  </div>
   );
 };
 

@@ -23,51 +23,49 @@ export const GridTable = ({ data, columns, minHeight }) => {
   });
 
   table.getState().pagination.pageSize = 7;
-
+  const tableSize = table.getPageCount();
   return (
     <>
-      <div>
-        <div style={{ minHeight: minHeight }}>
-          <div className="globar-filter">
-            <input
-              className="filter-input"
-              placeholder="Filter Table"
-              type="text"
-              value={filtering}
-              onChange={(e) => setFiltering(e.target.value)}
-            />
-          </div>
-          <table className="table">
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <th key={header.id}>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {table.getRowModel().rows.map((row) => (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* <div> */}
+      <div style={{ minHeight: minHeight }}>
+        <div className="globar-filter">
+          <input
+            className="filter-input"
+            placeholder="Filter Table"
+            type="text"
+            value={filtering}
+            onChange={(e) => setFiltering(e.target.value)}
+          />
         </div>
+        <table className="table">
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {tableSize > 1 ? (
         <div className="menu-list">
           <div className="FooterOptions">
             <button className="FooterBtn" onClick={() => table.setPageIndex(0)}>
@@ -131,7 +129,10 @@ export const GridTable = ({ data, columns, minHeight }) => {
             </span>
           </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
+      {/* </div> */}
     </>
   );
 };

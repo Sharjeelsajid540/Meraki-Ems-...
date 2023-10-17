@@ -19,10 +19,10 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://localhost:7206/api/User/Login",
+        "http://www.meraki-ams.local/api/User/Login",
         {
           name: name,
-          password: password
+          password: password,
         }
       );
       if (response.data.isSuccess === true) {
