@@ -20,6 +20,7 @@ namespace MerakiEMS.Domain.Entities.Models
         public bool? IsHourCompleted { get; set; }
         public string? ComputerName { get; set; }
         public string? IPAddress { get; set; }
+       
 
 
 

@@ -7,8 +7,6 @@ import "./css/UserListAdmin.css";
 function UsersListAdmin() {
   const [attendanceData, setAttendanceData] = useState([]);
 
-  
-
   function calculateTotalHours(timeString) {
     if (!timeString) {
       return 0; // Handle the case where timeString is undefined or empty
@@ -41,9 +39,9 @@ function UsersListAdmin() {
   //     return "green";
   //   }
   // }
-  
-   // Define a function to render the "Working Hours" cell with conditional formatting
-   const renderWorkingHoursCell = (cell) => {
+
+  // Define a function to render the "Working Hours" cell with conditional formatting
+  const renderWorkingHoursCell = (cell) => {
     const cellValue = cell.getValue();
 
     // Calculate total hours from the "HH:MM:SS" format (with error handling)
@@ -55,10 +53,6 @@ function UsersListAdmin() {
     return <span className={colorClass}>{cellValue}</span>;
   };
 
-
-  
-
- 
   const columns = [
     {
       header: "Date",
@@ -80,37 +74,36 @@ function UsersListAdmin() {
       header: "Working Hours",
       accessorKey: "workingHours",
       cell: renderWorkingHoursCell,
-    }
-  ,
+    },
     {
       header: "Is Hours Completed",
       accessorKey: "isHourCompleted",
-      cell: ( value ) => (
-       
+      cell: (value) => (
         <strong>
-        <span style={{ color: value.getValue('isHourCompleted') ? 'red' : 'green' }}>
-      { value.getValue('isHourCompleted') ? 'Yes' : 'No'}
-    </span>
-    </strong>
-    )  ,
+          <span
+            style={{
+              color: value.getValue("isHourCompleted") ? "red" : "green",
+            }}
+          >
+            {value.getValue("isHourCompleted") ? "Yes" : "No"}
+          </span>
+        </strong>
+      ),
     },
-  
+
     {
       header: "Is Late",
       accessorKey: "isLate",
-      cell: ( value ) => (
-       
+      cell: (value) => (
         <strong>
-        <span style={{ color: value.getValue('isLate') ? 'red' : 'green' }}>
-      { value.getValue('isLate') ? 'Late' : 'On Time'}
-    </span>
-    </strong>
-        
-        ),
-    }
-    
+          <span style={{ color: value.getValue("isLate") ? "red" : "green" }}>
+            {value.getValue("isLate") ? "Late" : "On Time"}
+          </span>
+        </strong>
+      ),
+    },
   ];
-  
+
   useEffect(() => {
     fetchAllAttendanceData().then((response) => {
       if (response) {

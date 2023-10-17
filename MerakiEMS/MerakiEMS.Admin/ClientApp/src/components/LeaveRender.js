@@ -3,7 +3,7 @@ import ShowLeaves from "./ShowLeavesAdmin";
 import AddLeave from "./AddLeave";
 import { Profile } from "./Profile";
 import { SideNavbar } from "./SideNavbar";
-import "./css/Leave.css";
+
 const Leave = () => {
   var role = localStorage.getItem("loginData");
   var roleData = JSON.parse(role);
@@ -17,9 +17,8 @@ const Leave = () => {
     <div>
       <SideNavbar />
       <Profile />
-      <div className="addEmployee">
-        {UserRole == "Admin" ? <ShowLeaves /> : <AddLeave />}
-      </div>
+
+      {UserRole == "Admin" ? <ShowLeaves /> : <AddLeave />}
     </div>
   );
 };

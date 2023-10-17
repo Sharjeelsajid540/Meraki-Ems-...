@@ -419,19 +419,16 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
         public async Task<List<UserListResponse>> UserList()
         {
             var list = new List<UserListResponse>();
-            var response = await _context.UserRole.ToListAsync();
+            var response = await _context.User.ToListAsync();
             foreach (var item in response)
             {
-                if (item.RoleID == 2 || item.RoleID == 3)
-                {
-                    var name = await _context.User.Where(s => s.ID == item.UserID).FirstOrDefaultAsync();
+               
+                
+                   
                     UserListResponse user = new UserListResponse();
-                    user.UserID = item.UserID;
-                    user.UserName = name.Name;
+                    user.UserID = item.ID;
+                    user.UserName = item.Name;
                     list.Add(user);
-
-                }
-
 
             }
             return list;
@@ -554,7 +551,6 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
                 var Time = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
                 var arrivalTime = DateTime.Parse(AppSettings.Configuration.AttendanceConfig.ArrivalTime);
-                var allowedTime = TimeZoneInfo.ConvertTimeToUtc(arrivalTime, pakistanTimeZone);
 
                 var check = _context.UserAttendance
                     .Where(s => s.UserID == req.UserID && s.CreatedAt == Time.Date)
@@ -576,7 +572,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 
                         attendance.UserID = req.UserID;
                         attendance.Name = name.Name;
-                        attendance.IsLate = allowedTime <= Time;
+                        attendance.IsLate = arrivalTime <= Time;
 
 
                         await _context.UserAttendance.AddAsync(attendance);
@@ -617,16 +613,18 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
         {
             try
             {
+                var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
                 var workingHours = TimeSpan.FromHours(AppSettings.Configuration.AttendanceConfig.DutyHours);
+                var todayDate = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
                 var CheckIn =await _context.UserAttendance.Where
-                        (s => s.ID == req.AttendanceID).FirstOrDefaultAsync();
-                if (CheckIn.CheckOutTime == null)
+                        (s => s.UserID == req.UserID && s.CreatedAt == todayDate.Date && s.CheckOutTime == null).FirstOrDefaultAsync();
+                if (CheckIn != null)
                 {
-                    var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
-                    var checkOutTime = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
+                   
+                    
 
-                    CheckIn.WorkingHours = checkOutTime - CheckIn.CheckInTime;
-                    CheckIn.CheckOutTime = checkOutTime;
+                    CheckIn.WorkingHours = todayDate - CheckIn.CheckInTime;
+                    CheckIn.CheckOutTime = todayDate;
                     CheckIn.IsHourCompleted = workingHours < CheckIn.WorkingHours;                    
 
                     _context.Update(CheckIn);

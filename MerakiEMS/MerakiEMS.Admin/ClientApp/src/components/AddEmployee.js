@@ -92,7 +92,7 @@ const AddEmployee = () => {
     }
 
     await axios
-      .post("https://localhost:7206/api/User/AddUser", data)
+      .post("http://www.meraki-ams.local/api/User/AddUser", data)
       .then((result) => {
         if (result.data.isRequestSuccessful === true) {
           clear();
@@ -150,7 +150,7 @@ const AddEmployee = () => {
 
   const getManagers = async () => {
     await axios
-      .get("https://localhost:7206/api/User/ManagerList")
+      .get("http://www.meraki-ams.local/api/User/ManagerList")
       .then((result) => {
         localStorage.setItem("ManagersData", JSON.stringify(result.data));
         setIsChanged(isChanged + 1);
@@ -164,7 +164,7 @@ const AddEmployee = () => {
 
   const getRoles = async () => {
     await axios
-      .get("https://localhost:7206/api/User/UserRole")
+      .get("http://www.meraki-ams.local/api/User/UserRole")
       .then((result) => {
         localStorage.setItem("RolesData", JSON.stringify(result.data));
         setIsChanged(isChanged + 1);
@@ -212,7 +212,7 @@ const AddEmployee = () => {
 
   return (
     <div className="CustomerPage">
-      <div className="addEmployee">
+      <div className="addEmployee-section">
         <Button
           variant="secondary"
           className="secondary-btn"

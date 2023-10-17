@@ -1,12 +1,10 @@
-.secondary-btn-respond{
-  
-    background-color:#0B2B50 !important;
-    color: white;
-
+.secondary-btn-respond {
+  background-color: #0b2b50 !important;
+  color: white;
 }
 
-.show-calendar-btn{
-  background-color:#0B2B50 !important;
+.show-calendar-btn {
+  background-color: #0b2b50 !important;
   color: white;
   margin-left: 88%;
   margin-bottom: 2%;
@@ -14,68 +12,74 @@
 
 /* Add this CSS to your stylesheet */
 .pagination {
-    display: inline-block;
-    list-style: none;
-    padding: 0;
-    margin: 10px 0;
-  }
-  
-  .page-item {
-    display: inline-block;
-    margin-right: 5px;
-    vertical-align: middle; /* Add this line to vertically align with pagination buttons */
-  }
-  
-  .page-link {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    cursor: pointer;
-    text-decoration: none;
-    color: #0B2B50;
-  }
-  .page-link:hover{
-    color:#0B2B50;
-  }
-  .page-link.active {
-    background-color: #0B2B50;
-    color: #fff;
-    border: 1px solid #0B2B50;
-  }
-  
-  .page-info,
-  .go-to-page {
-    display: inline-block;
-    margin-left: 10px;
-    vertical-align: middle; /* Add this line to vertically align with pagination buttons */
-  }
-  
-  .go-to-page input {
-    width: 50px;
-    padding: 5px;
-    height: 32px;
-    margin-right: 2px;
-    vertical-align: middle; /* Add this line to vertically align with pagination buttons */
-    border-radius: 6px;
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
 }
-  
-  .go-to-page-button {
-    background-color: #0B2B50;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    vertical-align: middle; /* Add this line to vertically align with pagination buttons */
-    border-radius: 7px;
+
+.page-item {
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle; /* Add this line to vertically align with pagination buttons */
 }
-  
-  .go-to-page-button:hover {
-    background-color: #0B2B50;
-  }
-  
-  .search-filter{
-    width: 30%;
-  }
-  .name{
-    margin-top: -5%;
-  }
+
+.page-link {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #0b2b50;
+}
+.page-link:hover {
+  color: #0b2b50;
+}
+.page-link.active {
+  background-color: #0b2b50;
+  color: #fff;
+  border: 1px solid #0b2b50;
+}
+
+.page-info,
+.go-to-page {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: middle; /* Add this line to vertically align with pagination buttons */
+}
+
+.go-to-page input {
+  width: 50px;
+  padding: 5px;
+  height: 32px;
+  margin-right: 2px;
+  vertical-align: middle; /* Add this line to vertically align with pagination buttons */
+  border-radius: 6px;
+}
+
+.go-to-page-button {
+  background-color: #0b2b50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  vertical-align: middle; /* Add this line to vertically align with pagination buttons */
+  border-radius: 7px;
+}
+
+.go-to-page-button:hover {
+  background-color: #0b2b50;
+}
+
+.search-filter {
+  width: 30%;
+}
+.name {
+  margin-top: -5%;
+}
+.showLeavesAdmin {
+  position: absolute;
+  margin: 12% 20%;
+  width: 75%;
+  /* margin: 110px 0px 0px 17.5%; */
+}
