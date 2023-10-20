@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-const apiUrl = "https://localhost:7206/";
+const apiUrl = "http://www.meraki-ams.local/";
 
 /////////   Attendance List    ///////
 
