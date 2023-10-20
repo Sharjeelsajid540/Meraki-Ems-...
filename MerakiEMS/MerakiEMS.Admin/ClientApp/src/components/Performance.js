@@ -12,6 +12,7 @@ import "./css/Performance.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { getUsers , addPerform , fetchPerformData } from "../Api/Api";
 
 const Performance = () => {
   const [performanceData, setPerformanceData] = useState([]);
@@ -25,10 +26,7 @@ const Performance = () => {
 
   const fetchPerformanceData = async () => {
     try {
-      const response = await fetch(
-        "http://www.meraki-ams.local/api/User/GetPerformance"
-      );
-      const data = await response.json();
+      const data = await fetchPerformData();
       setPerformanceData(data);
     } catch (error) {
       console.error("Error fetching performance data:", error);
@@ -36,51 +34,81 @@ const Performance = () => {
   };
 
   const navigate = useNavigate();
-  const refreshShowLeavesUser = () => {
-    fetchPerformanceData();
-  };
+  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("handleSubmit() called");
+  
+    // Disable the submit button.
+    e.target.disabled = true;
+  
+    const errors = [];
+  
+    if (!selectedUserName) {
+      errors.push("Please enter a Username.");
+    }
+  
+    if (!severity) {
+      errors.push("Please select Severity.");
+    }
+  
+    if (!comments) {
+      errors.push("Please enter comments.");
+    }
+  
+    if (errors.length > 0) {
+      // Handle validation errors (if any) here
+      // Enable the submit button before returning
+      e.target.disabled = false;
+      return;
+    }
+  
     const uID = localStorage.getItem("loginData");
     const usID = JSON.parse(uID);
-
+  
     const data = {
-      name: selectedUserName, // Use the selectedUserName state
+      name: selectedUserName,
       severity: severity,
       comments: comments,
     };
-
+  
     try {
-      const response = await axios.post(
-        "http://www.meraki-ams.local/api/User/AddPerform",
-        data
-      );
-
-      if (response.data.isRequestSuccessful === true) {
+      console.log("addPerform() called");
+      const response = await addPerform(data);
+      console.log("addPerform() returned");
+    
+      if (response.isRequestSuccessful === true) {
         toast.success("Performance Added");
-        refreshShowLeavesUser();
+        fetchPerformanceData();
+        fetchData();
         clear();
+        handleClose(); // Close the modal
       }
     } catch (error) {
-      if (error.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         toast.error("Session Expired!");
         navigate("/");
       } else {
         toast.error(error);
       }
+    } finally {
+      // Enable the submit button.
+      e.target.disabled = false;
     }
+    
   };
+  
 
-  const getUsers = async () => {
-    await axios
-      .get("http://www.meraki-ams.local/api/User/UserList")
-      .then((result) => {
-        localStorage.setItem("UsersData", JSON.stringify(result.data));
+  const fetchData = async () => {
+      try {
+        await getUsers();
         setIsChanged(isChanged + 1);
-      });
-  };
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
   const getUsersNamesFromLocalStorage = () => {
     const usersNames = localStorage.getItem("UsersData");
@@ -100,9 +128,10 @@ const Performance = () => {
     setSelectedUserName(""); // Clear the selected user name
   };
 
+  
   useEffect(() => {
+    
     fetchPerformanceData();
-    getUsers();
   }, []);
 
   const columns = [
@@ -130,17 +159,13 @@ const Performance = () => {
     <div>
       <SideNavbar />
       <Profile />
-      <div className="addEmployee">
-        <Button
-          variant="secondary"
-          className="secondary-btn"
-          onClick={handleShow}
-        >
-          Add Comments
-        </Button>
+      
+      <div>
+       
+        
         <br />
         <br />
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} backdrop="static">
           <Modal.Header closeButton>
             <Modal.Title>Add Performance</Modal.Title>
           </Modal.Header>
@@ -180,8 +205,8 @@ const Performance = () => {
                       Select Severity
                     </option>
                     <option value="High">High</option>
-                    <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
                     <option value="Severe">Severe</option>
                   </Form.Control>
                 </Form.Group>
@@ -203,7 +228,7 @@ const Performance = () => {
                 variant="primary"
                 type="submit"
                 className="addBtn"
-                onClick={handleClose}
+               
               >
                 Submit
               </Button>
@@ -211,8 +236,18 @@ const Performance = () => {
           </Modal.Body>
         </Modal>
       </div>
+      
       <div className="employeeList">
+     
         <h2 className="headingList">Employees Performance</h2>
+        <Button
+          variant="secondary"
+          className="secondary-btn-btn"
+          onClick={handleShow}
+        >
+          Add Review
+        </Button>
+        
         <GridTable data={data} columns={columns} minHeight={"300px"} />
       </div>
     </div>

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import {LoginUser} from "../Api/Api";
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -16,27 +17,25 @@ const Login = () => {
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
-
+   const data={
+      name: name,
+      password: password
+    }
     try {
-      const response = await axios.post(
-        "http://www.meraki-ams.local/api/User/Login",
-        {
-          name: name,
-          password: password,
-        }
-      );
-      if (response.data.isSuccess === true) {
-        toast.success("Login Successful");
+      const result = await LoginUser(data);
+      if (result.success)  {
+        
+        toast.success(result.message);
         navigate("/home");
 
-        localStorage.setItem("loginData", JSON.stringify(response.data));
+        
       } else {
-        toast.error("Invalid Name or Password");
+        toast.error(result.message);
       }
 
-      // Handle the response here (e.g., store user data or show a success message)
+      
     } catch (error) {
-      // Handle errors here (e.g., show an error message)
+      
       console.error(error);
       toast.error("Something Went Wrong");
     }

@@ -22,14 +22,6 @@ namespace MerakiEMS.Application.Services
             _usersRepository = usersRepository;
         }
 
-        
-
-
-
-       
-
-
-
        public async Task<AddTicketResponse> AddTicket(Tickets ticket)
         {
             try
@@ -256,6 +248,37 @@ namespace MerakiEMS.Application.Services
             return response;
 
         }
+        
+        public async Task<FineResponse> FinePaid(FineRequest req)
+        {
+            FineResponse response = new FineResponse();
+            try
+            {
+                var res = await _usersRepository.FinePaid(req);
+                if (res != null)
+                {
+                    response.SuccessMessage = "Fine Request Updated Successfull";
+                    response.IsRequestSuccessfull = "true";
+
+                }
+                else
+                {
+                    response.IsRequestSuccessfull = "false";
+                    response.SuccessMessage = "Fine Request Failed!";
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.IsRequestSuccessfull = "false";
+                response.Errors = new List<string> { ex.Message };
+                return response;
+
+            }
+
+
+        }
+
 
         public async Task<ApiResponse<string>> AddPerform(PerformanceRequest req)
         {
@@ -380,11 +403,11 @@ namespace MerakiEMS.Application.Services
                         response.CheckInTime = result.CheckInTime?.ToString("HH:mm:ss");
                         response.CreatedAt = result.CreatedAt.ToString("MM-dd-yyyy");
                         response.CheckOutTime = result.CheckOutTime?.ToString("HH:mm:ss");
-                        response.WorkingHours = result.WorkingHours?.ToString(@"hh\:mm\:ss");                      
-                        response.IPAddress = result.IPAddress;
-                        response.ComputerName = result.ComputerName;
+                        response.WorkingHours = result.WorkingHours?.ToString(@"hh\:mm\:ss");                     
                         response.IsLate = result.IsLate;
                         response.IsHourCompleted = result.IsHourCompleted;
+                        response.FinePaid = result.FinePaid;
+                        response.PaidDate = result.PaidDate?.ToString("MM-dd-yyyy");
 
                         responses.Add(response);
                     }
@@ -721,6 +744,11 @@ namespace MerakiEMS.Application.Services
             var res = await _usersRepository.CheckCheckOut(req);
             return res;
 
+        }
+        public async Task<int> FineCount(int UserID)
+        {
+            var res = await _usersRepository.FineCount(UserID);
+            return res;
         }
     }
 }

@@ -6,7 +6,12 @@ import {
   fetchAttendanceData,
   CheckInStatus,
   CheckOutStatus,
+  FineCount,
+  
 } from "../Api/Api";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GridTable } from "./GridTable";
@@ -21,13 +26,18 @@ function AttendanceList() {
   const attendId = localStorage.getItem("attendList");
   var attenddID = JSON.parse(attendId);
   // const attendanceID = attendID ? attendID.attendanceID : null;
-
+  const [paidEntry, setPaidEntry] = useState([]);
+  const [finePaid, setFinePaid] = useState([]);
   const [attendanceData, setAttendanceData] = useState([]);
   const [isChanged, setIsChanged] = useState(0);
   const [showCheckInModal, setShowCheckInModal] = useState(false);
   const [showCheckOutModal, setShowCheckOutModal] = useState(false);
   const [hasCheckedIn, setHasCheckedIn] = useState(false);
   const [hasCheckedOut, setHasCheckedOut] = useState(false);
+  const [fineCount, setFineCount] = useState(0);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const checkCheckInStatus = async (data) => {
     try {
@@ -56,6 +66,19 @@ function AttendanceList() {
     }
   };
 
+  
+  useEffect(() => {
+    FineCount(idData.id)
+      .then((data) => {
+        if (data) {
+          setFineCount(data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching fine count:", error);
+      });
+  }, [idData.id]); 
+
   const columns = [
     {
       header: "Date",
@@ -73,6 +96,11 @@ function AttendanceList() {
       header: "Working Hours",
       accessorKey: "workingHours",
     },
+   
+
+
+
+ 
   ];
 
   const confirmCheckIn = async () => {
@@ -227,8 +255,11 @@ function AttendanceList() {
             </div>
           </div>
           <div className="row">
+          
             <div className="col-md-12">
               <h2>Employee Attendance</h2>
+              <h5>Pending Fine: <span>{fineCount}</span></h5>
+              
 
               <GridTable data={data} columns={columns} minHeight={"375px"} />
             </div>

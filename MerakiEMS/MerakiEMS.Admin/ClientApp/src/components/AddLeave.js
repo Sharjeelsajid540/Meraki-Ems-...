@@ -15,10 +15,11 @@ import "./css/AddLeave.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
-import { addLeave, fetchLeave, sendEmail } from "../Api/Api";
+import { addLeave, fetchLeave, sendEmail} from "../Api/Api";
 import { GridTable } from "./GridTable";
 
 const AddLeave = () => {
+  const [userID, setuserID] = useState(null);
   const [from, setFrom] = useState(null);
   const [to, setTo] = useState(null);
   const [show, setShow] = useState(false);
@@ -28,6 +29,19 @@ const AddLeave = () => {
   const [leaveData, setLeaveData] = useState([]);
   const [LeaveType, setLeaveType] = useState();
   const [isChanged, setIsChanged] = useState(0);
+ 
+
+  var role = localStorage.getItem("loginData");
+  var roleData = JSON.parse(role);
+  const uID = localStorage.getItem("loginData");
+  const usID = JSON.parse(uID);
+  const id = {
+    id: usID.id,
+  };
+
+ 
+ 
+
 
   const columns = [
     {
@@ -66,6 +80,8 @@ const AddLeave = () => {
       header: "Updated At",
       accessorKey: "updatedAt",
     },
+    
+    
   ];
 
   const handleIconClick1 = () => {
@@ -78,17 +94,30 @@ const AddLeave = () => {
 
   const navigate = useNavigate();
 
-  var role = localStorage.getItem("loginData");
-  var roleData = JSON.parse(role);
-  const uID = localStorage.getItem("loginData");
-  const usID = JSON.parse(uID);
-  const id = {
-    id: usID.id,
-  };
+ 
   // Send the email
   const handleSubmit = async (e) => {
     e.preventDefault();
+   // Validate the form
+  const errors = [];
+  if (!from) {
+    errors.push("Please enter a from date.");
+  }
+  if (!to) {
+    errors.push("Please enter a to date.");
+  }
+  if (!LeaveType) {
+    errors.push("Please select a leave type.");
+  }
+  if (!description) {
+    errors.push("Please enter a description.");
+  }
 
+  // Display any errors to the user
+  if (errors.length > 0) {
+    toast.error(errors.join("\n"));
+    return;
+  }
     // Extract the date part from 'from' and 'to' using .toISOString()
     let fromDate = from ? new Date(from) : null;
     let toDate = to ? new Date(to) : null;
@@ -122,6 +151,7 @@ const AddLeave = () => {
           toast.success("Request has been Added");
           clear();
           setIsChanged(isChanged + 1);
+          handleClose();
           fetchLeave(id).then((response) => {
             setLeaveData(response);
             if (response.length > 0) {
@@ -161,6 +191,7 @@ const AddLeave = () => {
       setLeaveData(response);
     });
   }, [isChanged]);
+ 
   return (
     <>
       <div className="addLeave">
@@ -175,11 +206,12 @@ const AddLeave = () => {
         </div>
         <h2>Leaves Status List</h2>
         <br />
+        
 
         <GridTable data={leaveData} columns={columns} />
 
         <div className="addEmployee">
-          <Modal show={show} onHide={handleClose}>
+          <Modal show={show} onHide={handleClose} backdrop="static">
             <Modal.Header closeButton>
               <Modal.Title>Request Leave</Modal.Title>
             </Modal.Header>
@@ -192,6 +224,7 @@ const AddLeave = () => {
 
                       <div className="date-picker-container">
                         <DatePicker
+                          required
                           selected={from}
                           onChange={(date) => setFrom(date)}
                           dateFormat="yyyy-MM-dd"
@@ -213,6 +246,7 @@ const AddLeave = () => {
 
                       <div className="date-picker-container">
                         <DatePicker
+                          required
                           selected={to}
                           onChange={(date) => setTo(date)}
                           dateFormat="yyyy-MM-dd"
@@ -263,7 +297,7 @@ const AddLeave = () => {
                   variant="primary"
                   type="submit"
                   className="addBtn"
-                  onClick={handleClose}
+                  
                 >
                   Submit
                 </Button>

@@ -11,14 +11,15 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import "./css/Respond.css";
 import { GridTable } from "./GridTable";
+import { fetchAllLeaves , UpdateLeaveStatus } from "../Api/Api";
+
 
 function ShowLeaves() {
-  const [attendanceData, setAttendanceData] = useState([]);
+
   const [filteredData, setFilteredData] = useState([]); // New state for filtered data
   const [adminRequestViewer, setAdminRequestViewer] = useState("");
   const [status, setStatus] = useState("");
   const [comments, setComments] = useState("");
-  const [students, setUsers] = useState([]);
   const [selectedLeave, setSelectedLeave] = useState();
   const [goToPage, setGoToPage] = useState("");
   const [searchFilter, setSearchFilter] = useState(""); // State for the search filter
@@ -27,20 +28,6 @@ function ShowLeaves() {
   const [show1, setShow1] = useState(false);
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => setShow1(true);
-
-  useEffect(() => {
-    // Fetch leave data from your API or source
-    // Replace this with your actual API endpoint
-    fetch("http://www.meraki-ams.local/api/User/GetAllLeave")
-      .then((response) => response.json())
-      .then((data) => {
-        // Process the data as needed
-        setLeaveData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching leave data:", error);
-      });
-  }, []);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -54,7 +41,8 @@ function ShowLeaves() {
 
   const leave = localStorage.getItem("LeaveData");
   const lv = JSON.parse(leave);
-
+  const errors = [];
+ 
   // Define your columns here
   const columns = [
     {
@@ -106,11 +94,14 @@ function ShowLeaves() {
           className="secondary-btn-respond"
           variant="success"
           onClick={() => {
+            
+            
             setSelectedLeave(entry.cell.row.original);
-            // console.log(entry.cell.row.original.id); // Log the id here
+            
+            
             handleShow();
           }}
-          // disabled={new Date(entry.from) <= new Date()}
+          
         >
           Respond
         </button>
@@ -119,46 +110,46 @@ function ShowLeaves() {
   ];
 
   useEffect(() => {
-    fetchAttendanceData();
+    fetchAllLeaveData();
   }, []);
 
-  const fetchAttendanceData = async () => {
+  const fetchAllLeaveData = async () => {
     try {
-      const response = await fetch(
-        "http://www.meraki-ams.local/api/User/GetAllLeave"
-      );
-      const data = await response.json();
-
-      setAttendanceData(data);
+      const data = await fetchAllLeaves();
+      setLeaveData(data);
     } catch (error) {
-      console.error("Error fetching attendance data:", error);
+      console.error("Error fetching performance data:", error);
     }
   };
 
-  const Load = async () => {
-    const result = await axios.get(
-      "http://www.meraki-ams.local/api/User/GetAllLeave"
-    );
-    setUsers(result.data);
-  };
-
+ const refresh = async (event) => {
+    event.preventDefault();
+    fetchAllLeaveData();
+  
+ }
   const update = async (event) => {
     event.preventDefault();
-
+    if (!comments) {
+      errors.push("Please enter a Username.");
+    }
+    if (!status) {
+      errors.push("Please select Severity.");
+    }
+    const data={
+      id: selectedLeave.id,
+      status: status,
+      adminRequestViewer: usID.name,
+      comments: comments,
+    }
     try {
-      await axios.put("http://www.meraki-ams.local/api/User/AdminRequest", {
-        id: selectedLeave.id,
-        status: status,
-        adminRequestViewer: usID.name,
-        comments: comments,
-      });
+      await UpdateLeaveStatus(data);
 
       toast.success("Request has been Updated");
       setSelectedLeave(null);
       setStatus("");
       setComments("");
       handleClose();
-      fetchAttendanceData();
+      fetchAllLeaveData();
     } catch (err) {
       toast.error("Error occurred!");
     }
@@ -169,7 +160,7 @@ function ShowLeaves() {
       <div className="showLeavesAdmin">
         <div>
           <>
-            <Modal size="lg" show={show1} onHide={handleClose1}>
+            <Modal size="lg" show={show1} onHide={handleClose1} backdrop="static">
               <Modal.Header closeButton>
                 <Modal.Title>Calendar</Modal.Title>
               </Modal.Header>
@@ -187,20 +178,21 @@ function ShowLeaves() {
             </Modal>
           </>
           <>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} backdrop="static">
               <Modal.Header closeButton>
                 <Modal.Title>Update Leave Request</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <Form>
+                <Form onSubmit={update}>
                   <Row className="mt-3">
                     <Form.Group as={Col} controlId="formGridStatus">
                       <Form.Label>Status</Form.Label>
                       <Form.Control
+                        required
                         as="select"
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
-                        required
+                        
                       >
                         <option value="">Select Status</option>
                         <option value="Pending">Pending</option>
@@ -213,16 +205,19 @@ function ShowLeaves() {
                     <Form.Group as={Col} controlId="formGridEmail">
                       <Form.Label>Comments</Form.Label>
                       <Form.Control
+                        required
+                        rows={3}
                         as="textarea"
                         type="name"
                         placeholder="Enter Comments"
                         value={comments}
                         onChange={(e) => setComments(e.target.value)}
-                        required
+                        
                       />
                     </Form.Group>
                   </Row>
-                  <Button variant="secondary" onClick={handleClose}>
+                  <Button variant="secondary" 
+                  onClick={handleClose}>
                     Close
                   </Button>
                   &nbsp; &nbsp;
@@ -230,7 +225,7 @@ function ShowLeaves() {
                     className="secondary-btn-respond"
                     variant="success"
                     type="submit"
-                    onClick={update}
+                    
                   >
                     Update
                   </Button>
@@ -238,7 +233,14 @@ function ShowLeaves() {
               </Modal.Body>
             </Modal>
           </>
-          <h2 className="name">Leaves Request List</h2>
+          <h2 className="leave-request-name">Leaves Request List</h2>
+          <Button
+            variant="secondary"
+            className="show-refresh-btn"
+            onClick={refresh}
+          >
+            Refresh
+          </Button>{" "}
           <Button
             variant="secondary"
             className="show-calendar-btn"
@@ -247,7 +249,7 @@ function ShowLeaves() {
             Show Calendar
           </Button>{" "}
           <br />
-          <GridTable data={attendanceData} columns={columns} />
+          <GridTable data={leaveData} columns={columns} />
         </div>
       </div>
     </>

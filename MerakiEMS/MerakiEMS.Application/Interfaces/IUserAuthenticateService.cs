@@ -15,7 +15,6 @@ namespace MerakiEMS.Application.Interfaces
 {
     public interface IUserAuthenticateService
     {
-        //Task<ApiResponse<string>> AuthenticateUser(RegisterRequest request);
         Task<LoginResponse> LoginUser(LoginRequest request);
         Task<ApiResponse<string>> AddUser(AddEmployeeRequest req);
         Task<List<Role>> GetRoleList();
@@ -49,5 +48,8 @@ namespace MerakiEMS.Application.Interfaces
         Task<CheckStatusResponse> CheckCheckOut(CheckStatusRequest req);
 
         Task<List<UserListResponse>> GetUserList();
+
+        Task<FineResponse> FinePaid(FineRequest req);
+        Task<int> FineCount(int UserID);
     }
 }
