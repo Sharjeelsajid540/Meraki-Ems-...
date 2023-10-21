@@ -16,6 +16,7 @@ using System;
 using MerakiEMS.Application.Common.Configuration;
 using FluentValidation;
 using System.Xml.Linq;
+using System.Runtime.Intrinsics.X86;
 
 namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 {
@@ -573,6 +574,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                         attendance.UserID = req.UserID;
                         attendance.Name = name.Name;
                         attendance.IsLate = arrivalTime <= Time;
+                        
 
 
                         await _context.UserAttendance.AddAsync(attendance);
@@ -645,6 +647,36 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 
 
         }
+
+
+        public async Task<UserAttendance> FinePaid(FineRequest req)
+        {
+            var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
+            var Time = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
+            var Fine = await _context.UserAttendance
+                .Where(s => s.ID == req.ID)
+                .FirstOrDefaultAsync();
+
+            if (Fine != null)
+            {
+                if (req.FinePaid == "Paid" || req.FinePaid == "Resolved")
+                {
+                    Fine.FinePaid = req.FinePaid;
+                    Fine.PaidDate = Time;
+                }
+                else
+                {
+                    Fine.FinePaid = req.FinePaid;
+                    Fine.PaidDate = null;
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+            return Fine;
+        }
+
+
         public async Task<AddTicketResponse> AddTicket(Tickets ticket)
         {
             try
@@ -747,6 +779,11 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 result.Status = true;
             }
             return result;
+        }
+        public async Task<int> FineCount(int UserID)
+        {
+            var fineData = await _context.UserAttendance.Where(s => s.IsLate == true &&  s.UserID == UserID && s.FinePaid == "Pending").ToListAsync();
+            return fineData.Count;
         }
     }
 }

@@ -18,9 +18,10 @@ namespace MerakiEMS.Domain.Entities.Models
         public string? Name { get; set; }
         public bool? IsLate { get; set; }
         public bool? IsHourCompleted { get; set; }
-        public string? ComputerName { get; set; }
-        public string? IPAddress { get; set; }
-       
+        public string? FinePaid { get; set; }
+        public DateTime? PaidDate { get; set; }
+
+
 
 
 

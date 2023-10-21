@@ -1,12 +1,23 @@
 import React, { useState, useMemo, useEffect } from "react";
-import Button from "react-bootstrap/Button";
+import { Button, Modal } from "react-bootstrap";
 import { GridTable } from "./GridTable";
-import { fetchAllAttendanceData } from "../Api/Api";
+import { fetchAllAttendanceData , UpdateFineStatus} from "../Api/Api";
 import "./css/UserListAdmin.css";
+import { toast } from "react-toastify";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+
 
 function UsersListAdmin() {
   const [attendanceData, setAttendanceData] = useState([]);
-
+  const [paidEntry, setPaidEntry] = useState([]);
+  const [finePaid, setFinePaid] = useState("");
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [isCount, setIsCount] = useState(0);
+  
   function calculateTotalHours(timeString) {
     if (!timeString) {
       return 0; // Handle the case where timeString is undefined or empty
@@ -31,16 +42,9 @@ function UsersListAdmin() {
       return "green";
     }
   }
-  // function isLateColor(isLate) {
-  //   console.log(isLate)
-  //   if (isLate === false) {
-  //     return "red";
-  //   } else {
-  //     return "green";
-  //   }
-  // }
+ 
 
-  // Define a function to render the "Working Hours" cell with conditional formatting
+ 
   const renderWorkingHoursCell = (cell) => {
     const cellValue = cell.getValue();
 
@@ -51,6 +55,48 @@ function UsersListAdmin() {
     const colorClass = getWorkingHoursColor(totalHours);
 
     return <span className={colorClass}>{cellValue}</span>;
+  };
+
+  const update = async (event) => {
+    event.preventDefault();
+    const data={
+      id: paidEntry,
+      finePaid: finePaid,
+      
+    }
+   
+    
+    try {
+      await UpdateFineStatus(data).then((result)=>{
+        
+        const errors = [];
+        if (!finePaid) {
+          errors.push("Please select Status.");
+        }
+      if(result.isRequestSuccessfull=="true"){
+        toast.success("Request has been Updated");
+        setPaidEntry(null);
+        const errors = [];
+        if (!finePaid) {
+          errors.push("Please select Status.");
+        }
+       handleClose();
+      fetchAllAttendanceData();
+      setIsCount(isCount + 1);
+      setFinePaid("");
+
+
+      }
+      else{
+        toast.error("Something went wrong.");
+        handleClose();
+        setPaidEntry(null);
+        setFinePaid("");
+      }
+    });
+    } catch (err) {
+      toast.error("Error occurred!");
+    }
   };
 
   const columns = [
@@ -76,13 +122,13 @@ function UsersListAdmin() {
       cell: renderWorkingHoursCell,
     },
     {
-      header: "Is Hours Completed",
+      header: "Hours Complete",
       accessorKey: "isHourCompleted",
       cell: (value) => (
         <strong>
           <span
             style={{
-              color: value.getValue("isHourCompleted") ? "red" : "green",
+              color: value.getValue("isHourCompleted") ? "green" : "red",
             }}
           >
             {value.getValue("isHourCompleted") ? "Yes" : "No"}
@@ -97,11 +143,41 @@ function UsersListAdmin() {
       cell: (value) => (
         <strong>
           <span style={{ color: value.getValue("isLate") ? "red" : "green" }}>
-            {value.getValue("isLate") ? "Late" : "On Time"}
+            {value.getValue("isLate") ? "Yes" : "NO"}
           </span>
         </strong>
       ),
     },
+    {
+      header: "Fine Paid",
+      accessorKey: "finePaid",
+    },
+    {
+      header: "Paid Date",
+      accessorKey: "paidDate",
+    },
+    {
+      header: " ",
+      accessorKey: " ",
+      cell: (entry) =>
+        entry.row.original.isLate == true ? (
+          <button
+          className="secondary-btn-respond"
+          variant="success"
+          onClick={() => {
+            
+            setPaidEntry(entry.row.original.id);
+            
+            handleShow();
+          }}
+          
+        >
+          Action
+        </button>
+        ) : (
+          " "
+        ),
+    }
   ];
 
   useEffect(() => {
@@ -110,12 +186,52 @@ function UsersListAdmin() {
         setAttendanceData(response);
       }
     });
-  }, []);
+  }, [isCount]);
 
   const data = useMemo(() => attendanceData, [attendanceData]);
 
   return (
     <div>
+      <Modal show={show} onHide={handleClose} backdrop="static">
+              <Modal.Header closeButton >
+                <Modal.Title>Update Leave Request</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form onSubmit={update}>
+                  <Row className="mt-3">
+                    <Form.Group as={Col} controlId="formGridStatus">
+                      <Form.Label>Status</Form.Label>
+                      <Form.Control
+                        required
+                        as="select"
+                        value={finePaid}
+                        onChange={(e) => setFinePaid(e.target.value)}
+                        
+                      >
+                        <option value="">Select Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Paid">Paid</option>
+                        <option value="Resolved">Resolved</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Row>
+                
+                  <Button variant="secondary"  onClick={handleClose}>
+                    Close
+                  </Button>
+                  &nbsp; &nbsp;
+                  <Button
+                    className="secondary-btn-respond"
+                    variant="success"
+                    type="submit"
+                    
+                  >
+                    Update
+                  </Button>
+                </Form>
+              </Modal.Body>
+            </Modal>
+          
       <h2 className="headingList">Employees Attendance List</h2>
       <GridTable data={data} columns={columns} minHeight={"300px"} />
     </div>

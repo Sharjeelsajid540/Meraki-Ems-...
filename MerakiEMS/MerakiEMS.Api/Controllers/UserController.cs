@@ -27,6 +27,16 @@ namespace MerakiEMS.Api.Controllers
             _authenticateService = authenticateService;
 
         }
+        [HttpPut]
+        [Route("FinePaid")]
+        public async Task<FineResponse> FinePaid(FineRequest req)
+        {
+            var response = await _authenticateService.FinePaid(req);
+
+            return response;
+        }
+
+
         [HttpPost]
         [Route("AddLeave")]
         public async Task<ApiResponse<string>> LeaveRequestByAdmin(LeaveRequest req)
@@ -107,7 +117,7 @@ namespace MerakiEMS.Api.Controllers
         public async Task<CheckInResponse> AddUserAttendance(CheckInRequest req)
         {
 
-            
+
             var response = await _authenticateService.InsertAttendance(req);
 
             return response;
@@ -244,6 +254,13 @@ namespace MerakiEMS.Api.Controllers
             var response = await _authenticateService.GetUserList();
             return response;
         }
-        
+        [HttpPost]
+        [Route("FineCount")]
+        public async Task<int> FineCount(int UserID)
+        {
+            var response = await _authenticateService.FineCount(UserID);
+            return response;
+        }
     }
+    
 }

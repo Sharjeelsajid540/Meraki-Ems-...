@@ -48,6 +48,9 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Interfaces
         Task<CheckStatusResponse> CheckCheckOut(CheckStatusRequest req);
 
         Task<List<UserListResponse>> UserList();
+
+        Task<UserAttendance> FinePaid(FineRequest req);
+        Task<int> FineCount(int UserID);
     }
     
 }

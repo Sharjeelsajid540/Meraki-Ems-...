@@ -45,7 +45,7 @@ export const CheckInUser = async (data) => {
         localStorage.setItem("AttendanceID", JSON.stringify(response.data));
       }
 
-      console.log(response.data);
+      
       return response.data;
     } else {
       return false;
@@ -205,6 +205,7 @@ export const updateUsersData = async (data) => {
   }
 };
 
+
 ///////////   Delete User   //////////
 
 export const deleteUser = async (id) => {
@@ -285,10 +286,10 @@ export const updateTickets = async (data) => {
 /////// Update Leaves Api //////
 
 export const UpdateLeaveStatus = async (data) => {
-  const [id, setID] = useState("");
+
   try {
     const response = await axios.put(
-      apiUrl + "api/User/AdminRequest" + id,
+      apiUrl + "api/User/AdminRequest",
       data
     );
 
@@ -301,6 +302,160 @@ export const UpdateLeaveStatus = async (data) => {
     return err.response;
   }
 };
+
+
+
+///////////   Get Roles   //////////
+
+export const getManagers = async () => {
+  try {
+    const result = await axios.get(apiUrl + "api/User/ManagerList");
+    return result.data;
+  } catch (error) {
+    throw error; // Propagate the error back to the caller for handling
+  }
+};
+
+///////////   Get Roles   //////////
+
+export const getRoles = async () => {
+  try {
+    const result = await axios.get(apiUrl + "api/User/UserRole");
+    return result.data;
+  } catch (error) {
+    throw error; // Propagate the error back to the caller for handling
+  }
+};
+
+///////////   Add User   //////////
+
+export const addUser = async (data) => {
+  try {
+    const result = await axios.post(apiUrl + "api/User/AddUser", data);
+
+    if (result.data.isRequestSuccessful === true) {
+      return { success: true, message: "User has been Added" };
+    } else {
+      return { success: false, message: result.data.successResponse };
+    }
+  } catch (error) {
+ 
+    throw error;
+  }
+};
+
+
+///////////   Login   //////////
+
+export const LoginUser = async (request) => {
+  try {
+    const result = await axios.post(apiUrl + "api/User/Login", request);
+    console.log("login response",result.data);
+    localStorage.setItem("loginData", JSON.stringify(result.data));
+    if (result.data.isSuccess === true) {
+      
+      return { success: true, message: "Login Successful" };
+    } else {
+      return { success: false, message: "Invalid Name or Password" };
+    }
+  } catch (error) {
+ 
+    throw error;
+  }
+};
+
+///////////   Get Users   //////////
+
+export const getUsers = async () => {
+  try {
+    const result = await axios.get(apiUrl + "api/User/UserList");
+    localStorage.setItem('UsersData', JSON.stringify(result.data));
+    return result.data;
+  } catch (error) {
+    throw error; 
+  }
+};
+
+///////////   Add Perfromance   //////////
+
+export const addPerform = async (data) => {
+  try {
+    const result = await axios.post(apiUrl + "api/User/AddPerform", data);
+    return result.data;
+  } catch (error) {
+    throw error; 
+  }
+};
+
+
+
+///////////   Fetch Performance   //////////
+
+export const fetchPerformData = async (data) => {
+  try {
+    const result = await axios.get(apiUrl + "api/User/GetPerformance", data);
+    return result.data;
+  } catch (error) {
+    throw error; 
+  }
+};
+
+
+///////////   Fetch All Users Data   //////////
+
+export const fetchAllLeaves = async () => {
+  try {
+    const response = await axios.get(apiUrl + "api/User/GetAllLeave");
+    if (response.status == 200) {
+      
+
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+////// Update Leaves Api //////
+
+export const UpdateFineStatus = async (data) => {
+
+  try {
+    const response = await axios.put(
+      apiUrl + "api/User/FinePaid",
+      data
+    );
+
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    return err.response;
+  }
+};
+///////////   Fine Count   //////////
+
+export const FineCount = async (id) => {
+  try {
+    const response = await axios.post(
+      apiUrl + `api/User/FineCount?UserID=${id}`
+    );
+    if (response.status == 200) {
+      console.log(response.data)
+      return response.data;
+
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
 
 export const GetOrders = async () => {
   try {

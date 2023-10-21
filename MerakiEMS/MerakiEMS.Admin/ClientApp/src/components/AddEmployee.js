@@ -11,6 +11,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import UsersListAdmin from "./UsersListAdmin";
 import Modal from "react-bootstrap/Modal";
+import {
+  getManagers,
+  getRoles,
+  addUser 
+} from "../Api/Api";
 
 const AddEmployee = () => {
   const [roleNames, setRoleNames] = useState([]);
@@ -91,26 +96,21 @@ const AddEmployee = () => {
       setEContactNoError("");
     }
 
-    await axios
-      .post("http://www.meraki-ams.local/api/User/AddUser", data)
-      .then((result) => {
-        if (result.data.isRequestSuccessful === true) {
-          clear();
-          toast.success("User has been Added");
-          setShow(false);
-        } else {
-          toast.error(result.data.successResponse);
-        }
-      })
-      .catch((error) => {
-        if (error.response.status === 401) {
-          toast.error("Session Expired!");
+    try {
+      const result = await addUser(data);
 
-          navigate("/");
-        } else {
-          toast.error(error);
-        }
-      });
+      if (result.success) {
+        clear();
+        toast.success(result.message);
+        setShow(false);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      
+      navigate("/");
+      console.error("Error adding user:", error);
+    } 
   };
 
   // Validation functions
@@ -143,33 +143,43 @@ const AddEmployee = () => {
     setAddress("");
   };
 
-  useEffect(() => {
-    getRoles();
-    getManagers();
-  }, []);
-
-  const getManagers = async () => {
-    await axios
-      .get("http://www.meraki-ams.local/api/User/ManagerList")
-      .then((result) => {
-        localStorage.setItem("ManagersData", JSON.stringify(result.data));
-        setIsChanged(isChanged + 1);
-      });
+  const fetchManagersData = async () => {
+    try {
+      const managersData = await getManagers();
+      localStorage.setItem('ManagersData', JSON.stringify(managersData));
+      setIsChanged(isChanged + 1);
+    } catch (error) {
+      // Handle the error, e.g., by displaying an error message to the user.
+      console.error('Error fetching data:', error);
+    }
   };
+
+  const fetchRolesData = async () => {
+    try {
+      const rolesData = await getRoles();
+      localStorage.setItem("RolesData", JSON.stringify(rolesData));
+      setIsChanged(isChanged + 1);
+    } catch (error) {
+      // Handle the error, e.g., by displaying an error message to the user.
+      console.error('Error fetching data:', error);
+    }
+  };
+
+
+  useEffect(() => {
+  
+  fetchManagersData();
+  fetchRolesData();
+  }, []); 
+
+
   const getManagerNamesFromLocalStorage = () => {
     const managerNames = localStorage.getItem("ManagersData");
 
     return managerNames ? JSON.parse(managerNames) : [];
   };
 
-  const getRoles = async () => {
-    await axios
-      .get("http://www.meraki-ams.local/api/User/UserRole")
-      .then((result) => {
-        localStorage.setItem("RolesData", JSON.stringify(result.data));
-        setIsChanged(isChanged + 1);
-      });
-  };
+
   const getRoleNamesFromLocalStorage = () => {
     const roleNames = localStorage.getItem("RolesData");
 
@@ -223,7 +233,7 @@ const AddEmployee = () => {
         <UsersListAdmin />
         <br />
 
-        <Modal show={show} onHide={handleClose} centered={true} size={"lg"}>
+        <Modal show={show} onHide={handleClose} centered={true} backdrop="static" size={"lg"}>
           <Modal.Header closeButton>
             <Modal.Title>Add Employee</Modal.Title>
           </Modal.Header>

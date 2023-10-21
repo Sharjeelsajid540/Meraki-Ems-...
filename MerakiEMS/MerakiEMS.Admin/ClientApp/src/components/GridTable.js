@@ -20,6 +20,15 @@ export const GridTable = ({ data, columns, minHeight }) => {
       globalFilter: filtering,
     },
     onGlobalFilterChange: setFiltering,
+    filterFn: (row, columnId, filterValue) => {
+      if (filterValue.includes("<")) {
+        return row[columnId] < filterValue.replace("<", "");
+      } else if (filterValue.includes(">")) {
+        return row[columnId] > filterValue.replace(">", "");
+      } else {
+        return row[columnId] === filterValue;
+      }
+    },
   });
 
   table.getState().pagination.pageSize = 7;
