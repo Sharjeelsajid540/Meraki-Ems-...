@@ -8,6 +8,7 @@ import Tickets from "./components/Tickets";
 import ManageTickets from "./components/ManageTickets";
 import Performance from "./components/Performance";
 
+
 const AppRoutes = [
   {
     path: "/",
@@ -50,6 +51,11 @@ const AppRoutes = [
     path: "/perform",
     element: <Performance />,
   },
+  // {
+  //   path: "/attend",
+  //   element: <APICaller />,
+  // },
 ];
+
 
 export default AppRoutes;

@@ -5,12 +5,9 @@
 
 .show-calendar-btn {
   background-color: #0b2b50 !important;
-  color: white;
-  margin-left: 88%;
-  margin-bottom: 2%;
 }
 
-/* Add this CSS to your stylesheet */
+
 .pagination {
   display: inline-block;
   list-style: none;
@@ -21,7 +18,7 @@
 .page-item {
   display: inline-block;
   margin-right: 5px;
-  vertical-align: middle; /* Add this line to vertically align with pagination buttons */
+  vertical-align: middle; 
 }
 
 .page-link {
@@ -45,7 +42,7 @@
 .go-to-page {
   display: inline-block;
   margin-left: 10px;
-  vertical-align: middle; /* Add this line to vertically align with pagination buttons */
+  vertical-align: middle; 
 }
 
 .go-to-page input {
@@ -53,7 +50,7 @@
   padding: 5px;
   height: 32px;
   margin-right: 2px;
-  vertical-align: middle; /* Add this line to vertically align with pagination buttons */
+  vertical-align: middle; 
   border-radius: 6px;
 }
 
@@ -63,7 +60,7 @@
   border: none;
   padding: 5px 10px;
   cursor: pointer;
-  vertical-align: middle; /* Add this line to vertically align with pagination buttons */
+  vertical-align: middle; 
   border-radius: 7px;
 }
 
@@ -76,18 +73,36 @@
 }
 .leave-request-name {
   position: absolute;
-  top: 10px;
+   top:   2% !important;
 }
 .showLeavesAdmin {
   position: absolute;
-  margin: 12% 20%;
+  margin: 8% 20%;
   width: 75%;
-  /* margin: 110px 0px 0px 17.5%; */
+
 }
-.show-refresh-btn{
-  width: 15%;
-  position: absolute;
-  top: 1px;
-  right: 150px;
+.btn-color {
   background-color: #0b2b50;
 }
+.radio-button{
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  margin-top: 80px;
+  
+}
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; 
+  margin-top: -5% !important;
+  
+}
+.grid{
+  margin-top: 2% !important;
+}
+.name-column{
+  font-weight: 700;
+ width: 40%;
+}
+

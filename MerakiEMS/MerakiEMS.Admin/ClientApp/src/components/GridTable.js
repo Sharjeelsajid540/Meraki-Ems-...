@@ -1,51 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   flexRender,
   useReactTable,
   getCoreRowModel,
   getPaginationRowModel,
-  getFilteredRowModel,
 } from "@tanstack/react-table";
 
 export const GridTable = ({ data, columns, minHeight }) => {
-  const [filtering, setFiltering] = useState("");
-
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      globalFilter: filtering,
-    },
-    onGlobalFilterChange: setFiltering,
-    filterFn: (row, columnId, filterValue) => {
-      if (filterValue.includes("<")) {
-        return row[columnId] < filterValue.replace("<", "");
-      } else if (filterValue.includes(">")) {
-        return row[columnId] > filterValue.replace(">", "");
-      } else {
-        return row[columnId] === filterValue;
-      }
-    },
   });
 
   table.getState().pagination.pageSize = 7;
   const tableSize = table.getPageCount();
   return (
     <>
-      {/* <div> */}
       <div style={{ minHeight: minHeight }}>
-        <div className="globar-filter">
-          <input
-            className="filter-input"
-            placeholder="Filter Table"
-            type="text"
-            value={filtering}
-            onChange={(e) => setFiltering(e.target.value)}
-          />
-        </div>
         <table className="table">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -107,18 +80,6 @@ export const GridTable = ({ data, columns, minHeight }) => {
                 {table.getPageCount()}
               </strong>
             </span>
-            {/* <span className="FooterOptions">
-              | Go to page:
-              <input
-                type="number"
-                defaultValue={table.getState().pagination.pageIndex + 1}
-                onChange={(e) => {
-                  const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                  table.setPageIndex(page);
-                }}
-                className="border p-1 rounded w-16"
-              />
-            </span> */}
             <span className="FooterOptions">
               | Go to page:
               <input
@@ -141,7 +102,6 @@ export const GridTable = ({ data, columns, minHeight }) => {
       ) : (
         ""
       )}
-      {/* </div> */}
     </>
   );
 };

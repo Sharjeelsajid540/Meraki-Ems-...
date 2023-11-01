@@ -12,6 +12,7 @@ using MailKit.Net.Smtp;
 using MerakiEMS.Application.Services;
 using UAParser;
 using Org.BouncyCastle.Asn1.Ocsp;
+using System.IO;
 
 namespace MerakiEMS.Api.Controllers
 {
@@ -123,12 +124,15 @@ namespace MerakiEMS.Api.Controllers
             return response;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("AllUserAttendance")]
-        public async Task<List<AttendanceListResponse>> GetUserAttendance()
+        public async Task<List<AttendanceListResponse>> GetUserAttendance(AttendanceFilter req)
         {
-            var response = await _authenticateService.GetAttendanceList();
-            return response;
+        
+            var responses = await _authenticateService.GetAttendanceList(req);
+
+            
+            return responses;
         }
         [HttpPost]
         [Route("UserAttendance")]
@@ -177,17 +181,17 @@ namespace MerakiEMS.Api.Controllers
         }
         [HttpGet]
         [Route("GetAllLeave")]
-        public async Task<List<LeaveResponse>> GetLeave()
+        public async Task<List<LeaveResponse>> GetAllLeave(bool isLeaveFilter)
         {
-            var response = await _authenticateService.GetLeave();
+            var response = await _authenticateService.GetAllLeave(isLeaveFilter);
             return response;
         }
 
         [HttpPost]
         [Route("GetLeave")]
-        public async Task<List<LeaveResponse>> GetAllLeaves(UserID user)
+        public async Task<List<LeaveResponse>> GetLeave(UserID user)
         {
-            var response = await _authenticateService.GetAllLeaves(user);
+            var response = await _authenticateService.GetLeave(user);
             return response;
         }
         [HttpPost]
@@ -260,6 +264,15 @@ namespace MerakiEMS.Api.Controllers
         {
             var response = await _authenticateService.FineCount(UserID);
             return response;
+        }
+
+        [HttpGet] 
+        [Route("ProductsList")]
+        public async Task<IActionResult> GetProductsAsync([FromQuery] int pageNumber, [FromQuery] int pageSize)
+        {
+            var products = await _authenticateService.GetProductsAsync(pageNumber, pageSize);
+
+            return Ok(products);
         }
     }
     

@@ -225,7 +225,7 @@ const AddEmployee = () => {
       <div className="addEmployee-section">
         <Button
           variant="secondary"
-          className="secondary-btn"
+          className="secondary-btnn"
           onClick={handleShow}
         >
           Add Employee

@@ -10,6 +10,7 @@ using MerakiEMS.Infrastructure.Persistence.Sql.Interfaces;
 using MimeKit;
 using Microsoft.AspNetCore.Http;
 using UAParser;
+using MerakiEMS.Application.Common.Configuration;
 
 namespace MerakiEMS.Application.Services
 {
@@ -378,22 +379,20 @@ namespace MerakiEMS.Application.Services
             var response = await _usersRepository.RoleList();
             return response;
         }
-        public async Task<List<AttendanceListResponse>> GetAttendanceList()
+        public async Task<List<AttendanceListResponse>> GetAttendanceList(AttendanceFilter req)
         {
             try
             {
-                List<AttendanceListResponse> responses = new List<AttendanceListResponse>();
-
-                // Call the repository method to get attendance data
-                var res = await _usersRepository.AttendanceList();
+                var res = await _usersRepository.AttendanceList(req);
 
                 if (res == null)
                 {
-                    // Handle the case where no data is retrieved from the repository (e.g., log a message)
                     return null;
                 }
                 else
                 {
+                    var responses = new List<AttendanceListResponse>();
+
                     foreach (var result in res)
                     {
                         var response = new AttendanceListResponse();
@@ -403,7 +402,7 @@ namespace MerakiEMS.Application.Services
                         response.CheckInTime = result.CheckInTime?.ToString("HH:mm:ss");
                         response.CreatedAt = result.CreatedAt.ToString("MM-dd-yyyy");
                         response.CheckOutTime = result.CheckOutTime?.ToString("HH:mm:ss");
-                        response.WorkingHours = result.WorkingHours?.ToString(@"hh\:mm\:ss");                     
+                        response.WorkingHours = result.WorkingHours?.ToString(@"hh\:mm\:ss");
                         response.IsLate = result.IsLate;
                         response.IsHourCompleted = result.IsHourCompleted;
                         response.FinePaid = result.FinePaid;
@@ -417,17 +416,17 @@ namespace MerakiEMS.Application.Services
             }
             catch (Exception ex)
             {
-                // Handle exceptions appropriately (e.g., log the exception)
+        
                 throw ex;
             }
         }
 
 
-        public async Task<List<LeaveResponse>> GetAllLeaves(UserID user)
+        public async Task<List<LeaveResponse>> GetLeave(UserID user)
         {
         
                 List<LeaveResponse> responses = new List<LeaveResponse>();
-                var res = await _usersRepository.GetAllLeaves(user);
+                var res = await _usersRepository.GetLeave(user);
             if (res == null)
             {
                 return null;
@@ -462,11 +461,11 @@ namespace MerakiEMS.Application.Services
           
         
 
-        public async Task<List<LeaveResponse>> GetLeave()
+        public async Task<List<LeaveResponse>> GetAllLeave(bool isLateFilter)
     { List<LeaveResponse> responses = new List<LeaveResponse>();
         try
         {
-            var res = await _usersRepository.GetLeave();
+            var res = await _usersRepository.GetAllLeave(isLateFilter);
             if (res == null)
             {
                 return null;
@@ -513,7 +512,7 @@ namespace MerakiEMS.Application.Services
         public async Task<List<AttendanceListResponse>> GetSingleAttendanceList(UserAttendanceRequest req)
         {
             var res = await _usersRepository.SingleAttendanceList(req);
-
+            
             List<AttendanceListResponse> responses = new List<AttendanceListResponse>();
             if (res == null)
             {
@@ -532,6 +531,11 @@ namespace MerakiEMS.Application.Services
                     response.CreatedAt = result.CreatedAt.ToString("MM-dd-yyyy");
                     response.CheckOutTime = result.CheckOutTime?.ToString("HH:mm:ss");
                     response.WorkingHours = result.WorkingHours?.ToString(@"hh\:mm\:ss");
+                    response.IsHourCompleted = result.IsHourCompleted;
+                    response.FinePaid = result.FinePaid;
+
+                    response.IsLate = result.IsLate;
+
                     responses.Add(response);
 
                 }
@@ -749,6 +753,10 @@ namespace MerakiEMS.Application.Services
         {
             var res = await _usersRepository.FineCount(UserID);
             return res;
+        }
+        public async Task<IEnumerable<UserAttendance>> GetProductsAsync(int pageNumber, int pageSize)
+        {
+            return await _usersRepository.GetProductsAsync(pageNumber, pageSize);
         }
     }
 }

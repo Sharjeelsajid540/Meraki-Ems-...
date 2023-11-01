@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-const apiUrl = "http://www.meraki-ams.local/";
+const apiUrl = "https://localhost:7206/";
 
 /////////   Attendance List    ///////
 
@@ -369,7 +369,7 @@ export const LoginUser = async (request) => {
 export const getUsers = async () => {
   try {
     const result = await axios.get(apiUrl + "api/User/UserList");
-    localStorage.setItem('UsersData', JSON.stringify(result.data));
+    
     return result.data;
   } catch (error) {
     throw error; 
@@ -455,6 +455,40 @@ export const FineCount = async (id) => {
     return error.response;
   }
 };
+
+///////////   Get Late Records   //////////
+
+export const getLate = async (data) => {
+  try {
+   
+    const response = await axios.post(apiUrl + "api/User/AllUserAttendance", data);
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+
+///////////   Get Late Records   //////////
+
+export const getPendingLeaves = async (isLeaveFilter) => {
+  try {
+   
+    const response = await axios.get(apiUrl + `api/User/GetAllLeave?isLeaveFilter=${isLeaveFilter}`);
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
 
 
 export const GetOrders = async () => {

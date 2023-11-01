@@ -75,14 +75,13 @@ const Performance = () => {
     };
   
     try {
-      console.log("addPerform() called");
+      
       const response = await addPerform(data);
-      console.log("addPerform() returned");
+      
     
       if (response.isRequestSuccessful === true) {
         toast.success("Performance Added");
         fetchPerformanceData();
-        fetchData();
         clear();
         handleClose(); // Close the modal
       }
@@ -103,22 +102,23 @@ const Performance = () => {
 
   const fetchData = async () => {
       try {
-        await getUsers();
+        console.log("first");
+        const response = await getUsers();
+        
+        
         setIsChanged(isChanged + 1);
+        setUsersNames(response);
+        console.log("first");
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
-  const getUsersNamesFromLocalStorage = () => {
-    const usersNames = localStorage.getItem("UsersData");
-
-    return usersNames ? JSON.parse(usersNames) : [];
-  };
 
   const handleShow = () => {
-    const storedUsersNames = getUsersNamesFromLocalStorage();
-    setUsersNames(storedUsersNames);
+    fetchData();
+    
     setShow(true);
   };
 
@@ -239,7 +239,7 @@ const Performance = () => {
       
       <div className="employeeList">
      
-        <h2 className="headingList">Employees Performance</h2>
+        <h2 className="headingListt">Employees Performance</h2>
         <Button
           variant="secondary"
           className="secondary-btn-btn"

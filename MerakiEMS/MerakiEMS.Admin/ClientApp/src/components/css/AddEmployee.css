@@ -4,11 +4,15 @@
   margin-top: 30px;
   font-weight: 600;
 }
-.secondary-btn {
-  position:absolute;
+.secondary-btnn {
+  
+  position: absolute;
+  right: 2px;
+  z-index: 1;
   background-color: #0b2b50 !important;
-  right: 0.1px;
-  top: -4px;
+    
+
+ 
   
 }
 .form-label-addUser {
@@ -25,7 +29,7 @@
 }
 .addEmployee-section {
   position: absolute;
-  margin: 12% 20%;
+  margin: 6% 20% 12%20%;
   width: 75%;
   /* margin: 110px 0px 0px 17.5%; */
 }

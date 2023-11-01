@@ -39,6 +39,7 @@ namespace MerakiEMS.Application.Common.Configuration
         public string ArrivalTime { get; set; }
 
         public int DutyHours { get; set; }
+        public string MinLate { get; set; }
 
     }
 
