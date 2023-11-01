@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
 using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace MerakiEMS.Application.Interfaces
 {
@@ -20,7 +21,7 @@ namespace MerakiEMS.Application.Interfaces
         Task<List<Role>> GetRoleList();
         Task<CheckInResponse> InsertAttendance(CheckInRequest req);
         Task<CheckoutResponse> UpdateAttendance(CheckOutRequest req);
-        Task<List<AttendanceListResponse>> GetAttendanceList();
+        Task<List<AttendanceListResponse>> GetAttendanceList(AttendanceFilter req);
         Task<List<AttendanceListResponse>> GetSingleAttendanceList(UserAttendanceRequest req);
 
         Task<ApiResponse<string>> RequestLeave(LeaveRequest req);
@@ -29,10 +30,10 @@ namespace MerakiEMS.Application.Interfaces
         Task<GetUsersResponse> GetUser(int id);
         Task<UpdateUserResponse> UpdateUser(UpdateUserRequest user);
         Task<UpdateUserResponse> DeleteUser(int id);
-        Task<List<LeaveResponse>> GetLeave();
+        Task<List<LeaveResponse>> GetAllLeave(bool isLeaveFilter);
 
         Task<List<ManagerListResponse>> GetManagerList();
-        Task<List<LeaveResponse>> GetAllLeaves(UserID user);
+        Task<List<LeaveResponse>> GetLeave(UserID user);
        Task<AddTicketResponse> AddTicket(Tickets ticket);
         Task<List<GetTicketResponse>> GetAllTickets();
         Task<List<GetTicketResponse>> GetTickets(int id);
@@ -51,5 +52,7 @@ namespace MerakiEMS.Application.Interfaces
 
         Task<FineResponse> FinePaid(FineRequest req);
         Task<int> FineCount(int UserID);
+
+        Task<IEnumerable<UserAttendance>> GetProductsAsync(int pageNumber, int pageSize);
     }
 }

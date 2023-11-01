@@ -1,38 +1,43 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { GridTable } from "./GridTable";
-import { fetchAllAttendanceData , UpdateFineStatus} from "../Api/Api";
+import { fetchAllAttendanceData , UpdateFineStatus , getLate} from "../Api/Api";
 import "./css/UserListAdmin.css";
 import { toast } from "react-toastify";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
 
 
 function UsersListAdmin() {
   const [attendanceData, setAttendanceData] = useState([]);
+  const [isLateFilter, setIsLateFilter] = useState(true);
   const [paidEntry, setPaidEntry] = useState([]);
   const [finePaid, setFinePaid] = useState("");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [isCount, setIsCount] = useState(0);
+  const [count, setCount] = useState(0);
+  const [searchText, setSearchText] = useState("");
+  const [searchDate, setSearchDate] = useState("");
+  const [isFinePending, setIsFinePending] = useState(false);
   
   function calculateTotalHours(timeString) {
     if (!timeString) {
-      return 0; // Handle the case where timeString is undefined or empty
+      return 0; 
     }
 
-    // Split the timeString by ':' and convert to hours
+    
     const [hours, minutes, seconds] = timeString.split(":").map(Number);
 
-    // Calculate the total hours
+    
     const totalHours = hours + minutes / 60 + seconds / 3600;
 
     return totalHours;
   }
 
-  // Define a function to apply conditional formatting based on total hours
+  
   function getWorkingHoursColor(workingHours) {
     if (workingHours < 8.5) {
       return "red";
@@ -48,14 +53,48 @@ function UsersListAdmin() {
   const renderWorkingHoursCell = (cell) => {
     const cellValue = cell.getValue();
 
-    // Calculate total hours from the "HH:MM:SS" format (with error handling)
+   
     const totalHours = calculateTotalHours(cellValue);
 
-    // Calculate the CSS class based on the total hours
-    const colorClass = getWorkingHoursColor(totalHours);
+    
+    const colorclassName = getWorkingHoursColor(totalHours);
 
-    return <span className={colorClass}>{cellValue}</span>;
+    return <span className={colorclassName}>{cellValue}</span>;
   };
+  const fetchData = (filterType) => {
+    
+    const dateParameter = searchDate === "" ? null : searchDate;
+    const nameParameter = searchText === "" ? null : searchText;
+
+    const params = {
+      isLateFilter: filterType,
+      name: nameParameter,
+      date: dateParameter,
+      fineStatus:isFinePending,
+    };
+
+    
+
+   
+    getLate(params)
+      .then((response) => {
+        if (response) {
+          setAttendanceData(response);
+          // console.log(attendanceData);
+        }
+      })
+      .catch((error) => {
+   
+        console.error('Error fetching data:', error);
+      });
+
+      
+
+  };
+  
+
+
+
 
   const update = async (event) => {
     event.preventDefault();
@@ -81,8 +120,9 @@ function UsersListAdmin() {
           errors.push("Please select Status.");
         }
        handleClose();
-      fetchAllAttendanceData();
-      setIsCount(isCount + 1);
+       setCount(count + 1);
+       getLate(isLateFilter);
+    
       setFinePaid("");
 
 
@@ -122,7 +162,7 @@ function UsersListAdmin() {
       cell: renderWorkingHoursCell,
     },
     {
-      header: "Hours Complete",
+      header: "Hours Completed",
       accessorKey: "isHourCompleted",
       cell: (value) => (
         <strong>
@@ -180,21 +220,30 @@ function UsersListAdmin() {
     }
   ];
 
+  
+
+  
+  const handleSearch = () => {
+    fetchData();
+    setCount(count + 1);
+   
+  };
+
   useEffect(() => {
-    fetchAllAttendanceData().then((response) => {
-      if (response) {
-        setAttendanceData(response);
-      }
-    });
-  }, [isCount]);
+    fetchData(isLateFilter); 
+  }, [isLateFilter,count]);
+
+  useEffect(() => {
+    fetchData(isFinePending); 
+  }, [isFinePending,count]);
 
   const data = useMemo(() => attendanceData, [attendanceData]);
 
   return (
-    <div>
+    <div className="admin-attendance">
       <Modal show={show} onHide={handleClose} backdrop="static">
               <Modal.Header closeButton >
-                <Modal.Title>Update Leave Request</Modal.Title>
+                <Modal.Title>Update Fine Status</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <Form onSubmit={update}>
@@ -211,7 +260,7 @@ function UsersListAdmin() {
                         <option value="">Select Status</option>
                         <option value="Pending">Pending</option>
                         <option value="Paid">Paid</option>
-                        <option value="Resolved">Resolved</option>
+                        <option value="Ignored">Ignore</option>
                       </Form.Control>
                     </Form.Group>
                   </Row>
@@ -233,7 +282,91 @@ function UsersListAdmin() {
             </Modal>
           
       <h2 className="headingList">Employees Attendance List</h2>
-      <GridTable data={data} columns={columns} minHeight={"300px"} />
+      <div className="container-1">
+  <div className="row">
+    <div className="col-sm-6 radio-button-btn">
+      <label>
+        <input
+          type="radio"
+          value="true"
+          checked={isLateFilter === true}
+          onChange={() =>{ setIsLateFilter(true)
+             }}
+        />
+        &nbsp;
+        Show Late Records
+      </label>
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      <label>
+        <input
+          type="radio"
+          value="false"
+          checked={isLateFilter === false}
+          onChange={() => {setIsLateFilter(false)
+      }}
+        />
+        &nbsp;
+        Show All Records
+      </label>
+
+      &nbsp;
+        &nbsp;
+        <label>
+          <input
+            type="checkbox"
+            value={isFinePending}
+            checked={isFinePending}
+            onChange={() => setIsFinePending(!isFinePending)}
+          />
+          &nbsp;
+          Show Fine Pending
+        </label>
+    </div>
+
+    <div className="col-sm-6 search-form">
+      <Row>
+        <Col sm={5}>
+          <Form>
+            <Form.Group>
+              <Form.Control
+                className="fields"
+                type="text"
+                placeholder="Enter name to search"
+              
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Col>
+
+        <Col sm={5}>
+          <Form>
+            <Form.Group>
+              <Form.Control
+                className="fields"
+                type="date"
+                
+                value={searchDate}
+                onChange={(e) => setSearchDate(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Col>
+
+        <Col sm={2}>
+          <Button className="btn-search" variant="primary" onClick={handleSearch}>
+            Search
+          </Button>
+        </Col>
+      </Row>
+    </div>
+  </div>
+</div>
+
+      <GridTable className="grid" data={attendanceData} columns={columns} minHeight={"300px"} />
     </div>
   );
 }

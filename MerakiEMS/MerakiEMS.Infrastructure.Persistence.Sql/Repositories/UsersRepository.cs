@@ -335,15 +335,28 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 
 
 
-        public async Task<List<Leave>> GetLeave()
+        public async Task<List<Leave>> GetAllLeave(bool isLeaveFilter )
         {
-            var response = await _context.Leave.OrderByDescending(s => s.ID).ToListAsync();
+            IQueryable<Leave> query = _context.Leave;
+
+            
+            if (isLeaveFilter)
+            {
+                query = query.Where(s => s.Status == "Pending");
+            }
+
+            
+
+            query = query.OrderByDescending(s => s.ID);
+
+            var response = await query.ToListAsync();
             return response;
         }
 
 
 
-        public async Task<List<Leave>> GetAllLeaves(UserID user)
+
+        public async Task<List<Leave>> GetLeave(UserID user)
         {
             var response = await _context.Leave.Where(s => s.UserID == user.ID).OrderByDescending(s => s.From).ToListAsync();
             return response;
@@ -434,12 +447,37 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             }
             return list;
         }
-        public async Task<List<UserAttendance>> AttendanceList()
+        public async Task<List<UserAttendance>> AttendanceList(AttendanceFilter req)
         {
+            IQueryable<UserAttendance> query = _context.UserAttendance;
 
-            var response = await _context.UserAttendance.OrderByDescending(s => s.CheckInTime).ToListAsync();
+            if (req.IsLateFilter)
+            {
+                query = query.Where(s => s.IsLate == true);
+            }
+
+            if (req.FineStatus)
+            {
+                query = query.Where(s => s.FinePaid == "Pending");
+            }
+
+            if (req.Name != null)
+            {
+                query = query.Where(s => s.Name == req.Name);
+            }
+
+
+            if (req.Date != null)
+            {
+                query = query.Where(s => s.CreatedAt == req.Date);
+            }
+
+            query = query.OrderByDescending(s => s.CheckInTime);
+
+            var response = await query.ToListAsync();
             return response;
         }
+
         public async Task<List<UserAttendance>> SingleAttendanceList(UserAttendanceRequest req)
         {
 
@@ -546,12 +584,16 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
         {
             CheckInResponse response = new CheckInResponse();
             UserAttendance attendance = new UserAttendance();
-
+            
             try
             {
                 var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
                 var Time = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
                 var arrivalTime = DateTime.Parse(AppSettings.Configuration.AttendanceConfig.ArrivalTime);
+                var minLate = TimeSpan.Parse(AppSettings.Configuration.AttendanceConfig.MinLate);
+
+
+
 
                 var check = _context.UserAttendance
                     .Where(s => s.UserID == req.UserID && s.CreatedAt == Time.Date)
@@ -573,11 +615,16 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 
                         attendance.UserID = req.UserID;
                         attendance.Name = name.Name;
-                        attendance.IsLate = arrivalTime <= Time;
-                        
+                        attendance.IsLate = arrivalTime.Add(minLate) <= Time;
+                    attendance.IsLate = arrivalTime<= Time;
+
+                    if (arrivalTime.Add(minLate) <= Time)
+                    {
+                        attendance.FinePaid = "Pending";
+                    }
 
 
-                        await _context.UserAttendance.AddAsync(attendance);
+                    await _context.UserAttendance.AddAsync(attendance);
                         await _context.SaveChangesAsync();
 
                         var AId = _context.UserAttendance
@@ -659,6 +706,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 
             if (Fine != null)
             {
+                
                 if (req.FinePaid == "Paid" || req.FinePaid == "Resolved")
                 {
                     Fine.FinePaid = req.FinePaid;
@@ -781,9 +829,17 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             return result;
         }
         public async Task<int> FineCount(int UserID)
-        {
-            var fineData = await _context.UserAttendance.Where(s => s.IsLate == true &&  s.UserID == UserID && s.FinePaid == "Pending").ToListAsync();
+        {   
+            var fineData = await _context.UserAttendance.Where(s => s.UserID == UserID &&  s.FinePaid == "Pending" ).ToListAsync();
             return fineData.Count;
+        }
+
+        public async Task<IEnumerable<UserAttendance>> GetProductsAsync(int pageNumber, int pageSize)
+        {
+            return await _context.UserAttendance
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
     }
 }

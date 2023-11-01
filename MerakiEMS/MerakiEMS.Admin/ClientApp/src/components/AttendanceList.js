@@ -72,6 +72,7 @@ function AttendanceList() {
       .then((data) => {
         if (data) {
           setFineCount(data);
+          setIsChanged(isChanged + 1);
         }
       })
       .catch((error) => {
@@ -96,6 +97,37 @@ function AttendanceList() {
       header: "Working Hours",
       accessorKey: "workingHours",
     },
+    {
+      header: "Hours Completed",
+      accessorKey: "isHourCompleted",
+      cell: (value) => (
+        <strong>
+          <span
+            style={{
+              color: value.getValue("isHourCompleted") ? "green" : "red",
+            }}
+          >
+            {value.getValue("isHourCompleted") ? "Yes" : "No"}
+          </span>
+        </strong>
+      ),
+    },
+    {
+      header: "Is Late",
+      accessorKey: "isLate",
+      cell: (value) => (
+        <strong>
+          <span style={{ color: value.getValue("isLate") ? "red" : "green" }}>
+            {value.getValue("isLate") ? "Yes" : "NO"}
+          </span>
+        </strong>
+      ),
+    },
+    {
+      header: "Fine Paid",
+      accessorKey: "finePaid",
+    },
+
    
 
 
@@ -111,7 +143,14 @@ function AttendanceList() {
       const response = await CheckInUser(data);
       if (response && response.isRequestSuccessfull === "true") {
         toast.success(response.successMessage);
-
+        const updatedFineCount = await FineCount(idData.id);
+        if (updatedFineCount !== null) {
+          setFineCount(updatedFineCount);
+        } else {
+          // Handle error or display a message if needed
+          console.error("Error fetching fine count in confirmCheckIn");
+        }
+  
         setIsChanged(isChanged + 1);
       } else if (response && response.isRequestSuccessfull === "false") {
         toast.error(response.successMessage);
@@ -257,8 +296,10 @@ function AttendanceList() {
           <div className="row">
           
             <div className="col-md-12">
-              <h2>Employee Attendance</h2>
-              <h5>Pending Fine: <span>{fineCount}</span></h5>
+            <div className="title-container">
+              <h2 className="late-heading">Employee Attendance</h2>
+              <h5 className="pending-fine late">Pending Fine: <span>{fineCount} </span></h5>
+            </div>
               
 
               <GridTable data={data} columns={columns} minHeight={"375px"} />

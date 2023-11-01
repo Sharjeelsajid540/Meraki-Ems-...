@@ -11,6 +11,23 @@
     color: #fff !important; /* Text color */
    
   }
+  .pending-fine{
+    color: red;
+    font-size: 20px !important;
+    margin-bottom: 20px !important;
+  }
+  .title-container {
+    display: flex;
+    align-items: center; /* Align vertically in the middle if needed */
+  }
+  
+ 
+  .late{
+    position:absolute; 
+    right: 18px;
+  }
+
+
   /* .btn-1:hover{
     color: #fff !important;
     background-color:#1f4776 !important;
