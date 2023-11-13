@@ -18,7 +18,11 @@ namespace MerakiEMS.Infrastructure.Bootstrap
 
             //services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUsersRepository, UsersRepository>();
-           
+            services.AddTransient<IAdminRepository, AdminRepository>();
+            services.AddTransient<ILeavesRepository, LeavesRepository>();
+            services.AddTransient<IAttendanceRepository, AttendanceRepository>();
+            services.AddTransient<IPerformanceRepository, PerformanceRepository>();
+            services.AddTransient<ITicketsRepository, TicketsRepository>();
             //services.AddTransient<IOrderRepository, OrderRepository>();
 
 

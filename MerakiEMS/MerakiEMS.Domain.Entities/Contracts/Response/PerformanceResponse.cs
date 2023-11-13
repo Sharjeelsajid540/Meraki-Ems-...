@@ -15,7 +15,9 @@ namespace MerakiEMS.Domain.Entities.Contracts.Response
         public string? Severity { get; set; }
 
         public string? Date { get; set; }
+        public string? SpecifiedDate { get; set; }
 
         public string? Comments { get; set; }
+        public List<string> Errors { get; set; }
     }
 }

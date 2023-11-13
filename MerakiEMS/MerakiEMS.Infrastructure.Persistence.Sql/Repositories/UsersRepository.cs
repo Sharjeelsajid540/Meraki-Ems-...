@@ -32,7 +32,6 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 
         }
 
-
         public async Task<User> CheckUser(User user)
         {
 
@@ -48,15 +47,12 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             return null;
         }
 
-
         public async Task<List<GetUsersResponse>> GetAllUsers()
         {
-
-
-
             List<GetUsersResponse> users = new List<GetUsersResponse>();
             //User user = new User();
-            try {
+            try
+            {
                 var user = await _context.User.OrderByDescending(s => s.ID).ToListAsync();
 
                 foreach (var u in user)
@@ -68,8 +64,6 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                         var userRole = await _context.Role.Where(s => s.ID == userRoleid.RoleID).FirstOrDefaultAsync();
 
                         var manager = await _context.User.Where(s => s.ID == u.ManagerID).FirstOrDefaultAsync();
-
-
 
                         response.UserID = u.ID;
                         response.Name = u.Name;
@@ -137,371 +131,20 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             return response;
         }
 
-
-        public async Task<LeaveEmailResponse> SendLeaveEmail(EmailID req)
-        {
-            
-            var userIdsWithRole1 = await _context.UserRole
-                .Where(ur => ur.RoleID == 1 && ur.UserID != req.ID)
-                .Select(ur => ur.UserID)
-                .ToListAsync();
-
-            
-            var user = await _context.User
-                .Where(u => u.ID == req.ID)
-                .FirstOrDefaultAsync();
-
-            
-            if (user != null)
-            {
-                
-                var manager = await _context.User
-                    .Where(u => u.ID == user.ManagerID)
-                    .FirstOrDefaultAsync();
-
-                if (manager != null)
-                {
-                  
-                    var leaveData = await _context.Leave
-                        .Where(x => x.UserID == req.ID)
-                        .FirstOrDefaultAsync();
-
-                    if (leaveData != null)
-                    {
-                       
-                        var response = new LeaveEmailResponse();
-                        response.ID = req.ID;
-                        response.ManagerName = manager.Name;
-                        response.EmpName = user.Name;
-                        response.Description = req.Description;
-                        response.From = req.From;
-                        response.To = req.To;
-
-                        
-                        var userEmails = await _context.User
-                            .Where(u => userIdsWithRole1.Contains(u.ID))
-                            .Select(u => u.Email)
-                            .ToListAsync();
-
-                        response.Emails = userEmails;
-
-
-                        return response;
-                    }
-                }
-            }
-
-            return null;
-        }
-
-
-        public async Task<User> UpdateUser(UpdateUserRequest user)
-        {
-            try
-            {
-
-
-                var res = await _context.User.Where(s => s.ID == user.ID).FirstOrDefaultAsync();
-
-                res.CNIC = user.CNIC;
-                res.Name = user.Name;
-                res.Email = user.Email;
-                res.EContactNo = user.EContactNo;
-                res.ContactNo = user.ContactNo;
-                res.Address = user.Address;
-                res.ManagerID = user.ManagerID;
-                res.Image = user.Image;
-
-
-                _context.User.Update(res);
-                await _context.SaveChangesAsync();
-
-                var urole = await _context.UserRole.Where(s => s.UserID == user.ID).FirstOrDefaultAsync();
-                urole.RoleID = user.RoleID;
-                _context.UserRole.Update(urole);
-                await _context.SaveChangesAsync();
-                return res;
-            }
-            catch (Exception ex) {
-                throw ex;
-            }
-        }
-
-        public async Task<User> DeleteUser(int id)
-        {
-            try
-            {
-
-
-                var res = await _context.User.Where(s => s.ID == id).FirstOrDefaultAsync();
-
-
-
-                _context.User.Remove(res);
-                await _context.SaveChangesAsync();
-                return res;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-
-        public async Task<Leave> AdminLeaveRequest(AdminRequest req)
-        {
-            var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
-            var Time = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
-            var CheckIn = await _context.Leave.Where
-            (s => s.ID == req.ID).FirstOrDefaultAsync();
-            if (CheckIn != null)
-            {
-                CheckIn.AdminRequestViewer = req.AdminRequestViewer;
-                CheckIn.Status = req.Status;
-                CheckIn.Comments = req.Comments;
-                CheckIn.UpdatedAt = Time;
-
-
-                await _context.SaveChangesAsync();
-            }
-            return CheckIn;
-        }
-
-
-        public async Task<Leave> RequestLeave(LeaveRequest req)
-        {
-            var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
-            var Time = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
-            Leave leave = new Leave
-            { ID = req.ID,
-                UserID = req.UserID,
-                Name = req.Name,
-                From = req.From,
-                To = req.To,
-                Description = req.Description,
-                Comments = req.Comments,
-                UpdatedAt = req.UpdatedAt,
-                LeaveType = req.LeaveType,
-                CreatedAt = Time,
-                AdminRequestViewer = "",
-                Status = "Pending"
-            };
-
-            _context.Leave.Add(leave);
-            await _context.SaveChangesAsync();
-            return leave;
-        }
-
-
-        public async Task<Performance> AddPerform(PerformanceRequest req)
-        {
-            var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
-            var Time = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
-
-        
-            var user = await _context.User
-               .Where(u => u.Name == req.Name)
-               .FirstOrDefaultAsync();
-
-           
-
-            if (user == null )
-            {
-
-                
-                return null;
-            }
-
-            Performance perform = new Performance();
-
-
-                perform.UserID = user.ID;
-                perform.EmployeeName = user.Name; 
-                perform.Severity = req.Severity;
-                perform.Date = Time;
-                perform.Comments = req.Comments;
-            
-
-            await _context.Performance.AddAsync(perform); 
-            await _context.SaveChangesAsync();
-            return perform;
-        }
-
-        public async Task<List<Performance>> GetPerform()
-        {
-            var response = await _context.Performance.OrderByDescending(s => s.Date).ToListAsync();
-            return response;
-        }
-
-
-
-        public async Task<List<Leave>> GetAllLeave(bool isLeaveFilter )
-        {
-            IQueryable<Leave> query = _context.Leave;
-
-            
-            if (isLeaveFilter)
-            {
-                query = query.Where(s => s.Status == "Pending");
-            }
-
-            
-
-            query = query.OrderByDescending(s => s.ID);
-
-            var response = await query.ToListAsync();
-            return response;
-        }
-
-
-
-
-        public async Task<List<Leave>> GetLeave(UserID user)
-        {
-            var response = await _context.Leave.Where(s => s.UserID == user.ID).OrderByDescending(s => s.From).ToListAsync();
-            return response;
-        }
-
-        public async Task<User> InsertUser(AddEmployeeRequest req)
-        {
-            User user = new User();
-            UserRole role = new UserRole();
-            user.Name = req.Name;
-            user.Password = req.Password;
-            user.Email = req.Email;
-            user.Address = req.Address;
-            user.CNIC = req.CNIC;
-            user.ContactNo = req.ContactNo;
-            user.EContactNo = req.EContactNo;
-            user.ManagerID = req.ManagerID;
-            user.Image = req.Image;
-
-            var check = await _context.User
-               .Where(s => s.Name == user.Name).FirstOrDefaultAsync();
-            if (check == null)
-            {
-                _context.User.Add(user);
-                await _context.SaveChangesAsync();
-                var userr = await _context.User
-               .Where(s => s.Name == user.Name && s.Password == user.Password).FirstOrDefaultAsync();
-                if (userr == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    role.UserID = userr == null ? 0 : userr.ID;
-                    role.RoleID = req.RoleID;
-                }
-                _context.UserRole.Add(role);
-                await _context.SaveChangesAsync();
-
-                return new User();
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public async Task<List<Role>> RoleList()
-        {
-
-            var response = await _context.Role.ToListAsync();
-            return response;
-        }
-        public async Task<List<ManagerListResponse>> MangerList()
-        {
-            var list = new List<ManagerListResponse>();
-            var response = await _context.UserRole.ToListAsync();
-            foreach (var item in response)
-            {
-                if (item.RoleID == 1 || item.RoleID == 3)
-                {
-                    var name = await _context.User.Where(s => s.ID == item.UserID).FirstOrDefaultAsync();
-                    ManagerListResponse manager = new ManagerListResponse();
-                    manager.ManagerID = item.UserID;
-                    manager.ManagerName = name.Name;
-                    list.Add(manager);
-
-                }
-
-
-            }
-            return list;
-        }
-
         public async Task<List<UserListResponse>> UserList()
         {
             var list = new List<UserListResponse>();
             var response = await _context.User.ToListAsync();
             foreach (var item in response)
             {
-               
-                
-                   
-                    UserListResponse user = new UserListResponse();
-                    user.UserID = item.ID;
-                    user.UserName = item.Name;
-                    list.Add(user);
+                UserListResponse user = new UserListResponse();
+                user.UserID = item.ID;
+                user.UserName = item.Name;
+                list.Add(user);
 
             }
             return list;
         }
-        public async Task<List<UserAttendance>> AttendanceList(AttendanceFilter req)
-        {
-            IQueryable<UserAttendance> query = _context.UserAttendance;
-
-            if (req.IsLateFilter)
-            {
-                query = query.Where(s => s.IsLate == true);
-            }
-
-            if (req.FineStatus)
-            {
-                query = query.Where(s => s.FinePaid == "Pending");
-            }
-
-            if (req.Name != null)
-            {
-                query = query.Where(s => s.Name == req.Name);
-            }
-
-
-            if (req.Date != null)
-            {
-                query = query.Where(s => s.CreatedAt == req.Date);
-            }
-
-            query = query.OrderByDescending(s => s.CheckInTime);
-
-            var response = await query.ToListAsync();
-            return response;
-        }
-
-        public async Task<List<UserAttendance>> SingleAttendanceList(UserAttendanceRequest req)
-        {
-
-            try
-            {
-                var data = await _context.UserAttendance
-                    .Where(x => x.UserID == req.UserID)
-                    .OrderByDescending(s => s.CheckInTime)
-                    .ToListAsync();
-
-
-
-                return data;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-
-            return null;
-        }
-
-
-
 
         public async Task<LoginResponse> CheckLogin(User user)
         {
@@ -576,126 +219,6 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-
-
-
-
-        public async Task<CheckInResponse> InsertAttendance(CheckInRequest req)
-        {
-            CheckInResponse response = new CheckInResponse();
-            UserAttendance attendance = new UserAttendance();
-            
-            try
-            {
-                var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
-                var Time = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
-                var arrivalTime = DateTime.Parse(AppSettings.Configuration.AttendanceConfig.ArrivalTime);
-                var minLate = TimeSpan.Parse(AppSettings.Configuration.AttendanceConfig.MinLate);
-
-
-
-
-                var check = _context.UserAttendance
-                    .Where(s => s.UserID == req.UserID && s.CreatedAt == Time.Date)
-      
-                    .FirstOrDefault();
-
-                if (check == null)
-                {
-                    
-                        var name = _context.User
-                            .Where(s => s.ID == req.UserID)
-                            .FirstOrDefault();
-
-                        
-                        
-                       
-                        attendance.CheckInTime = Time;
-                        attendance.CreatedAt = Time.Date;
-
-                        attendance.UserID = req.UserID;
-                        attendance.Name = name.Name;
-                        attendance.IsLate = arrivalTime.Add(minLate) <= Time;
-                    attendance.IsLate = arrivalTime<= Time;
-
-                    if (arrivalTime.Add(minLate) <= Time)
-                    {
-                        attendance.FinePaid = "Pending";
-                    }
-
-
-                    await _context.UserAttendance.AddAsync(attendance);
-                        await _context.SaveChangesAsync();
-
-                        var AId = _context.UserAttendance
-                            .Where(s => s.UserID == req.UserID)
-                            .OrderByDescending(s => s.ID)
-                            .FirstOrDefault();
-
-                        response.AttendanceID = AId.ID;
-
-                        return response;
-                    
-                   
-                }
-                else
-                {
-                    response.SuccessMessage = "Already CheckedIN!";
-                    var AId = _context.UserAttendance
-                        .Where(s => s.UserID == req.UserID)
-                        .OrderByDescending(s => s.ID)
-                        .FirstOrDefault();
-
-                    response.AttendanceID = AId.ID;
-                    return response;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-
-
-        public async Task<UserAttendance> EditAttendance(CheckOutRequest req)
-        {
-            try
-            {
-                var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
-                var workingHours = TimeSpan.FromHours(AppSettings.Configuration.AttendanceConfig.DutyHours);
-                var todayDate = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
-                var CheckIn =await _context.UserAttendance.Where
-                        (s => s.UserID == req.UserID && s.CreatedAt == todayDate.Date && s.CheckOutTime == null).FirstOrDefaultAsync();
-                if (CheckIn != null)
-                {
-                   
-                    
-
-                    CheckIn.WorkingHours = todayDate - CheckIn.CheckInTime;
-                    CheckIn.CheckOutTime = todayDate;
-                    CheckIn.IsHourCompleted = workingHours < CheckIn.WorkingHours;                    
-
-                    _context.Update(CheckIn);
-
-                    await _context.SaveChangesAsync();
-                    return CheckIn;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-
-
-        }
-
-
         public async Task<UserAttendance> FinePaid(FineRequest req)
         {
             var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
@@ -706,7 +229,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 
             if (Fine != null)
             {
-                
+
                 if (req.FinePaid == "Paid" || req.FinePaid == "Resolved")
                 {
                     Fine.FinePaid = req.FinePaid;
@@ -723,117 +246,11 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 
             return Fine;
         }
-
-
-        public async Task<AddTicketResponse> AddTicket(Tickets ticket)
-        {
-            try
-               
-            {
-                var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
-                var Time = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
-                ticket.Status = "Pending";
-                ticket.CreatedAt = Time;
-                ticket.UpdatedAt = Time;
-                _context.Tickets.Add(ticket);
-                AddTicketResponse res = new AddTicketResponse();
-                await _context.SaveChangesAsync();
-                return res;
-
-            }
-            catch(Exception ex)
-            {
-                throw (ex);
-                return null;
-            }
-            
-        }
-        public async Task<List<Tickets>> GetAllTickets()
-        {
-            var response = await _context.Tickets.OrderByDescending(s => s.CreatedAt).ToListAsync();
-            if(response == null)
-            {
-                return null;
-            }
-            else
-            {
-                return response;
-            }
-        }
-        public async Task<List<Tickets>> GetTickets(int id)
-        {
-            var response = await _context.Tickets.Where(s => s.RequesterID == id).ToListAsync();
-            if (response == null)
-            {
-                return null;
-            }
-            else
-            {
-                return response;
-            }
-        }
-        public async Task<AddTicketResponse> UpdateTickets(UpdateTicketRequest req)
-        {
-            var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
-            var Time = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
-            AddTicketResponse res = new AddTicketResponse();
-            var response = await _context.Tickets.Where(s => s.ID == req.ID).FirstOrDefaultAsync();
-            if (response == null)
-            {
-                return null;
-            }
-            else
-            {
-                response.Status = req.Status;
-                response.Reviewer = req.Reviewer;
-                response.UpdatedAt = Time;
-                await _context.SaveChangesAsync();
-                return res;
-            }
-        }
-        public async Task<CheckStatusResponse> CheckCheckIn(CheckStatusRequest req)
-        {
-            var result = new CheckStatusResponse();
-            var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
-            var Time = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
-            var date = Time.Date;
-            var response = await _context.UserAttendance.Where(s => s.UserID == req.UserID && s.CheckInTime != null && s.CreatedAt == date).FirstOrDefaultAsync();
-            if (response == null)
-            {
-                result.Status = false;
-               
-            }
-            else
-            {
-                result.Status = true;
-            }
-            return result;
-        }
-
-        public async Task<CheckStatusResponse> CheckCheckOut(CheckStatusRequest req)
-        {
-            var result = new CheckStatusResponse();
-            var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
-            var Time = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
-            var date = Time.Date;
-            var response = await _context.UserAttendance.Where(s => s.UserID == req.UserID && s.CreatedAt == date && s.CheckInTime!=null && s.CheckOutTime==null).FirstOrDefaultAsync();
-            if (response == null)
-            {
-                result.Status = false;
-
-            }
-            else
-            {
-                result.Status = true;
-            }
-            return result;
-        }
         public async Task<int> FineCount(int UserID)
-        {   
-            var fineData = await _context.UserAttendance.Where(s => s.UserID == UserID &&  s.FinePaid == "Pending" ).ToListAsync();
+        {
+            var fineData = await _context.UserAttendance.Where(s => s.UserID == UserID && s.FinePaid == "Pending").ToListAsync();
             return fineData.Count;
         }
-
         public async Task<IEnumerable<UserAttendance>> GetProductsAsync(int pageNumber, int pageSize)
         {
             return await _context.UserAttendance
@@ -841,5 +258,6 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 .Take(pageSize)
                 .ToListAsync();
         }
+
     }
 }

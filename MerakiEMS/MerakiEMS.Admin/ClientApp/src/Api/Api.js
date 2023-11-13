@@ -1,12 +1,15 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 const apiUrl = "https://localhost:7206/";
-
+// const apiUrl = "http://www.meraki-ams.local/";
 /////////   Attendance List    ///////
 
 export const fetchAttendanceData = async (data) => {
   try {
-    const response = await axios.post(apiUrl + "api/User/UserAttendance", data);
+    const response = await axios.post(
+      apiUrl + "api/Attendance/UserAttendance",
+      data
+    );
     if (response.status == 200) {
       localStorage.setItem("attendList", JSON.stringify(response.data));
 
@@ -21,7 +24,9 @@ export const fetchAttendanceData = async (data) => {
 
 export const fetchAllAttendanceData = async () => {
   try {
-    const response = await axios.get(apiUrl + "api/User/AllUserAttendance");
+    const response = await axios.get(
+      apiUrl + "api/Attendance/AllUserAttendance"
+    );
     if (response.status == 200) {
       localStorage.setItem("attendList", JSON.stringify(response.data));
 
@@ -38,14 +43,16 @@ export const fetchAllAttendanceData = async () => {
 
 export const CheckInUser = async (data) => {
   try {
-    const response = await axios.post(apiUrl + "api/User/UserCheckIn", data);
+    const response = await axios.post(
+      apiUrl + "api/Attendance/UserCheckIn",
+      data
+    );
 
     if (response.status === 200) {
       if (response.data.isRequestSuccessfull == "true") {
         localStorage.setItem("AttendanceID", JSON.stringify(response.data));
       }
 
-      
       return response.data;
     } else {
       return false;
@@ -58,7 +65,10 @@ export const CheckInUser = async (data) => {
 ////////   CheckOut    ///////
 export const CheckOutUser = async (data) => {
   try {
-    const response = await axios.put(apiUrl + "api/User/UserCheckOut", data);
+    const response = await axios.put(
+      apiUrl + "api/Attendance/UserCheckOut",
+      data
+    );
     if (response.status === 200) {
       return response.data;
     } else {
@@ -73,7 +83,10 @@ export const CheckOutUser = async (data) => {
 
 export const CheckOutStatus = async (data) => {
   try {
-    const response = await axios.post(apiUrl + "api/User/CheckCheckOut", data);
+    const response = await axios.post(
+      apiUrl + "api/Attendance/CheckCheckOut",
+      data
+    );
 
     if (response.status === 200) {
       if (response.status == "true") {
@@ -94,7 +107,10 @@ export const CheckOutStatus = async (data) => {
 
 export const CheckInStatus = async (data) => {
   try {
-    const response = await axios.post(apiUrl + "api/User/CheckCheckIn", data);
+    const response = await axios.post(
+      apiUrl + "api/Attendance/CheckCheckIn",
+      data
+    );
 
     if (response.status === 200) {
       if (response.data.isRequestSuccessfull == "true") {
@@ -115,7 +131,7 @@ export const CheckInStatus = async (data) => {
 
 export const addLeave = async (data) => {
   try {
-    const response = await axios.post(apiUrl + "api/User/AddLeave", data);
+    const response = await axios.post(apiUrl + "api/Leaves/AddLeave", data);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -130,7 +146,7 @@ export const addLeave = async (data) => {
 
 export const fetchLeave = async (data) => {
   try {
-    const response = await axios.post(apiUrl + "api/User/GetLeave", data);
+    const response = await axios.post(apiUrl + "api/Leaves/GetLeave", data);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -145,7 +161,7 @@ export const fetchLeave = async (data) => {
 
 export const sendEmail = async (data) => {
   try {
-    const response = await axios.post(apiUrl + "api/User/SendEmail", data);
+    const response = await axios.post(apiUrl + "api/Leaves/SendEmail", data);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -194,7 +210,7 @@ export const fetchUserData = async (id) => {
 
 export const updateUsersData = async (data) => {
   try {
-    const response = await axios.post(apiUrl + "api/User/UpdateUser", data);
+    const response = await axios.post(apiUrl + "api/Admin/UpdateUser", data);
     if (response.status == 200) {
       return response.data;
     } else {
@@ -205,13 +221,12 @@ export const updateUsersData = async (data) => {
   }
 };
 
-
 ///////////   Delete User   //////////
 
 export const deleteUser = async (id) => {
   try {
     const response = await axios.delete(
-      apiUrl + `api/User/DeleteUser?id=${id}`
+      apiUrl + `api/Admin/DeleteUser?id=${id}`
     );
     if (response.status == 200) {
       return response.data;
@@ -227,7 +242,7 @@ export const deleteUser = async (id) => {
 
 export const addTicket = async (data) => {
   try {
-    const response = await axios.post(apiUrl + "api/User/AddTicket", data);
+    const response = await axios.post(apiUrl + "api/Tickets/AddTicket", data);
     if (response.status == 200) {
       return response.data;
     } else {
@@ -242,7 +257,9 @@ export const addTicket = async (data) => {
 
 export const getTicket = async (id) => {
   try {
-    const response = await axios.post(apiUrl + `api/User/GetTickets?id=${id}`);
+    const response = await axios.post(
+      apiUrl + `api/Tickets/GetTickets?id=${id}`
+    );
     if (response.status == 200) {
       return response.data;
     } else {
@@ -257,7 +274,7 @@ export const getTicket = async (id) => {
 
 export const getAllTickets = async () => {
   try {
-    const response = await axios.get(apiUrl + "api/User/GetAllTickets");
+    const response = await axios.get(apiUrl + "api/Tickets/GetAllTickets");
     if (response.status == 200) {
       return response.data;
     } else {
@@ -272,7 +289,7 @@ export const getAllTickets = async () => {
 
 export const updateTickets = async (data) => {
   try {
-    const response = await axios.put(apiUrl + "api/User/UpdateTicket", data);
+    const response = await axios.put(apiUrl + "api/Tickets/UpdateTicket", data);
     if (response.status == 200) {
       return response.data;
     } else {
@@ -286,12 +303,8 @@ export const updateTickets = async (data) => {
 /////// Update Leaves Api //////
 
 export const UpdateLeaveStatus = async (data) => {
-
   try {
-    const response = await axios.put(
-      apiUrl + "api/User/AdminRequest",
-      data
-    );
+    const response = await axios.put(apiUrl + "api/Leaves/AdminRequest", data);
 
     if (response.status == 200) {
       return response.data;
@@ -303,13 +316,11 @@ export const UpdateLeaveStatus = async (data) => {
   }
 };
 
-
-
 ///////////   Get Roles   //////////
 
 export const getManagers = async () => {
   try {
-    const result = await axios.get(apiUrl + "api/User/ManagerList");
+    const result = await axios.get(apiUrl + "api/Admin/ManagerList");
     return result.data;
   } catch (error) {
     throw error; // Propagate the error back to the caller for handling
@@ -320,7 +331,7 @@ export const getManagers = async () => {
 
 export const getRoles = async () => {
   try {
-    const result = await axios.get(apiUrl + "api/User/UserRole");
+    const result = await axios.get(apiUrl + "api/Admin/UserRole");
     return result.data;
   } catch (error) {
     throw error; // Propagate the error back to the caller for handling
@@ -331,7 +342,7 @@ export const getRoles = async () => {
 
 export const addUser = async (data) => {
   try {
-    const result = await axios.post(apiUrl + "api/User/AddUser", data);
+    const result = await axios.post(apiUrl + "api/Admin/AddUser", data);
 
     if (result.data.isRequestSuccessful === true) {
       return { success: true, message: "User has been Added" };
@@ -339,27 +350,23 @@ export const addUser = async (data) => {
       return { success: false, message: result.data.successResponse };
     }
   } catch (error) {
- 
     throw error;
   }
 };
-
 
 ///////////   Login   //////////
 
 export const LoginUser = async (request) => {
   try {
     const result = await axios.post(apiUrl + "api/User/Login", request);
-    console.log("login response",result.data);
+    console.log("login response", result.data);
     localStorage.setItem("loginData", JSON.stringify(result.data));
     if (result.data.isSuccess === true) {
-      
       return { success: true, message: "Login Successful" };
     } else {
       return { success: false, message: "Invalid Name or Password" };
     }
   } catch (error) {
- 
     throw error;
   }
 };
@@ -369,10 +376,10 @@ export const LoginUser = async (request) => {
 export const getUsers = async () => {
   try {
     const result = await axios.get(apiUrl + "api/User/UserList");
-    
+
     return result.data;
   } catch (error) {
-    throw error; 
+    throw error;
   }
 };
 
@@ -380,35 +387,54 @@ export const getUsers = async () => {
 
 export const addPerform = async (data) => {
   try {
-    const result = await axios.post(apiUrl + "api/User/AddPerform", data);
+    const result = await axios.post(
+      apiUrl + "api/Performance/AddPerform",
+      data
+    );
     return result.data;
   } catch (error) {
-    throw error; 
+    throw error;
   }
 };
 
+///////////   Update Perfromance   //////////
 
+export const updatePerformance = async (data) => {
+  try {
+    const result = await axios.post(
+      apiUrl + "api/Performance/UpdatePerformance",
+      data
+    );
+    if (result.status == 200) {
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
 
 ///////////   Fetch Performance   //////////
 
 export const fetchPerformData = async (data) => {
   try {
-    const result = await axios.get(apiUrl + "api/User/GetPerformance", data);
+    const result = await axios.get(
+      apiUrl + "api/Performance/GetPerformance",
+      data
+    );
     return result.data;
   } catch (error) {
-    throw error; 
+    throw error;
   }
 };
-
 
 ///////////   Fetch All Users Data   //////////
 
 export const fetchAllLeaves = async () => {
   try {
-    const response = await axios.get(apiUrl + "api/User/GetAllLeave");
+    const response = await axios.get(apiUrl + "api/Leaves/GetAllLeave");
     if (response.status == 200) {
-      
-
       return response.data;
     } else {
       return false;
@@ -421,12 +447,8 @@ export const fetchAllLeaves = async () => {
 ////// Update Leaves Api //////
 
 export const UpdateFineStatus = async (data) => {
-
   try {
-    const response = await axios.put(
-      apiUrl + "api/User/FinePaid",
-      data
-    );
+    const response = await axios.put(apiUrl + "api/User/FinePaid", data);
 
     if (response.status == 200) {
       return response.data;
@@ -445,9 +467,8 @@ export const FineCount = async (id) => {
       apiUrl + `api/User/FineCount?UserID=${id}`
     );
     if (response.status == 200) {
-      console.log(response.data)
+      console.log(response.data);
       return response.data;
-
     } else {
       return false;
     }
@@ -460,8 +481,10 @@ export const FineCount = async (id) => {
 
 export const getLate = async (data) => {
   try {
-   
-    const response = await axios.post(apiUrl + "api/User/AllUserAttendance", data);
+    const response = await axios.post(
+      apiUrl + "api/Attendance/AllUserAttendance",
+      data
+    );
     if (response.status == 200) {
       return response.data;
     } else {
@@ -471,14 +494,14 @@ export const getLate = async (data) => {
     return error.response;
   }
 };
-
 
 ///////////   Get Late Records   //////////
 
 export const getPendingLeaves = async (isLeaveFilter) => {
   try {
-   
-    const response = await axios.get(apiUrl + `api/User/GetAllLeave?isLeaveFilter=${isLeaveFilter}`);
+    const response = await axios.get(
+      apiUrl + `api/Leaves/GetAllLeave?isLeaveFilter=${isLeaveFilter}`
+    );
     if (response.status == 200) {
       return response.data;
     } else {
@@ -488,8 +511,6 @@ export const getPendingLeaves = async (isLeaveFilter) => {
     return error.response;
   }
 };
-
-
 
 export const GetOrders = async () => {
   try {

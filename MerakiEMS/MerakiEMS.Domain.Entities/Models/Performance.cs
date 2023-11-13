@@ -17,6 +17,7 @@ namespace MerakiEMS.Domain.Entities.Models
 
         public string? Severity { get; set; }
         public DateTime? Date { get; set; }
+        public DateTime? SpecifiedDate { get; set; }
         public string? Comments { get; set; }
     }
 }

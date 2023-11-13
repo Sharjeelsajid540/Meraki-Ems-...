@@ -15,7 +15,7 @@ import "./css/AddLeave.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
-import { addLeave, fetchLeave, sendEmail} from "../Api/Api";
+import { addLeave, fetchLeave, sendEmail } from "../Api/Api";
 import { GridTable } from "./GridTable";
 
 const AddLeave = () => {
@@ -23,13 +23,17 @@ const AddLeave = () => {
   const [from, setFrom] = useState(null);
   const [to, setTo] = useState(null);
   const [show, setShow] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const handleCloseComments = () => setShowComments(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleShowComments = () => setShowComments(true);
   const [description, setDescription] = useState("");
   const [leaveData, setLeaveData] = useState([]);
   const [LeaveType, setLeaveType] = useState();
   const [isChanged, setIsChanged] = useState(0);
- 
+  const [selectedLeave, setSelectedLeave] = useState();
+  const [comments, setComments] = useState("");
 
   var role = localStorage.getItem("loginData");
   var roleData = JSON.parse(role);
@@ -39,15 +43,11 @@ const AddLeave = () => {
     id: usID.id,
   };
 
- 
- 
-
-
   const columns = [
-    {
-      header: "Name",
-      accessorKey: "name",
-    },
+    // {
+    //   header: "Name",
+    //   accessorKey: "name",
+    // },
     {
       header: "From (Date)",
       accessorKey: "from",
@@ -72,16 +72,27 @@ const AddLeave = () => {
       header: "Status",
       accessorKey: "status",
     },
-    {
-      header: "Comments",
-      accessorKey: "comments",
-    },
+
     {
       header: "Updated At",
       accessorKey: "updatedAt",
     },
-    
-    
+    {
+      header: "",
+      accessorKey: "comments",
+      cell: (entry) => (
+        <button
+          className="secondary-btn-respond"
+          variant="success"
+          onClick={() => {
+            setSelectedLeave(entry.cell.row.original.comments);
+            handleShowComments();
+          }}
+        >
+          Comments
+        </button>
+      ),
+    },
   ];
 
   const handleIconClick1 = () => {
@@ -94,30 +105,29 @@ const AddLeave = () => {
 
   const navigate = useNavigate();
 
- 
   // Send the email
   const handleSubmit = async (e) => {
     e.preventDefault();
-   // Validate the form
-  const errors = [];
-  if (!from) {
-    errors.push("Please enter a from date.");
-  }
-  if (!to) {
-    errors.push("Please enter a to date.");
-  }
-  if (!LeaveType) {
-    errors.push("Please select a leave type.");
-  }
-  if (!description) {
-    errors.push("Please enter a description.");
-  }
+    // Validate the form
+    const errors = [];
+    if (!from) {
+      errors.push("Please enter a from date.");
+    }
+    if (!to) {
+      errors.push("Please enter a to date.");
+    }
+    if (!LeaveType) {
+      errors.push("Please select a leave type.");
+    }
+    if (!description) {
+      errors.push("Please enter a description.");
+    }
 
-  // Display any errors to the user
-  if (errors.length > 0) {
-    toast.error(errors.join("\n"));
-    return;
-  }
+    // Display any errors to the user
+    if (errors.length > 0) {
+      toast.error(errors.join("\n"));
+      return;
+    }
     // Extract the date part from 'from' and 'to' using .toISOString()
     let fromDate = from ? new Date(from) : null;
     let toDate = to ? new Date(to) : null;
@@ -191,9 +201,35 @@ const AddLeave = () => {
       setLeaveData(response);
     });
   }, [isChanged]);
- 
+
   return (
     <>
+      <Modal show={showComments} onHide={handleCloseComments} backdrop="static">
+        <Modal.Header closeButton>
+          <Modal.Title>Comments</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Row className="mt-3">
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label>Comments</Form.Label>
+                <Form.Control
+                  rows={3}
+                  as="textarea"
+                  type="name"
+                  placeholder="Enter Comments"
+                  value={selectedLeave}
+                  onChange={(e) => setComments(e.target.value)}
+                />
+              </Form.Group>
+            </Row>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            &nbsp; &nbsp;
+          </Form>
+        </Modal.Body>
+      </Modal>
       <div className="addLeave">
         <div>
           <Button
@@ -206,7 +242,6 @@ const AddLeave = () => {
         </div>
         <h2>Leaves Status List</h2>
         <br />
-        
 
         <GridTable data={leaveData} columns={columns} />
 
@@ -293,12 +328,7 @@ const AddLeave = () => {
                     />
                   </Form.Group>
                 </Row>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className="addBtn"
-                  
-                >
+                <Button variant="primary" type="submit" className="addBtn">
                   Submit
                 </Button>
               </Form>

@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import {LoginUser} from "../Api/Api";
+import { LoginUser } from "../Api/Api";
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -17,25 +17,19 @@ const Login = () => {
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
-   const data={
+    const data = {
       name: name,
-      password: password
-    }
+      password: password,
+    };
     try {
       const result = await LoginUser(data);
-      if (result.success)  {
-        
+      if (result.success) {
         toast.success(result.message);
         navigate("/home");
-
-        
       } else {
         toast.error(result.message);
       }
-
-      
     } catch (error) {
-      
       console.error(error);
       toast.error("Something Went Wrong");
     }
@@ -55,7 +49,7 @@ const Login = () => {
           <h6>Enter your credentials to login</h6>
           <form className="login-form" onSubmit={handleLogin}>
             <div className="mb-3">
-              <label htmlFor="name" className="form-label">
+              <label htmlFor="name" className="form-label-login">
                 Name
               </label>
               <input
@@ -68,7 +62,7 @@ const Login = () => {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="password" className="form-label">
+              <label htmlFor="password" className="form-label-login">
                 Password
               </label>
               <div className="password-input">

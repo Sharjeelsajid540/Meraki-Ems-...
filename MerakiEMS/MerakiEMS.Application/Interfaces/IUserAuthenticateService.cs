@@ -17,42 +17,11 @@ namespace MerakiEMS.Application.Interfaces
     public interface IUserAuthenticateService
     {
         Task<LoginResponse> LoginUser(LoginRequest request);
-        Task<ApiResponse<string>> AddUser(AddEmployeeRequest req);
-        Task<List<Role>> GetRoleList();
-        Task<CheckInResponse> InsertAttendance(CheckInRequest req);
-        Task<CheckoutResponse> UpdateAttendance(CheckOutRequest req);
-        Task<List<AttendanceListResponse>> GetAttendanceList(AttendanceFilter req);
-        Task<List<AttendanceListResponse>> GetSingleAttendanceList(UserAttendanceRequest req);
-
-        Task<ApiResponse<string>> RequestLeave(LeaveRequest req);
-        Task<AdminLeaveResponse> AdminLeaveRequest(AdminRequest req);
         Task<List<GetUsersResponse>> GetAllUsers();
         Task<GetUsersResponse> GetUser(int id);
-        Task<UpdateUserResponse> UpdateUser(UpdateUserRequest user);
-        Task<UpdateUserResponse> DeleteUser(int id);
-        Task<List<LeaveResponse>> GetAllLeave(bool isLeaveFilter);
-
-        Task<List<ManagerListResponse>> GetManagerList();
-        Task<List<LeaveResponse>> GetLeave(UserID user);
-       Task<AddTicketResponse> AddTicket(Tickets ticket);
-        Task<List<GetTicketResponse>> GetAllTickets();
-        Task<List<GetTicketResponse>> GetTickets(int id);
-        Task<AddTicketResponse> UpdateTickets(UpdateTicketRequest req);
-
-        Task<EmailResult> SendLeaveEmail(EmailID email);
-
-        Task<ApiResponse<string>> AddPerform(PerformanceRequest req);
-
-        Task<List<PerformanceResponse>> GetPerform();
-        Task<CheckStatusResponse> CheckCheckIn(CheckStatusRequest req);
-
-        Task<CheckStatusResponse> CheckCheckOut(CheckStatusRequest req);
-
-        Task<List<UserListResponse>> GetUserList();
-
         Task<FineResponse> FinePaid(FineRequest req);
+        Task<List<UserListResponse>> GetUserList();
         Task<int> FineCount(int UserID);
-
         Task<IEnumerable<UserAttendance>> GetProductsAsync(int pageNumber, int pageSize);
     }
 }
