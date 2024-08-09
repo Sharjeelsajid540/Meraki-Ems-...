@@ -42,11 +42,25 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
             return perform;
         }
 
+        public async Task<bool> Deleteperformance(Performance prformanceToDelete)
+        {
+
+            _context.Performance.Remove(prformanceToDelete);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<List<Performance>> GetPerform()
         {
             var response = await _context.Performance.OrderByDescending(s => s.Date).ToListAsync();
             return response;
         }
+
+        public async Task<Performance> GetUserByID(int id)
+        {
+            return await _context.Performance.FirstOrDefaultAsync(s => s.ID == id);
+        }
+
         public async Task<bool> UpdatePerformance(UpdatePerformanceRequest request)
         {
             var performanceData = await _context.Performance.Where(c => c.ID == request.PerformanceID).FirstOrDefaultAsync();
@@ -63,5 +77,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 return false;
             }
         }
+
+        
     }
 }

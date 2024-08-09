@@ -11,16 +11,17 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import "./css/Respond.css";
 import { GridTable } from "./GridTable";
-import { fetchAllLeaves , UpdateLeaveStatus, getPendingLeaves } from "../Api/Api";
-
-
-
-
+import {
+  fetchAllLeaves,
+  UpdateLeaveStatus,
+  getPendingLeaves,
+  getLate,
+} from "../Api/Api";
+import Loader from "./Loader";
 
 function ShowLeaves() {
+  const [isLeaveFilter, setisLeaveFilter] = useState(true);
 
-
-  const [isLeaveFilter, setLeaveFilter] = useState(true);
   const [filteredData, setFilteredData] = useState([]); // New state for filtered data
   const [adminRequestViewer, setAdminRequestViewer] = useState("");
   const [status, setStatus] = useState("");
@@ -30,31 +31,26 @@ function ShowLeaves() {
   const [searchFilter, setSearchFilter] = useState(""); // State for the search filter
   const [leaveData, setLeaveData] = useState([]);
   const [count, setCount] = useState(0);
-
-
+  const [searchText, setSearchText] = useState("");
+  const [searchDate, setSearchDate] = useState("");
+  const [searchSelect, setSearchStatus] = useState("");
 
   const [show1, setShow1] = useState(false);
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => setShow1(true);
 
-
-
   const [show3, setShow3] = useState(false);
   const handleClose3 = () => setShow3(false); // Updated to open the modal instead of closing it
   const handleShow3 = () => setShow3(false);
-
-
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
-
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-
-
+  const [attendanceData, setAttendanceData] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   const uID = localStorage.getItem("loginData");
   const usID = JSON.parse(uID);
@@ -62,32 +58,77 @@ function ShowLeaves() {
   const lv = JSON.parse(leave);
   const errors = [];
 
-  const selectedLeaveFields = [ "description","adminRequestViewer","comments","createdAt","updatedAt",];
-  const selectedNameFields = [ "name","from","to","description"];
+  const selectedLeaveFields = [
+    "description",
+    "adminRequestViewer",
+    "comments",
+    "createdAt",
+    "updatedAt",
+  ];
+  const selectedNameFields = ["name", "from", "to", "description"];
 
-  
+  const fetchData = (filterType) => {
+    const statusParameter = searchSelect === "" ? null : searchSelect;
+    const nameParameter = searchText === "" ? null : searchText;
+
+    const params = {
+      isLeaveFilter: filterType,
+      name: nameParameter,
+      status: statusParameter,
+    };
+
+    getPendingLeaves(isLeaveFilter, searchText, searchSelect)
+      .then((response) => {
+        if (response) {
+          setLeaveData(response);
+          // console.log(attendanceData);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+
+    const handleKeyPress = (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault(); // Prevent default behavior (page refresh)
+        // Call your search function here
+        handleSearch();
+      }
+    };
+  };
+  const handleSearch = () => {
+    fetchData(isLeaveFilter);
+    setCount(count + 1);
+  };
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent default behavior (page refresh)
+      // Call your search function here
+      handleSearch();
+    }
+  };
 
   const columns = [
     {
       header: "Name",
-      accessorKey: "name", 
+      accessorKey: "name",
     },
     {
       header: "From",
-      accessorKey: "from", 
+      accessorKey: "from",
     },
     {
       header: "To",
-      accessorKey: "to", 
+      accessorKey: "to",
     },
 
     {
       header: "Leave Type",
-      accessorKey: "leaveType", 
+      accessorKey: "leaveType",
     },
     {
-       header: "Status",
-      accessorKey: "status", 
+      header: "Status",
+      accessorKey: "status",
     },
     {
       header: "Details",
@@ -98,82 +139,71 @@ function ShowLeaves() {
           onClick={() => {
             setSelectedLeave(entry.cell.row.original);
             setShow3(true);
-          }}         
+          }}
         >
           Details
         </button>
       ),
     },
-    
-    
+
     {
       header: "Action",
       cell: (entry) => (
         <button
           className="secondary-btn-respond"
           variant="success"
-          onClick={() => {                      
-          setSelectedLeave(entry.cell.row.original);
-          handleShow();
-          }}         
+          onClick={() => {
+            setSelectedLeave(entry.cell.row.original);
+            handleShow();
+          }}
         >
           Respond
         </button>
       ),
-    }
-    
+    },
   ];
-
- 
-
-
 
   const update = async (event) => {
     event.preventDefault();
+    setLoader(true);
+
     if (!comments) {
       errors.push("Please enter a Username.");
     }
     if (!status) {
       errors.push("Please select Severity.");
     }
-    const data={
+    const data = {
       id: selectedLeave.id,
       status: status,
       adminRequestViewer: usID.name,
       comments: comments,
-    }
- 
+    };
 
     try {
       await UpdateLeaveStatus(data);
       toast.success("Request has been Updated");
+      setLoader(false);
       setSelectedLeave(null);
       setStatus("");
       setComments("");
       handleClose();
       setCount(count + 1);
       getPendingLeaves(isLeaveFilter);
-      
- 
     } catch (err) {
       toast.error("Error occurred!");
     }
   };
 
-
-  
   useEffect(() => {
-    
-    getPendingLeaves(isLeaveFilter)
-      .then((response) => {
-        if(response){
-          setLeaveData(response);
-       }
-      });
-      
+    fetchData(isLeaveFilter);
+    getPendingLeaves(isLeaveFilter).then((response) => {
+      if (response) {
+        setLeaveData(response);
+      }
+    });
   }, [isLeaveFilter, count]);
   useEffect(() => {
-
     if (selectedLeave) {
       setStatus(selectedLeave.status);
     }
@@ -183,14 +213,20 @@ function ShowLeaves() {
     event.preventDefault();
     await getPendingLeaves(isLeaveFilter);
     setCount(count + 1);
-  }
-  
+  };
+
   return (
     <>
-     <div className="showLeavesAdmin">
+      {loader && <Loader />}
+      <div className="showLeavesAdmin">
         <div>
           <>
-            <Modal size="lg" show={show1} onHide={handleClose1} backdrop="static">
+            <Modal
+              size="lg"
+              show={show1}
+              onHide={handleClose1}
+              backdrop="static"
+            >
               <Modal.Header closeButton>
                 <Modal.Title>Calendar</Modal.Title>
               </Modal.Header>
@@ -206,59 +242,65 @@ function ShowLeaves() {
                 />
               </Modal.Body>
             </Modal>
-          </>         
+          </>
           <>
+            <>
+              <Modal size="xl" show={show3} onHide={handleClose3}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Leave Details</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  {selectedLeave ? (
+                    <table>
+                      <tbody>
+                        {selectedLeaveFields.map((field) => (
+                          <tr key={field}>
+                            <td className="name-column">
+                              {field.charAt(0).toUpperCase() +
+                                field.slice(1).toLowerCase()}
+                            </td>
+                            <td>{selectedLeave[field]}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <p>No data selected.</p>
+                  )}
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose3}>
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </>
+          </>
           <>
-  <Modal size="xl" show={show3} onHide={handleClose3}>
-    <Modal.Header closeButton>
-      <Modal.Title>Leave Details</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-      {selectedLeave ? ( 
-        <table>
-          <tbody>
-            {selectedLeaveFields.map((field) => (
-              <tr key={field}>
-                <td className="name-column">{field.charAt(0).toUpperCase() + field.slice(1).toLowerCase()}</td> 
-                <td>{selectedLeave[field]}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No data selected.</p>
-      )}
-    </Modal.Body>
-    <Modal.Footer>
-      <Button variant="secondary" onClick={handleClose3}>
-        Close
-      </Button>
-    </Modal.Footer>
-  </Modal>
-</>
-</>
-        <>
-            <Modal  show={show} onHide={handleClose} backdrop="static">
+            <Modal show={show} onHide={handleClose} backdrop="static">
               <Modal.Header closeButton>
                 <Modal.Title>Update Leave Request</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-              {selectedLeave ? (
-                        <table>
-                          <tbody>
-                            {selectedNameFields.map((field) => (
-                              <tr key={field}>
-                                <td className="name-column">{field.charAt(0).toUpperCase() + field.slice(1).toLowerCase()}</td>                                
-                                <td >{selectedLeave[field]}</td>                             
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      ) : (
-                        <p>No data selected.</p>
-                      )}
+                {selectedLeave ? (
+                  <table>
+                    <tbody>
+                      {selectedNameFields.map((field) => (
+                        <tr key={field}>
+                          <td className="name-column">
+                            {field.charAt(0).toUpperCase() +
+                              field.slice(1).toLowerCase()}
+                          </td>
+                          <td>{selectedLeave[field]}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>No data selected.</p>
+                )}
                 <Form onSubmit={update}>
-                <Row className="mt-3">
+                  <Row className="mt-3">
                     <Form.Group as={Col} controlId="formGridStatus">
                       <Form.Label>Status</Form.Label>
                       <Form.Control
@@ -268,24 +310,17 @@ function ShowLeaves() {
                         onChange={(e) => setStatus(e.target.value)}
                       >
                         <option value="">Select Status</option>
-                        <option value="Pending">
-                          Pending
-                        </option>
-                        <option value="Approved" >
-                          Approved
-                        </option>
-                        <option value="Rejected" >
-                          Rejected
-                        </option>
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
                       </Form.Control>
                     </Form.Group>
                   </Row>
-
                   <Row className="mt-3">
                     <Form.Group as={Col} controlId="formGridEmail">
                       <Form.Label>Comments</Form.Label>
-                    <Form.Control                     
-                       rows={3}
+                      <Form.Control
+                        rows={3}
                         as="textarea"
                         type="name"
                         placeholder="Enter Comments"
@@ -294,8 +329,7 @@ function ShowLeaves() {
                       />
                     </Form.Group>
                   </Row>
-                  <Button variant="secondary" 
-                  onClick={handleClose}>
+                  <Button variant="secondary" onClick={handleClose}>
                     Close
                   </Button>
                   &nbsp; &nbsp;
@@ -309,61 +343,96 @@ function ShowLeaves() {
                 </Form>
               </Modal.Body>
             </Modal>
-         </>
+          </>
           <h2 className="leave-request-name">Leaves Request List</h2>
           <div className="radio-button">
-        <label>
-          <input
-            type="radio"
-            value="true"
-            checked={isLeaveFilter === true}
-            onChange={() => setLeaveFilter(true)}
-          />&nbsp;
-          Show Pending Leaves
-        </label>
-        &nbsp;
-        &nbsp;
-        <label>
-          <input
-            type="radio"
-            value="false"
-            checked={isLeaveFilter === false}
-            onChange={() => setLeaveFilter(false)}
-          />
-          &nbsp;
-          Show All Leaves
-        </label>
+            <label>
+              <input
+                type="radio"
+                value="true"
+                checked={isLeaveFilter === true}
+                onChange={() => setisLeaveFilter(true)}
+              />
+              &nbsp; Show Pending Leaves
+            </label>
+            &nbsp; &nbsp;
+            <label>
+              <input
+                type="radio"
+                value="false"
+                checked={isLeaveFilter === false}
+                onChange={() => setisLeaveFilter(false)}
+              />
+              &nbsp; Show All Leaves
+            </label>
+          </div>
 
-        
-        
-      </div>
-      
-      
-      <div className="button-container">
-    
-      <Button
-        variant="secondary"
-        className="btn-color"
-        onClick={refresh}
-      >
-        Refresh
-      </Button>{" "}
-      &nbsp;
-      <Button
-        variant="secondary"
-        className="btn-color"
-        onClick={handleShow1}
-      >
-        Show Calendar
-      </Button>{" "}
-    </div>
-        <div className="grid">
-          <GridTable data={leaveData} columns={columns} />
-        </div>
+          <div className="button-container">
+            <div className="col-sm-6 search-form">
+              <Row>
+                <Col sm={5}>
+                  <Form>
+                    <Form.Group>
+                      <Form.Control
+                        className="fields"
+                        type="text"
+                        placeholder="Enter name to search"
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                        onKeyDown={handleKeyPress}
+                      />
+                    </Form.Group>
+                  </Form>
+                </Col>
+
+                <Col sm={5}>
+                  <Form>
+                    <Form.Group>
+                      <Form.Control
+                        as="select"
+                        className="fields"
+                        value={searchSelect}
+                        onChange={(e) => setSearchStatus(e.target.value)}
+                        onKeyDown={handleKeyPress}
+                      >
+                        <option value="">Select Status</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="pending">Pending</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Form>
+                </Col>
+
+                <Col sm={2}>
+                  <Button
+                    className="btn-search"
+                    variant="secondary"
+                    onClick={handleSearch}
+                  >
+                    Search
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+            <Button variant="secondary" className="btn-color" onClick={refresh}>
+              Refresh
+            </Button>{" "}
+            &nbsp;
+            <Button
+              variant="secondary"
+              className="btn-color"
+              onClick={handleShow1}
+            >
+              Show Calendar
+            </Button>{" "}
+          </div>
+          <div className="grid">
+            <GridTable data={leaveData} columns={columns} />
+          </div>
         </div>
       </div>
     </>
   );
-
 }
 export default ShowLeaves;

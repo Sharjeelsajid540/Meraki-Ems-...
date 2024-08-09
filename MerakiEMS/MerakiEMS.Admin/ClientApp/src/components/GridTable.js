@@ -4,31 +4,50 @@ import {
   useReactTable,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 
-export const GridTable = ({ data, columns, minHeight }) => {
+export const GridTable = ({ data, columns, minHeight, minWidth, sortable }) => {
+  const [sorting, setSorting] = React.useState([]);
   const table = useReactTable({
     data,
     columns,
+
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting: sorting,
+    },
+    onSortingChange: setSorting,
   });
 
   table.getState().pagination.pageSize = 7;
   const tableSize = table.getPageCount();
   return (
     <>
-      <div style={{ minHeight: minHeight }}>
+      <div style={{ minHeight: minHeight, minWidth: minWidth }}>
         <table className="table">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id}>
+                  <th
+                    key={header.id}
+                    onClick={
+                      sortable && header.column.getToggleSortingHandler()
+                    }
+                  >
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext()
                     )}
+
+                    {
+                      { asc: "⬆", desc: "⬇" }[
+                        header.column.getIsSorted() ?? null
+                      ]
+                    }
                   </th>
                 ))}
               </tr>

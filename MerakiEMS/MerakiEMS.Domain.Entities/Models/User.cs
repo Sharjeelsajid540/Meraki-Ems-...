@@ -19,6 +19,8 @@ namespace MerakiEMS.Domain.Entities.Models
         public int? ManagerID { get; set; }
         public int? TotalLeaves { get; set; }
         public string? Image { get; set; }
+        public string? ResetToken { get; set; }
+        public DateTime? ResetTokenExpiration { get; set; }
 
 
     }

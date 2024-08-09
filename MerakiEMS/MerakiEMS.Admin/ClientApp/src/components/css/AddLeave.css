@@ -31,3 +31,39 @@
   width: 75%;
   /* margin: 110px 0px 0px 17.5%; */
 }
+.deletepopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #0b2b50;
+  padding: 20px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 22px;
+  width: 350px;
+  text-align: center;
+  z-index: 1;
+  
+  }
+
+.textclr{
+ color: white; 
+}
+.btn-custom {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-custom:hover {
+  color: white;
+  background-color: #0b2b50;
+}
+.btn-respond {
+
+  color: white;
+  background-color: #0b2b50;
+}
+.btn-respond:hover {
+background-color: #6c757d;
+  color: white;
+}

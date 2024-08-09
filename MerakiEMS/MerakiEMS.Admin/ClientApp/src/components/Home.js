@@ -28,7 +28,7 @@ function Home() {
         <SideNavbar />
         <Profile />
 
-        {UserRole == "Admin" ? <AddEmployee /> : <AttendanceList />}
+        {UserRole == "Admin" ?   <AddEmployee /> : <AttendanceList />}
       </div>
     </>
   );

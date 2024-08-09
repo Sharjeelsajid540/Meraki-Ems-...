@@ -26,6 +26,7 @@ namespace MerakiEMS.Application.Bootstrap
             services.AddTransient<IPerformanceService, PerformanceService>();
             services.AddTransient<ITicketsService, TicketsService>();
             services.AddTransient<IAdminService, AdminService>();
+           
             //services.AddTransient<IPostsService, PostsService>();
             //services.AddTransient<IProductService, ProductService>();
             //services.AddTransient<IOrderService, OrderService>();

@@ -7,7 +7,8 @@ import UserProfile from "./components/UserProfile";
 import Tickets from "./components/Tickets";
 import ManageTickets from "./components/ManageTickets";
 import Performance from "./components/Performance";
-
+import ResetPassword from "./components/ResetPassword";
+import InterviewData from "./components/InterviewData";
 
 const AppRoutes = [
   {
@@ -51,11 +52,19 @@ const AppRoutes = [
     path: "/perform",
     element: <Performance />,
   },
+  {
+    path: "/reset",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/interviewdata",
+    element: <InterviewData />,
+  },
+
   // {
   //   path: "/attend",
   //   element: <APICaller />,
   // },
 ];
-
 
 export default AppRoutes;

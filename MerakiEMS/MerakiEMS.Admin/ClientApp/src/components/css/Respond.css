@@ -95,7 +95,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end; 
-  margin-top: -5% !important;
+  margin-top: -3% !important;
   
 }
 .grid{
@@ -105,4 +105,15 @@
   font-weight: 700;
  width: 40%;
 }
+.btn{
+  height: 35.5px !important;
+  
+}
 
+.btn-search:hover {
+ 
+  background-color:#6c757d!important ;
+  
+  color: #fff!important;
+  
+}

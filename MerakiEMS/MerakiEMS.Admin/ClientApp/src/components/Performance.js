@@ -17,6 +17,7 @@ import {
   addPerform,
   fetchPerformData,
   updatePerformance,
+  DeletePerformance,
 } from "../Api/Api";
 
 const Performance = () => {
@@ -26,12 +27,15 @@ const Performance = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleUpdateClose = () => setUpdateShow(false);
+  const handleDeleteClose = () => setDeleteShow(false);
   const [selectedUserName, setSelectedUserName] = useState(""); // Selected user name
   const [usersNames, setUsersNames] = useState([]);
   const [isChanged, setIsChanged] = useState(0);
   const [date, setDate] = useState();
   const [updateShow, setUpdateShow] = useState(false);
+  const [deleteshow, setDeleteShow] = useState(false);
   const [performanceID, setPerformanceID] = useState();
+  const [id, setPerformancesID] = useState();
   const [count, setCount] = useState(0);
   const fetchPerformanceData = async () => {
     try {
@@ -39,6 +43,27 @@ const Performance = () => {
       setPerformanceData(data.successResponse);
     } catch (error) {
       console.error("Error fetching performance data:", error);
+    }
+  };
+  const handleDelete = async (e) => {
+    console.log("nccnncncn");
+    e.preventDefault();
+
+    console.log("nccnncncn");
+    try {
+      await DeletePerformance(id).then((response) => {
+        if (response.isRequestSuccessful) {
+          toast.success("DeletePerformance Successfully");
+          clear();
+          // fetchinterviewData();
+          handleDeleteClose();
+          setCount(count + 1);
+        } else {
+          toast.error("Failed to Delete Performance");
+        }
+      });
+    } catch (error) {
+      toast.error(error);
     }
   };
 
@@ -160,6 +185,13 @@ const Performance = () => {
     setUpdateShow(true);
     setPerformanceID(data.row.original.id);
   };
+  const showDetailss = (data) => {
+    setSeverityType(data.row.original.severity);
+    setComments(data.row.original.comments);
+    setDate(data.row.original.specifiedDate);
+    setDeleteShow(true);
+    setPerformancesID(data.row.original.id);
+  };
 
   useEffect(() => {
     fetchPerformanceData();
@@ -196,6 +228,19 @@ const Performance = () => {
           onClick={() => showDetails(data)} // Call the showDetails function with the employee data
         >
           Update
+        </Button>
+      ),
+    },
+    {
+      header: "",
+      accessorKey: " ",
+      cell: (data) => (
+        <Button
+          className="action"
+          variant="outline-secondary"
+          onClick={() => showDetailss(data)} // Call the showDetails function with the employee data
+        >
+          Delete
         </Button>
       ),
     },
@@ -342,6 +387,20 @@ const Performance = () => {
               </Button>
             </Form>
           </Modal.Body>
+        </Modal>
+        <Modal show={deleteshow} onHide={() => setDeleteShow(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm Check-Out</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Are you sure you want to Delete?</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleDeleteClose}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={(event) => handleDelete(event)}>
+              OK
+            </Button>
+          </Modal.Footer>
         </Modal>
       </div>
 

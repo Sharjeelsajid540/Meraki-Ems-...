@@ -5,6 +5,12 @@ using MerakiEMS.Api.Extension;
 using MerakiEMS.Application.Common.Configuration;
 using MerakiEMS.Application.Common.Constants;
 using System.Text;
+using MerakiEMS.Application.Interfaces;
+using MerakiEMS.Application.Services;
+using MerakiEMS.Domain.Entities.Models;
+using MerakiEMS.Infrastructure.Persistence.Sql.Context;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace MerakiEMS.Api
 {
@@ -26,8 +32,15 @@ namespace MerakiEMS.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("MySqlDb");
+            var serverVersion = ServerVersion.AutoDetect(connectionString);
+            services.AddDbContext<UserContext>(options => options.UseMySql(connectionString, serverVersion));
+
+            var smtpSettings = Configuration.GetSection("SmtpSettings").Get<SmtpSettings>();
+            services.AddSingleton<IEmailService>(new EmailService(smtpSettings.SmtpServer, smtpSettings.SmtpPort, smtpSettings.SmtpUsername, smtpSettings.SmtpPassword));
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-.AddJwtBearer(options =>
+            .AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -59,7 +72,7 @@ namespace MerakiEMS.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-          
+
             app.ConfigureRequestPipeline();
             app.UseCors(ApiConstants.CorsPolicy);
 
@@ -75,7 +88,7 @@ namespace MerakiEMS.Api
             app.UseAuthorization();
 
 
-
+        
         }
     }
 }

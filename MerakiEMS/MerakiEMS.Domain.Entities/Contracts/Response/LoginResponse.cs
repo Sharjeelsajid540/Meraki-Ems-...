@@ -10,6 +10,8 @@ namespace MerakiEMS.Application.Contracts.Response
     {
         public string Name { get; set; }
         public int Id { get; set; }
+        public bool IsCheckedIn { get; set; }
+        public bool IsCheckedOut { get; set; }
         public string UserRole { get; set; }
         public int RoleID { get; set; }
         public List<string> UserPermissions { get; set; }

@@ -65,3 +65,66 @@ h6 {
 .login-form {
   margin-top: 40px;
 }
+.forgot-password-button {
+  background-color:#0b2b50 ;
+  color: white;
+    margin: 10px;
+
+}
+
+
+/* Forget Modal CSS */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.forget-modal {
+  position: relative;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+.forgrt-modal{
+
+ 
+      padding: 50px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      width: 27%;
+}
+.reset-btn{
+  margin-top: 8px;
+  background: #0b2b50;
+    color: white;
+}
+.logo{
+  width: 30% !important;
+}
+.field{
+  display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+}
+.forgot-password-button{
+      border-radius: 8px;
+}

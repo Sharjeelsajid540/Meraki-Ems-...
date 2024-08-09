@@ -50,7 +50,7 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
         public async Task<List<GetUsersResponse>> GetAllUsers()
         {
             List<GetUsersResponse> users = new List<GetUsersResponse>();
-            //User user = new User();
+           
             try
             {
                 var user = await _context.User.OrderByDescending(s => s.ID).ToListAsync();
@@ -148,6 +148,8 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 
         public async Task<LoginResponse> CheckLogin(User user)
         {
+            var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
+            var Time = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
             LoginResponse response = new LoginResponse();
             var userr = await _context.User
            .Where(s => s.Name == user.Name && s.Password == user.Password).FirstOrDefaultAsync();
@@ -205,6 +207,20 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 }
             }
 
+            var checkInData = await _context.UserAttendance.Where(x => x.UserID == userr.ID && x.CreatedAt == Time.Date).FirstOrDefaultAsync();
+
+            if (checkInData != null)
+            {
+                response.IsCheckedIn = true;
+                if (checkInData.CheckOutTime != null)
+                {
+                    response.IsCheckedOut = true;
+                }
+                else { response.IsCheckedOut = false; }
+                    
+            }
+            else { response.IsCheckedIn = false; }
+
             return response;
         }
         public async Task<string> GenerateToken(LoginResponse response)
@@ -259,5 +275,74 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
                 .ToListAsync();
         }
 
-    }
+        public async Task<bool> SaveResetToken(string email, string resetToken)
+        {
+            try
+            {
+
+
+                var user = await _context.User.Where(u => u.Email == email).FirstOrDefaultAsync();
+
+                if (user != null)
+                {
+                    user.ResetToken = resetToken;
+
+                  
+                        var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
+                        
+                        var todayDate = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
+                        user.ResetTokenExpiration = todayDate.AddHours(1); // Set token expiration (adjust as needed)
+                 
+
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+              
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+                
+                    }
+        }
+
+
+        public async Task<bool> IsValidResetToken( string resetToken)
+        {
+            var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time");
+
+            var todayDate = TimeZoneInfo.ConvertTime(DateTime.Now, pakistanTimeZone);
+            var user = await _context.User.Where(u =>  u.ResetToken == resetToken && u.ResetTokenExpiration > todayDate).FirstOrDefaultAsync();
+
+            return user != null;
+        }
+
+        public async Task ResetUserPassword(ResetPasswordRequest req)
+        {
+            var user = await _context.User.Where(u => u.ResetToken == req.ResetToken).FirstOrDefaultAsync();
+
+            if (user != null)
+            {
+                user.Password = req.NewPassword;
+                user.ResetToken = null;
+                user.ResetTokenExpiration = null;
+               await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<GetUserImageResponse> GetUserImage(int id)
+        {
+            var user = await _context.User.Where(s => s.ID == id).FirstOrDefaultAsync();
+
+            var response = new GetUserImageResponse();
+            response.Image = user.Image;
+
+            return response;
+
+        }
+        }
 }

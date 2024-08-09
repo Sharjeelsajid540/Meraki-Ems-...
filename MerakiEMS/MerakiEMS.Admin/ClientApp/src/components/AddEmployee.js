@@ -11,11 +11,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import UsersListAdmin from "./UsersListAdmin";
 import Modal from "react-bootstrap/Modal";
-import {
-  getManagers,
-  getRoles,
-  addUser 
-} from "../Api/Api";
+import { getManagers, getRoles, addUser } from "../Api/Api";
 
 const AddEmployee = () => {
   const [roleNames, setRoleNames] = useState([]);
@@ -107,10 +103,9 @@ const AddEmployee = () => {
         toast.error(result.message);
       }
     } catch (error) {
-      
       navigate("/");
       console.error("Error adding user:", error);
-    } 
+    }
   };
 
   // Validation functions
@@ -146,11 +141,11 @@ const AddEmployee = () => {
   const fetchManagersData = async () => {
     try {
       const managersData = await getManagers();
-      localStorage.setItem('ManagersData', JSON.stringify(managersData));
+      localStorage.setItem("ManagersData", JSON.stringify(managersData));
       setIsChanged(isChanged + 1);
     } catch (error) {
       // Handle the error, e.g., by displaying an error message to the user.
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -161,24 +156,20 @@ const AddEmployee = () => {
       setIsChanged(isChanged + 1);
     } catch (error) {
       // Handle the error, e.g., by displaying an error message to the user.
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
-
   useEffect(() => {
-  
-  fetchManagersData();
-  fetchRolesData();
-  }, []); 
-
+    fetchManagersData();
+    fetchRolesData();
+  }, []);
 
   const getManagerNamesFromLocalStorage = () => {
     const managerNames = localStorage.getItem("ManagersData");
 
     return managerNames ? JSON.parse(managerNames) : [];
   };
-
 
   const getRoleNamesFromLocalStorage = () => {
     const roleNames = localStorage.getItem("RolesData");
@@ -223,17 +214,26 @@ const AddEmployee = () => {
   return (
     <div className="CustomerPage">
       <div className="addEmployee-section">
-        <Button
-          variant="secondary"
-          className="secondary-btnn"
-          onClick={handleShow}
-        >
-          Add Employee
-        </Button>
+        <div className="add-btns">
+          <Button
+            variant="secondary"
+            className="secondary-btnn"
+            onClick={handleShow}
+          >
+            Add Employee
+          </Button>
+        </div>
+
         <UsersListAdmin />
         <br />
 
-        <Modal show={show} onHide={handleClose} centered={true} backdrop="static" size={"lg"}>
+        <Modal
+          show={show}
+          onHide={handleClose}
+          centered={true}
+          backdrop="static"
+          size={"lg"}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Add Employee</Modal.Title>
           </Modal.Header>

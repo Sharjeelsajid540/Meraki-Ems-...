@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import Modal from "react-modal";
 import Logo from "../images/logo-black.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./css/Home.css";
 import "./css/SideNavbar.css";
+import Loader from "./Loader";
 import {
   faUser,
   faTicketSimple,
@@ -21,9 +23,18 @@ export const SideNavbar = () => {
   } else {
     UserRole = "User";
   }
-
   const handleLogout = () => {
-    localStorage.clear();
+    console.log("handleLogout function called");
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      console.log("Logging out...");
+
+      localStorage.clear();
+
+      window.location.href = "/login";
+    } else {
+      console.log("Logout canceled.");
+    }
   };
   return (
     <div className="leftPanel">
@@ -57,13 +68,25 @@ export const SideNavbar = () => {
           </h5>
         </NavLink>
         {UserRole === "Admin" && (
-  <NavLink className="menu-links" to="/perform">
-    <h5 className="link-text">
-      <FontAwesomeIcon icon={faTicketSimple} size="xs" className="menu-icons" />
-      Performance
-    </h5>
-  </NavLink>
-)}
+          <NavLink className="menu-links" to="/interviewdata">
+            <h5 className="link-text">
+              <FontAwesomeIcon icon={faUser} size="xs" className="menu-icons" />
+              Interviews
+            </h5>
+          </NavLink>
+        )}
+        {UserRole === "Admin" && (
+          <NavLink className="menu-links" to="/perform">
+            <h5 className="link-text">
+              <FontAwesomeIcon
+                icon={faTicketSimple}
+                size="xs"
+                className="menu-icons"
+              />
+              Performance
+            </h5>
+          </NavLink>
+        )}
 
         {/* <NavLink
           className="menu-links"
@@ -79,7 +102,7 @@ export const SideNavbar = () => {
             {UserRole === "Admin" ? "Tickets" : "Raise Ticket"}
           </h5>
         </NavLink> */}
-{/* 
+        {/* 
        <NavLink
           className="menu-links"
           to={"/attend"}
@@ -95,8 +118,7 @@ export const SideNavbar = () => {
           </h5>
         </NavLink>  */}
 
-
-        {/*<NavLink className="menu-links" to="/feedback">
+        {/* {<NavLink className="menu-links" to="/feedback">
           <h5 className="link-text">
             <FontAwesomeIcon
               icon={faFilePen}
@@ -105,22 +127,24 @@ export const SideNavbar = () => {
             />
             {UserRole === "Admin" ? "Feedback" : "Give Feedback"}
           </h5>
-        </NavLink> */}
-        {/* <NavLink
-          className="menu-links"
-          to={"/home"}
-          // to={UserRole === "Admin" ? "/employees" : "/profile"}
-        >
-          <h5 className="link-text">
-            <FontAwesomeIcon icon={faUser} size="xs" className="menu-icons" />
-            {UserRole === "Admin" ? "Employees" : "Profile"}
-          </h5>
-        </NavLink> */}
+        </NavLink> } */}
+        {
+          <NavLink
+            className="menu-links"
+            //to={"/home"}
+            to={UserRole === "Admin" ? "/employees" : "/profile"}
+          >
+            <h5 className="link-text">
+              <FontAwesomeIcon icon={faUser} size="xs" className="menu-icons" />
+              {UserRole === "Admin" ? "Employees" : "Profile"}
+            </h5>
+          </NavLink>
+        }
       </div>
       <div className="logout">
         <NavLink
           className="menu-links menu-logout"
-          to="/login"
+          //  to="/login"
           onClick={handleLogout}
         >
           <h5 className="link-text">

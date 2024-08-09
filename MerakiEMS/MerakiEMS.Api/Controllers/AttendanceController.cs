@@ -15,7 +15,7 @@ namespace MerakiEMS.Api.Controllers
             _attendanceService = attendanceService;
 
         }
-        [HttpPut]
+        [HttpPost]
         [Route("UserCheckOut")]
         public async Task<CheckoutResponse> UpdateUserAttendance(CheckOutRequest req)
         {

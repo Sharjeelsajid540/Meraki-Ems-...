@@ -18,7 +18,7 @@
   margin: 0% 30% 8% 0 !important;
   width: 100%;
 }
-.btn-search{
+.btn-search {
   background-color: #0b2b50 !important;
 }
 /* .radio-button-btn{
@@ -31,11 +31,30 @@
   margin-top: 10%;
 }  */
 
-.container{
+.container {
   position: absolute;
   top: 23%;
   left: -5px;
 }
-.search-form{
+.search-form {
   margin-left: -0%;
+}
+/* .dataexcel-btn {
+  margin-left: 700px;
+  margin-top: -12px;
+  background-color: #0b2b50;
+} */
+
+.exceldata-btn {
+  margin-top: -11px;
+  margin-right: 40px;
+  background-color: #0b2b50;
+  color: white;
+  width: 152px;
+}
+.Employee-exceldata-check {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -39px;
+  margin-right: 113px;
 }

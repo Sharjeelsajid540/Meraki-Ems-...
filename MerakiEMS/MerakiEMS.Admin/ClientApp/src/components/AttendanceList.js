@@ -7,7 +7,6 @@ import {
   CheckInStatus,
   CheckOutStatus,
   FineCount,
-  
 } from "../Api/Api";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -66,7 +65,6 @@ function AttendanceList() {
     }
   };
 
-  
   useEffect(() => {
     FineCount(idData.id)
       .then((data) => {
@@ -78,7 +76,7 @@ function AttendanceList() {
       .catch((error) => {
         console.error("Error fetching fine count:", error);
       });
-  }, [idData.id]); 
+  }, [idData.id]);
 
   const columns = [
     {
@@ -127,12 +125,6 @@ function AttendanceList() {
       header: "Fine Paid",
       accessorKey: "finePaid",
     },
-
-   
-
-
-
- 
   ];
 
   const confirmCheckIn = async () => {
@@ -150,7 +142,7 @@ function AttendanceList() {
           // Handle error or display a message if needed
           console.error("Error fetching fine count in confirmCheckIn");
         }
-  
+
         setIsChanged(isChanged + 1);
       } else if (response && response.isRequestSuccessfull === "false") {
         toast.error(response.successMessage);
@@ -225,7 +217,7 @@ function AttendanceList() {
   return (
     <>
       <div className="attendanceList">
-        <div className="container">
+        <div className="containerr">
           <div className="row">
             <div className="col-md-6">
               <div>
@@ -294,13 +286,13 @@ function AttendanceList() {
             </div>
           </div>
           <div className="row">
-          
             <div className="col-md-12">
-            <div className="title-container">
-              <h2 className="late-heading">Employee Attendance</h2>
-              <h5 className="pending-fine late">Pending Fine: <span>{fineCount} </span></h5>
-            </div>
-              
+              <div className="title-container">
+                <h2 className="late-heading">Employee Attendance</h2>
+                <h5 className="pending-fine late">
+                  Pending Fine: <span>{fineCount} </span>
+                </h5>
+              </div>
 
               <GridTable data={data} columns={columns} minHeight={"375px"} />
             </div>

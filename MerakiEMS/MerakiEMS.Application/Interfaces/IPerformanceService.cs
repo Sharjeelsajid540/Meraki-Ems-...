@@ -15,5 +15,6 @@ namespace MerakiEMS.Application.Interfaces
         Task<ApiResponse<string>> AddPerform(PerformanceRequest req);
         Task<ApiResponse<string>> UpdatePerformance(UpdatePerformanceRequest request);
         Task<ApiResponse<List<PerformanceResponse>>> GetPerform();
+        Task<ApiResponse<bool>> DeletePerformance(int id);
     }
 }

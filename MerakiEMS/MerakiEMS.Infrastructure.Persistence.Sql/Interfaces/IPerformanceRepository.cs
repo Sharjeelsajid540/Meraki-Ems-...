@@ -11,7 +11,9 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Interfaces
     public interface IPerformanceRepository
     {
         Task<Performance> AddPerform(PerformanceRequest req);
+        Task<bool> Deleteperformance(Performance prformanceToDelete);
         Task<List<Performance>> GetPerform();
+        Task<Performance> GetUserByID(int id);
         Task<bool> UpdatePerformance(UpdatePerformanceRequest request);
     }
 }

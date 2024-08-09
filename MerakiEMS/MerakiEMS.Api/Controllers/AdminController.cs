@@ -1,6 +1,7 @@
 ﻿using MerakiEMS.Application.Contracts.Requests;
 using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Application.Interfaces;
+using MerakiEMS.Application.Services;
 using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
 using MerakiEMS.Domain.Entities.Models;
@@ -51,7 +52,7 @@ namespace MerakiEMS.Api.Controllers
             return response;
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Route("DeleteUser")]
 
         public async Task<UpdateUserResponse> DeleteUser(int id)
@@ -59,5 +60,75 @@ namespace MerakiEMS.Api.Controllers
             var response = await _adminService.DeleteUser(id);
             return response;
         }
+        [HttpPost]
+        [Route("AddInterviewCandidate")]
+        public async Task<ApiResponse<string>> AddCandidate(AddCandidateRequest req)
+        {
+            var response = await _adminService.AddCandidate(req);
+            return response;
+        }
+        
+
+        [HttpGet]
+        [Route("GetAllCandidateData")]
+        public async Task<List<InterviewResponse>> GetAllCandidateData(bool isDataFilter, string? Name)
+        
+        {
+            var response = await _adminService.GetCandidate( isDataFilter,Name);
+            return response;
+        }
+        
+
+        [HttpPost]
+        [Route("UpdateCandidate")]
+        public async Task<ApiResponse<string>> UpdateCandidate(UpdateCandidateRequest req)
+        {
+            var response = await _adminService.UpdateCandidate(req);
+            return (response);
+        }
+       
+
+       
+        [HttpPost]
+        [Route("Addapplicant")]
+        public async Task<ApiResponse<string>> Addapplicant(AddApplicantRequest req)
+        {
+            var response = await _adminService.Addapplicant(req);
+            return response;
+        }
+        [HttpPost]
+        [Route("Deleteapplicant")]
+        public async Task<UpdateUserResponse> Deleteapplicant(int id)
+        {
+            var response = await _adminService.Deleteapplicant(id); 
+            return response;
+        }
+        [HttpPost]
+        [Route("Getimageapplicant")]
+        public async Task<InterviewListResponse> Getimageapplicant(int id)
+        {
+            var response = await _adminService.Getimageapplican(id);
+            return response;
+        }
+        [HttpPost]
+        [Route("GenerateExcelFile")]
+        public async Task<string> GenerateExcelFile(GenerateExcellRequest req)
+        {
+            var response = await _adminService.GenerateExcelFile(req);
+            return response;
+
+        }
+        [HttpPost]
+        [Route("Getuserid")]
+        public async Task<List<UserListResponse>> Getuserid()
+        {
+            var response = await _adminService.Getuserid();
+            return response;
+
+        }
+
+
+
+
     }
 }

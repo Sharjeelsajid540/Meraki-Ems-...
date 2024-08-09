@@ -15,8 +15,9 @@ import "./css/AddLeave.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
-import { addLeave, fetchLeave, sendEmail } from "../Api/Api";
+import { DeleteLeaveByID, addLeave, fetchLeave, sendEmail } from "../Api/Api";
 import { GridTable } from "./GridTable";
+import Loader from "./Loader";
 
 const AddLeave = () => {
   const [userID, setuserID] = useState(null);
@@ -34,11 +35,49 @@ const AddLeave = () => {
   const [isChanged, setIsChanged] = useState(0);
   const [selectedLeave, setSelectedLeave] = useState();
   const [comments, setComments] = useState("");
+  const [updateData, setUpdateData] = useState(false);
+
+  const [iddd, setIddd] = useState();
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [loader, setLoader] = useState(false);
+
+  const openDeleteModal = (id) => {
+    setIddd(id)
+    setDeleteModal(true);
+  }
+  const closeDeleteModal = () => {
+    setDeleteModal(false);
+  }
+
+
+
 
   var role = localStorage.getItem("loginData");
   var roleData = JSON.parse(role);
   const uID = localStorage.getItem("loginData");
   const usID = JSON.parse(uID);
+
+  const DeleteLeave = (event) => {
+    event.preventDefault(); // Prevent the default behavior (e.g., page refresh) on button click
+
+
+    DeleteLeaveByID(iddd).then((response) => {
+      if (response) {
+        if (response.isRequestSuccessful) {
+          fetchLeave(id).then((response) => {
+            setLeaveData(response);
+            setDeleteModal(false);
+          });
+
+
+        }
+      } else {
+
+      }
+
+    });
+  };
+
   const id = {
     id: usID.id,
   };
@@ -82,7 +121,7 @@ const AddLeave = () => {
       accessorKey: "comments",
       cell: (entry) => (
         <button
-          className="secondary-btn-respond"
+          className="btn btn-respond"
           variant="success"
           onClick={() => {
             setSelectedLeave(entry.cell.row.original.comments);
@@ -92,6 +131,22 @@ const AddLeave = () => {
           Comments
         </button>
       ),
+    },
+    {
+      header: "",
+      accessorKey: "comments",
+      cell: (entry) => entry.row.original.status == "Pending" ? (
+        <button
+          className="btn btn-custom"
+          variant="success"
+          onClick={() => {
+            // setSelectedLeave(entry.cell.row.original.comments);
+            openDeleteModal(entry.cell.row.original.id);
+          }}
+        >
+          Delete
+        </button>)
+        : (""),
     },
   ];
 
@@ -107,7 +162,8 @@ const AddLeave = () => {
 
   // Send the email
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
+    setLoader(true);
     // Validate the form
     const errors = [];
     if (!from) {
@@ -159,23 +215,24 @@ const AddLeave = () => {
       addLeave(data).then((response) => {
         if (response.isRequestSuccessful === true) {
           toast.success("Request has been Added");
+          setLoader(false);
           clear();
           setIsChanged(isChanged + 1);
           handleClose();
           fetchLeave(id).then((response) => {
             setLeaveData(response);
-            if (response.length > 0) {
-              const latestLeave = response[0];
-              const emailData = {
-                id: usID.id,
-                from: latestLeave.from,
-                to: latestLeave.to,
-                description: latestLeave.description,
-              };
-              sendEmail(emailData);
-            } else {
-              toast.error("Failed to retrieve the latest leave data.");
-            }
+            // if (response.length > 0) {
+            //   const latestLeave = response[0];
+            //   const emailData = {
+            //     id: usID.id,
+            //     from: latestLeave.from,
+            //     to: latestLeave.to,
+            //     description: latestLeave.description,
+            //   };
+            //   sendEmail(emailData);
+            // } else {
+            //   toast.error("Failed to retrieve the latest leave data.");
+            // }
           });
         } else {
           toast.error(response.data.successResponse);
@@ -200,10 +257,11 @@ const AddLeave = () => {
     fetchLeave(id).then((response) => {
       setLeaveData(response);
     });
-  }, [isChanged]);
+  }, [isChanged,]);
 
   return (
     <>
+      {loader && <Loader />}
       <Modal show={showComments} onHide={handleCloseComments} backdrop="static">
         <Modal.Header closeButton>
           <Modal.Title>Comments</Modal.Title>
@@ -223,13 +281,14 @@ const AddLeave = () => {
                 />
               </Form.Group>
             </Row>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant="secondary" onClick={handleCloseComments}>
               Close
             </Button>
             &nbsp; &nbsp;
           </Form>
         </Modal.Body>
       </Modal>
+
       <div className="addLeave">
         <div>
           <Button
@@ -312,7 +371,10 @@ const AddLeave = () => {
                       <option value="Sick">Sick</option>
                       <option value="Annual">Annual</option>
                       <option value="Half Day">Half Day</option>
-                      <option value="For Hours">For Hours</option>
+                      <option value="One Hours">One Hours</option>
+                      <option value="Two Hours">Two Hours</option>
+                      <option value="Three Hours">Three Hours</option>
+                      <option value="Four Hours">Four Hours</option>
                     </Form.Control>
                   </Form.Group>
                 </Row>
@@ -336,6 +398,48 @@ const AddLeave = () => {
           </Modal>
         </div>
       </div>
+
+      {/* {
+        deleteModal && (
+          <>
+         <div className="deletepopup">
+  <div className="row">
+    <label htmlFor="" className="textclr"> Are you sure you want to delete?</label>
+  </div>
+  <div className="row mt-3">
+    <button className="btn btn-custom col-6" onClick={(event) => DeleteLeave(event)}>
+      Delete
+    </button>
+    <button className="btn btn-custom col-6" onClick={closeDeleteModal}>
+      Cancel
+    </button>
+  </div>
+</div>
+          
+          </>
+        )
+      } */}
+      <Modal
+        show={deleteModal}
+        onHide={() => setDeleteModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Check-Out</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to Delete?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={closeDeleteModal}
+          >
+
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={(event) => DeleteLeave(event)}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

@@ -41,5 +41,14 @@ namespace MerakiEMS.Api.Controllers
 
             return (response);
         }
+        [HttpPost]
+        public async Task<ApiResponse<bool>> DeletePerformance(int id)
+        {
+            var response = await _performanceService.DeletePerformance(id);
+            return response;
+        }
+
+
+
     }
 }

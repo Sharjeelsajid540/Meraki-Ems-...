@@ -4,6 +4,7 @@ using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
 using MerakiEMS.Domain.Entities.Models;
 using MerakiEMS.Infrastructure.Persistence.Sql.Interfaces;
+using MerakiEMS.Infrastructure.Persistence.Sql.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,40 @@ namespace MerakiEMS.Application.Services
             return response;
 
         }
+
+        public async Task<ApiResponse<bool>> DeletePerformance(int id)
+        {
+            {
+                var response = new ApiResponse<bool>();
+
+                try
+                {
+                    var prformanceToDelete = await _performanceRepository.GetUserByID(id);
+
+                    if (prformanceToDelete == null)
+                    {
+                        response.ErrorMessage = "peformance with the provided ID not found.";
+                        return response;
+                    }
+
+
+
+                    // Proceed with deletion
+                    var deletionMessage = await _performanceRepository.Deleteperformance(prformanceToDelete);
+
+                    response.IsRequestSuccessful = true;
+                    response.SuccessMessage = "Leave deleted successfully: " + deletionMessage;
+                }
+                catch (Exception ex)
+                {
+                    response.IsRequestSuccessful = false;
+                    response.ErrorMessage = $"An error occurred: {ex.Message}";
+                }
+
+                return response;
+            }
+        }
+
         public async Task<ApiResponse<List<PerformanceResponse>>> GetPerform()
         {
             List<PerformanceResponse> responses = new();

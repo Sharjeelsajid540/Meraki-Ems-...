@@ -39,7 +39,7 @@ namespace MerakiEMS.Api.Controllers
             var response = await _ticketsService.GetTickets(id);
             return response;
         }
-        [HttpPut]
+        [HttpPost]
         [Route("UpdateTicket")]
         public async Task<AddTicketResponse> UpdateTicket(UpdateTicketRequest request)
         {

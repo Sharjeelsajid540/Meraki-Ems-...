@@ -38,7 +38,8 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
 
             if (req.Name != null)
             {
-                query = query.Where(s => s.Name == req.Name);
+                // Change the equality check to use Contains for partial matching
+                query = query.Where(s => s.Name.Contains(req.Name));
             }
 
             if (req.Date != null)

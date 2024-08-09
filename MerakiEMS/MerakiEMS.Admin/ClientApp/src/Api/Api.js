@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 const apiUrl = "https://localhost:7206/";
-// const apiUrl = "http://www.meraki-ams.local/";
+//const apiUrl = "http://www.meraki-ams.local/";
+
 /////////   Attendance List    ///////
 
 export const fetchAttendanceData = async (data) => {
@@ -65,7 +66,7 @@ export const CheckInUser = async (data) => {
 ////////   CheckOut    ///////
 export const CheckOutUser = async (data) => {
   try {
-    const response = await axios.put(
+    const response = await axios.post(
       apiUrl + "api/Attendance/UserCheckOut",
       data
     );
@@ -92,7 +93,7 @@ export const CheckOutStatus = async (data) => {
       if (response.status == "true") {
       }
 
-      // localStorage.setItem("AttendanceID", JSON.stringify(response.data));
+      // localStorage.setItem("AttendanceID", JSON.stringify(response.data));npm d
 
       return response.data;
     } else {
@@ -304,7 +305,7 @@ export const updateTickets = async (data) => {
 
 export const UpdateLeaveStatus = async (data) => {
   try {
-    const response = await axios.put(apiUrl + "api/Leaves/AdminRequest", data);
+    const response = await axios.post(apiUrl + "api/Leaves/AdminRequest", data);
 
     if (response.status == 200) {
       return response.data;
@@ -370,6 +371,22 @@ export const LoginUser = async (request) => {
     throw error;
   }
 };
+///////////   Forgot password   //////////
+
+export const forgotPassword = async (request) => {
+  try {
+    const result = await axios.post(apiUrl + "api/User/Login", request);
+    console.log("login response", result.data);
+    localStorage.setItem("loginData", JSON.stringify(result.data));
+    if (result.data.isSuccess === true) {
+      return { success: true, message: "Login Successful" };
+    } else {
+      return { success: false, message: "Invalid Name or Password" };
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 
 ///////////   Get Users   //////////
 
@@ -397,6 +414,14 @@ export const addPerform = async (data) => {
   }
 };
 
+export const AddInterviewCandidate = async (data) => {
+  try {
+    const result = await axios.post(apiUrl + "api/Admin/Addapplicant", data);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+};
 ///////////   Update Perfromance   //////////
 
 export const updatePerformance = async (data) => {
@@ -406,6 +431,62 @@ export const updatePerformance = async (data) => {
       data
     );
     if (result.status == 200) {
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const DeletePerformance = async (id) => {
+  try {
+    const result = await axios.post(`${apiUrl}api/Performance?ID=${id}`);
+    if (result.status === 200) {
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const updateCandidateData = async (data) => {
+  try {
+    const result = await axios.post(apiUrl + "api/Admin/UpdateCandidate", data);
+    if (result.status == 200) {
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const DeleteCandidateData = async (id) => {
+  try {
+    const result = await axios.post(
+      `${apiUrl}api/Admin/Deleteapplicant?ID=${id}`
+    );
+    if (result.status === 200) {
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const ShowCvCandidate = async (id) => {
+  try {
+    const result = await axios.post(
+      `${apiUrl}api/Admin/Getimageapplicant?id=${id}`
+    );
+    if (result.status === 200) {
       return result.data;
     } else {
       return false;
@@ -429,6 +510,26 @@ export const fetchPerformData = async (data) => {
   }
 };
 
+export const fetchInterData = async (isDataFilter, Name) => {
+  try {
+    let apiUrlWithParams =
+      apiUrl + `api/Admin/GetAllCandidateData?isDataFilter=${isDataFilter}`;
+
+    if (Name !== null) {
+      apiUrlWithParams += `&Name=${Name}`;
+    }
+
+    const response = await axios.get(apiUrlWithParams);
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
 ///////////   Fetch All Users Data   //////////
 
 export const fetchAllLeaves = async () => {
@@ -448,7 +549,7 @@ export const fetchAllLeaves = async () => {
 
 export const UpdateFineStatus = async (data) => {
   try {
-    const response = await axios.put(apiUrl + "api/User/FinePaid", data);
+    const response = await axios.post(apiUrl + "api/User/FinePaid", data);
 
     if (response.status == 200) {
       return response.data;
@@ -497,11 +598,20 @@ export const getLate = async (data) => {
 
 ///////////   Get Late Records   //////////
 
-export const getPendingLeaves = async (isLeaveFilter) => {
+export const getPendingLeaves = async (isLeaveFilter, name, status) => {
   try {
-    const response = await axios.get(
-      apiUrl + `api/Leaves/GetAllLeave?isLeaveFilter=${isLeaveFilter}`
-    );
+    let apiUrlWithParams =
+      apiUrl + `api/Leaves/GetAllLeave?isLeaveFilter=${isLeaveFilter}`;
+
+    if (name !== null) {
+      apiUrlWithParams += `&Name=${name}`;
+    }
+
+    if (status !== null) {
+      apiUrlWithParams += `&Status=${status}`;
+    }
+
+    const response = await axios.get(apiUrlWithParams);
     if (response.status == 200) {
       return response.data;
     } else {
@@ -780,5 +890,71 @@ export const RemoveProduct = async (id) => {
     }
   } catch (err) {
     return err.response;
+  }
+};
+export const DeleteLeaveByID = async (id) => {
+  try {
+    const resp = await axios.post(apiUrl + `api/Leaves/DeleteLeave?id=${id}`);
+
+    if (resp.status == 200) {
+      return resp.data;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    return err.response;
+  }
+};
+export const ForgotPassword = async (email) => {
+  try {
+    const resp = await axios.post(apiUrl + "api/User/forgot-password", {
+      email: email,
+    });
+
+    if (resp.status == 200) {
+      return resp.data;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    return err.response;
+  }
+};
+export const ResetPass = async (data) => {
+  try {
+    const resp = await axios.post(apiUrl + "api/User/reset-password", data);
+
+    if (resp.status == 200) {
+      return resp.data;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    return err.response;
+  }
+};
+export const GenerateAttendanceExcel = async (data) => {
+  try {
+    const resp = await axios.post(apiUrl + "api/Admin/GenerateExcelFile", data);
+
+    if (resp.status == 200) {
+      return resp.data;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    return err.response;
+  }
+};
+export const getAllUsers = async () => {
+  try {
+    const response = await axios.post(apiUrl + "api/Admin/Getuserid");
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
   }
 };

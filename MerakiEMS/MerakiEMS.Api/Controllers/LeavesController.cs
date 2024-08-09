@@ -1,5 +1,6 @@
 ﻿using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Application.Interfaces;
+using MerakiEMS.Application.Services;
 using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
 using MerakiEMS.Domain.Entities.Models;
@@ -26,7 +27,7 @@ namespace MerakiEMS.Api.Controllers
 
             return response;
         }
-        [HttpPut]
+        [HttpPost]
         [Route("AdminRequest")]
         public async Task<AdminLeaveResponse> LeaveAdminRequest(AdminRequest req)
         {
@@ -34,18 +35,18 @@ namespace MerakiEMS.Api.Controllers
 
             return response;
         }
-        [HttpPost]
-        [Route("SendEmail")]
-        public async Task<EmailResult> SendLeaveEmail(EmailID email)
-        {
-            var response = await _leavesService.SendLeaveEmail(email);
-            return response;
-        }
+        //[HttpPost]
+        //[Route("SendEmail")]
+        //public async Task<EmailResult> SendLeaveEmail(EmailID email)
+        //{
+        //    var response = await _leavesService.SendLeaveEmail(email);
+        //    return response;
+        //}
         [HttpGet]
         [Route("GetAllLeave")]
-        public async Task<List<LeaveResponse>> GetAllLeave(bool isLeaveFilter)
+        public async Task<List<LeaveResponse>> GetAllLeave(bool isLeaveFilter,string? Name,string? Status)
         {
-            var response = await _leavesService.GetAllLeave(isLeaveFilter);
+            var response = await _leavesService.GetAllLeave(isLeaveFilter,Name,Status);
             return response;
         }
 
@@ -54,6 +55,14 @@ namespace MerakiEMS.Api.Controllers
         public async Task<List<LeaveResponse>> GetLeave(UserID user)
         {
             var response = await _leavesService.GetLeave(user);
+            return response;
+        }
+        [HttpPost]
+        [Route("DeleteLeave")]
+
+        public async Task<UpdateUserResponse> Deleteleave(int id)
+        {
+            var response = await _leavesService.Deleteleave(id);
             return response;
         }
     }

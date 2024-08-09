@@ -11,16 +11,24 @@ using MimeKit;
 using Microsoft.AspNetCore.Http;
 using UAParser;
 using MerakiEMS.Application.Common.Configuration;
+using System.Security.Cryptography;
+using Org.BouncyCastle.Asn1.Ocsp;
+using Microsoft.AspNetCore.Mvc;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace MerakiEMS.Application.Services
 {
     public class UserAuthenticateService : IUserAuthenticateService
     {
         private readonly IUsersRepository _usersRepository;
+        private readonly IEmailService _emailService;
+       
 
-        public UserAuthenticateService(IUsersRepository usersRepository)
+        public UserAuthenticateService(IUsersRepository usersRepository,IEmailService emailService)
         {
             _usersRepository = usersRepository;
+            _emailService = emailService;
+            
         }
 
         public async Task<List<GetUsersResponse>> GetAllUsers()
@@ -114,6 +122,85 @@ namespace MerakiEMS.Application.Services
         {
             return await _usersRepository.GetProductsAsync(pageNumber, pageSize);
         }
-        
+
+        public async Task<ApiResponse<string>> ForgotPassword(ForgotPasswordRequest model)
+        {
+            try
+            {
+                var response= new ApiResponse<string>();
+                // Generate a unique token
+                string resetToken = GenerateResetToken();
+
+                // Save the token and user's email in the database
+                var result = await _usersRepository.SaveResetToken(model.Email, resetToken);
+                if (result == true)
+                {
+                    // Send the password reset email
+                    _emailService.SendPasswordResetEmailAsync(model.Email, resetToken);
+                   response.IsRequestSuccessful = true;
+                    response.IsSuccess = true;
+                    response.SuccessMessage = "email send successfully";
+                }
+                else
+                {
+                    response.IsRequestSuccessful = false;
+                    response.IsSuccess = false;
+                    response.SuccessMessage = "invalid email";
+
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, log, or rethrow if necessary
+                throw new PasswordResetException("Failed to initiate password reset", ex);
+            }
+        }
+
+        private string GenerateResetToken()
+        {
+            const string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const int tokenLength = 32; // Adjust the length as needed
+
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                var tokenChars = new char[tokenLength];
+                var bytes = new byte[tokenLength];
+
+                rng.GetBytes(bytes);
+
+                for (int i = 0; i < tokenLength; i++)
+                {
+                    tokenChars[i] = allowedChars[bytes[i] % allowedChars.Length];
+                }
+
+                return new string(tokenChars);
+            }
+        }
+
+
+
+
+        public async Task ResetPassword(ResetPasswordRequest model)
+        {
+
+            if (await _usersRepository.IsValidResetToken( model.ResetToken))
+            {
+               await _usersRepository.ResetUserPassword(model);
+            }
+            else
+            {
+                throw new InvalidResetTokenException();
+            }
+        }
+
+
+        public async Task<GetUserImageResponse> GetUserImage(int id)
+        {
+            var response = await _usersRepository.GetUserImage(id)
+        ;
+            return response;
+        }
+
     }
 }

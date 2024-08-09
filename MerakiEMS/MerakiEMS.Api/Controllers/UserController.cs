@@ -29,7 +29,7 @@ namespace MerakiEMS.Api.Controllers
 
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("FinePaid")]
         public async Task<FineResponse> FinePaid(FineRequest req)
         {
@@ -44,7 +44,8 @@ namespace MerakiEMS.Api.Controllers
         {
             if (request == null) return BadRequest();
             var response = await _authenticateService.LoginUser(request);
-            return Ok(response);
+            return Ok(response
+                );
 
         }
 
@@ -103,7 +104,46 @@ namespace MerakiEMS.Api.Controllers
 
             return Ok(products);
         }
-       
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword( ForgotPasswordRequest model)
+        {
+            try
+            {
+                 var res= await _authenticateService.ForgotPassword(model);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+        [HttpPost("reset-password")]
+        public async Task <IActionResult> ResetPassword( ResetPasswordRequest model)
+        {
+            try
+            {
+                await _authenticateService.ResetPassword(model);
+                return Ok(new { Message = "Password reset successful" });
+            }
+            catch (InvalidResetTokenException)
+            {
+                return BadRequest(new { Message = "Invalid reset token" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+        [HttpGet]
+        [Route("GetUserImage")]
+        public async Task<GetUserImageResponse> GetUserImage(int id)
+        {
+            var response = await _authenticateService.GetUserImage(id)
+        ;
+            return response;
+        }
+
     }
     
 }

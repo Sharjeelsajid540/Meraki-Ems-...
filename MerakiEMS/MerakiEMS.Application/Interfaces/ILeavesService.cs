@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MerakiEMS.Application.Interfaces
 {
@@ -14,8 +15,10 @@ namespace MerakiEMS.Application.Interfaces
     {
         Task<ApiResponse<string>> RequestLeave(LeaveRequest req);
         Task<AdminLeaveResponse> AdminLeaveRequest(AdminRequest req);
-        Task<List<LeaveResponse>> GetAllLeave(bool isLeaveFilter);
+        Task<List<LeaveResponse>> GetAllLeave(bool isLeaveFilter, string Name, string Status);
         Task<List<LeaveResponse>> GetLeave(UserID user);
-        Task<EmailResult> SendLeaveEmail(EmailID email);
+        Task<EmailResult> SendLeaveEmail(LeaveRequest req);
+
+        Task<UpdateUserResponse> Deleteleave(int id);
     }
 }

@@ -1,0 +1,20 @@
+.custom{
+    background-color: #0b2b50
+}
+.fieldss{
+    width: 495%;
+}
+.actions{
+        background-color: #0b2b50;
+            color: white;
+}
+.modal-dialog:has(.add-modal){
+    width: 40% !important;
+    max-width: none !important;
+}
+.pdf-div{
+    margin-top: 100px;
+}
+.pdfs-div {
+    margin-top: 100px;
+}

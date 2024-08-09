@@ -3,6 +3,8 @@ using MerakiEMS.Application.Contracts.Response;
 using MerakiEMS.Domain.Entities.Contracts.Requests;
 using MerakiEMS.Domain.Entities.Contracts.Response;
 using MerakiEMS.Domain.Entities.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +24,13 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Interfaces
         Task<UserAttendance> FinePaid(FineRequest req);
         Task<int> FineCount(int UserID);
         Task<IEnumerable<UserAttendance>> GetProductsAsync(int pageNumber, int pageSize);
-        
+        Task<bool> SaveResetToken(string email, string resetToken);
+        Task<bool> IsValidResetToken( string resetToken);
+        Task ResetUserPassword(ResetPasswordRequest req);
+        Task<GetUserImageResponse> GetUserImage(int id);
+
+
+
     }
     
 }

@@ -23,5 +23,8 @@ namespace MerakiEMS.Application.Interfaces
         Task<List<UserListResponse>> GetUserList();
         Task<int> FineCount(int UserID);
         Task<IEnumerable<UserAttendance>> GetProductsAsync(int pageNumber, int pageSize);
+        Task<ApiResponse<string>> ForgotPassword(ForgotPasswordRequest model);
+        Task ResetPassword(ResetPasswordRequest model);
+        Task<GetUserImageResponse> GetUserImage(int id);
     }
 }
