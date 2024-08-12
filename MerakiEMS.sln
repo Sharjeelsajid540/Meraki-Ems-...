@@ -1,0 +1,101 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32505.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{A39384F1-5C72-4145-B873-FEEF02208124}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{1E8DD166-8742-4C21-B67C-C16BAD1B4CB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{EEAF0EEB-BC9B-43FD-8586-B84D69C91B6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{D606381F-3A9C-4FC0-9755-1BE798932A97}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{D227FF53-6E3A-4BB4-BB16-BA1121E014DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MerakiEMS.Application", "MerakiEMS\MerakiEMS.Application\MerakiEMS.Application.csproj", "{804E0A8B-5BCD-4D49-A69A-F22714127E8C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MerakiEMS.Application.Bootstrap", "MerakiEMS\MerakiEMS.Application.Bootstrap\MerakiEMS.Application.Bootstrap.csproj", "{2FAF37B3-ABDA-48A0-9A4D-2A5F370E98EB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MerakiEMS.Application.Common", "MerakiEMS\MerakiEMS.Application.Common\MerakiEMS.Application.Common.csproj", "{743EA9E5-9269-41FD-ABCE-65F2AE3B5A0C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MerakiEMS.Infrastructure.Bootstrap", "MerakiEMS\MerakiEMS.Infrastructure.Bootstrap\MerakiEMS.Infrastructure.Bootstrap.csproj", "{783AC26E-7307-40D5-BDD6-74F01DA43355}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MerakiEMS.Infrastructure.ExternalClients", "MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\MerakiEMS.Infrastructure.ExternalClients.csproj", "{934666D6-127E-420D-BF40-A5D07A17B33C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MerakiEMS.Infrastructure.Persistence.Sql", "MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\MerakiEMS.Infrastructure.Persistence.Sql.csproj", "{467D88E7-957C-4155-8614-AE4BF3E8552F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MerakiEMS.Admin", "MerakiEMS\MerakiEMS.Admin\MerakiEMS.Admin.csproj", "{F8F8E8EB-4370-4065-93F3-BD2E9B3CC55E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MerakiEMS.Api", "MerakiEMS\MerakiEMS.Api\MerakiEMS.Api.csproj", "{12B409A2-CA88-4349-86EB-177D3FE00CC8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MerakiEMS.Domain.Entities", "MerakiEMS\MerakiEMS.Domain.Entities\MerakiEMS.Domain.Entities.csproj", "{6539CBE3-1252-415C-B093-6727B9547B65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MerakiEMS.Test", "MerakiEMS\MerakiEMS.Test\MerakiEMS.Test.csproj", "{94A71767-B03D-499E-A8BA-0487A68DED17}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{804E0A8B-5BCD-4D49-A69A-F22714127E8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{804E0A8B-5BCD-4D49-A69A-F22714127E8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{804E0A8B-5BCD-4D49-A69A-F22714127E8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{804E0A8B-5BCD-4D49-A69A-F22714127E8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FAF37B3-ABDA-48A0-9A4D-2A5F370E98EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FAF37B3-ABDA-48A0-9A4D-2A5F370E98EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FAF37B3-ABDA-48A0-9A4D-2A5F370E98EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FAF37B3-ABDA-48A0-9A4D-2A5F370E98EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{743EA9E5-9269-41FD-ABCE-65F2AE3B5A0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{743EA9E5-9269-41FD-ABCE-65F2AE3B5A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{743EA9E5-9269-41FD-ABCE-65F2AE3B5A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{743EA9E5-9269-41FD-ABCE-65F2AE3B5A0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{783AC26E-7307-40D5-BDD6-74F01DA43355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{783AC26E-7307-40D5-BDD6-74F01DA43355}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{783AC26E-7307-40D5-BDD6-74F01DA43355}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{783AC26E-7307-40D5-BDD6-74F01DA43355}.Release|Any CPU.Build.0 = Release|Any CPU
+		{934666D6-127E-420D-BF40-A5D07A17B33C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{934666D6-127E-420D-BF40-A5D07A17B33C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{934666D6-127E-420D-BF40-A5D07A17B33C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{934666D6-127E-420D-BF40-A5D07A17B33C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{467D88E7-957C-4155-8614-AE4BF3E8552F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{467D88E7-957C-4155-8614-AE4BF3E8552F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{467D88E7-957C-4155-8614-AE4BF3E8552F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{467D88E7-957C-4155-8614-AE4BF3E8552F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8F8E8EB-4370-4065-93F3-BD2E9B3CC55E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8F8E8EB-4370-4065-93F3-BD2E9B3CC55E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8F8E8EB-4370-4065-93F3-BD2E9B3CC55E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8F8E8EB-4370-4065-93F3-BD2E9B3CC55E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12B409A2-CA88-4349-86EB-177D3FE00CC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12B409A2-CA88-4349-86EB-177D3FE00CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12B409A2-CA88-4349-86EB-177D3FE00CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12B409A2-CA88-4349-86EB-177D3FE00CC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6539CBE3-1252-415C-B093-6727B9547B65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6539CBE3-1252-415C-B093-6727B9547B65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6539CBE3-1252-415C-B093-6727B9547B65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6539CBE3-1252-415C-B093-6727B9547B65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94A71767-B03D-499E-A8BA-0487A68DED17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A71767-B03D-499E-A8BA-0487A68DED17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94A71767-B03D-499E-A8BA-0487A68DED17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A71767-B03D-499E-A8BA-0487A68DED17}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{804E0A8B-5BCD-4D49-A69A-F22714127E8C} = {A39384F1-5C72-4145-B873-FEEF02208124}
+		{2FAF37B3-ABDA-48A0-9A4D-2A5F370E98EB} = {A39384F1-5C72-4145-B873-FEEF02208124}
+		{743EA9E5-9269-41FD-ABCE-65F2AE3B5A0C} = {A39384F1-5C72-4145-B873-FEEF02208124}
+		{783AC26E-7307-40D5-BDD6-74F01DA43355} = {EEAF0EEB-BC9B-43FD-8586-B84D69C91B6A}
+		{934666D6-127E-420D-BF40-A5D07A17B33C} = {EEAF0EEB-BC9B-43FD-8586-B84D69C91B6A}
+		{467D88E7-957C-4155-8614-AE4BF3E8552F} = {EEAF0EEB-BC9B-43FD-8586-B84D69C91B6A}
+		{F8F8E8EB-4370-4065-93F3-BD2E9B3CC55E} = {D606381F-3A9C-4FC0-9755-1BE798932A97}
+		{12B409A2-CA88-4349-86EB-177D3FE00CC8} = {D606381F-3A9C-4FC0-9755-1BE798932A97}
+		{6539CBE3-1252-415C-B093-6727B9547B65} = {1E8DD166-8742-4C21-B67C-C16BAD1B4CB1}
+		{94A71767-B03D-499E-A8BA-0487A68DED17} = {D227FF53-6E3A-4BB4-BB16-BA1121E014DC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {072296E8-F0BF-4D2E-9DBB-0B6828BCEFCA}
+	EndGlobalSection
+EndGlobal
