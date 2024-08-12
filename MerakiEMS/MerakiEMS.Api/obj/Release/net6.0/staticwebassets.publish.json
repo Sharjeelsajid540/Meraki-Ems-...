@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "dhMLWfWtDVr6e/Q5ZeBeP6KF1X50W8KL6Qseqj03qMI=",
+  "Source": "MerakiEMS.Api",
+  "BasePath": "_content/MerakiEMS.Api",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

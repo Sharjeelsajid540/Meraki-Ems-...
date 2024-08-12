@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:44439",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "C:\\Users\\Laptop Wala\\Desktop\\EMS NEW\\AMS Repository - Copy\\AMS Repository - Copy\\MerakiEMS\\MerakiEMS.Admin\\ClientApp\\",
+"MaxTimeoutInSeconds": "120"
+}
+}

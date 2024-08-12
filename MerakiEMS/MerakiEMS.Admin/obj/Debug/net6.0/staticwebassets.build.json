@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "iy7jsCh1jjXguFJNtzitjCkh+R4Bh3ardO3Ju7h2ZmI=",
+  "Source": "MerakiEMS.Admin",
+  "BasePath": "_content/MerakiEMS.Admin",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,43 @@
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.deps.json
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.pdb
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Application.Common.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Application.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Domain.Entities.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Application.pdb
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Application.Common.pdb
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Domain.Entities.pdb
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.pdb
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.csproj.AssemblyReference.cache
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.AssemblyInfoInputs.cache
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.AssemblyInfo.cs
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.csproj.CoreCompileInputs.cache
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.csproj.CopyComplete
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\refint\MerakiEMS.Infrastructure.ExternalClients.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.pdb
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\ref\MerakiEMS.Infrastructure.ExternalClients.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.deps.json
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.pdb
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Application.Common.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Application.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Domain.Entities.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Application.pdb
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Application.Common.pdb
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Domain.Entities.pdb
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.pdb
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.csproj.AssemblyReference.cache
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.AssemblyInfoInputs.cache
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.AssemblyInfo.cs
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.csproj.CoreCompileInputs.cache
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.sourcelink.json
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.csproj.CopyComplete
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\refint\MerakiEMS.Infrastructure.ExternalClients.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\MerakiEMS.Infrastructure.ExternalClients.pdb
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.ExternalClients\obj\Debug\net6.0\ref\MerakiEMS.Infrastructure.ExternalClients.dll

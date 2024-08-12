@@ -1,0 +1,272 @@
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\appsettings.Development.json
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\appsettings.json
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.exe
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.deps.json
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.runtimeconfig.json
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.pdb
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\AutoMapper.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\FluentValidation.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\MediatR.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\MediatR.Contracts.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.ApplicationInsights.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.AI.PerfCounterCollector.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IO.RecyclableMemoryStream.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Diagnostics.PerformanceCounter.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.0\System.Diagnostics.PerformanceCounter.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.Bootstrap.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.Common.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Domain.Entities.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Infrastructure.Bootstrap.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Infrastructure.Persistence.Sql.dll
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.Bootstrap.pdb
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.pdb
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Infrastructure.Bootstrap.pdb
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.Common.pdb
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Domain.Entities.pdb
+D:\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Infrastructure.Persistence.Sql.pdb
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.csproj.AssemblyReference.cache
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.GeneratedMSBuildEditorConfig.editorconfig
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.AssemblyInfoInputs.cache
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.AssemblyInfo.cs
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.csproj.CoreCompileInputs.cache
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.MvcApplicationPartsAssemblyInfo.cs
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.MvcApplicationPartsAssemblyInfo.cache
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets\msbuild.Senior.Api.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets\msbuild.build.Senior.Api.props
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Senior.Api.props
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.Senior.Api.props
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets.pack.json
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets.build.json
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets.development.json
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\scopedcss\bundle\Senior.Api.styles.css
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.csproj.CopyComplete
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.dll
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\refint\Senior.Api.dll
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.pdb
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.genruntimeconfig.cache
+D:\Senior\Senior\Senior.Api\obj\Debug\net6.0\ref\Senior.Api.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\appsettings.json
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.exe
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.deps.json
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.runtimeconfig.json
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\FluentValidation.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\MediatR.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\MediatR.Contracts.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.ApplicationInsights.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Drawing.Common.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Runtime.Caching.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Security.Permissions.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Windows.Extensions.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.Bootstrap.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.Common.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Domain.Entities.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Infrastructure.Bootstrap.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Infrastructure.Persistence.Sql.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.Bootstrap.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Infrastructure.Bootstrap.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.Common.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Domain.Entities.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Infrastructure.Persistence.Sql.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.csproj.AssemblyReference.cache
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.AssemblyInfoInputs.cache
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.AssemblyInfo.cs
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.csproj.CoreCompileInputs.cache
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets\msbuild.Senior.Api.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets\msbuild.build.Senior.Api.props
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Senior.Api.props
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.Senior.Api.props
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\scopedcss\bundle\Senior.Api.styles.css
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.csproj.CopyComplete
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\refint\Senior.Api.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.genruntimeconfig.cache
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Api\obj\Debug\net6.0\ref\Senior.Api.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\appsettings.Development.json
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\appsettings.json
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.exe
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.deps.json
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.runtimeconfig.json
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Api.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\AutoMapper.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\FluentValidation.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\MediatR.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\MediatR.Contracts.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.ApplicationInsights.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.AI.PerfCounterCollector.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IO.RecyclableMemoryStream.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Diagnostics.PerformanceCounter.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.0\System.Diagnostics.PerformanceCounter.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.Bootstrap.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.Common.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Domain.Entities.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Infrastructure.Bootstrap.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Infrastructure.Persistence.Sql.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.Bootstrap.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Infrastructure.Bootstrap.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Application.Common.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Domain.Entities.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Senior.Infrastructure.Persistence.Sql.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.csproj.AssemblyReference.cache
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.GeneratedMSBuildEditorConfig.editorconfig
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.AssemblyInfoInputs.cache
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.AssemblyInfo.cs
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.csproj.CoreCompileInputs.cache
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.MvcApplicationPartsAssemblyInfo.cs
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.MvcApplicationPartsAssemblyInfo.cache
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets\msbuild.Senior.Api.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets\msbuild.build.Senior.Api.props
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Senior.Api.props
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.Senior.Api.props
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets.pack.json
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets.build.json
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\staticwebassets.development.json
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\scopedcss\bundle\Senior.Api.styles.css
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.csproj.CopyComplete
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\refint\Senior.Api.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\Senior.Api.genruntimeconfig.cache
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\obj\Debug\net6.0\ref\Senior.Api.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Api\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll

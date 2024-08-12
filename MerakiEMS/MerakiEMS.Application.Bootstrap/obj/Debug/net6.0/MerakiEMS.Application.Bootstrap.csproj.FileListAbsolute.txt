@@ -1,0 +1,127 @@
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.deps.json
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.dll
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.pdb
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Common.dll
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.dll
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Domain.Entities.dll
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.dll
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Common.pdb
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.pdb
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Domain.Entities.pdb
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.pdb
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.AssemblyReference.cache
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.GeneratedMSBuildEditorConfig.editorconfig
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.AssemblyInfoInputs.cache
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.AssemblyInfo.cs
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.CoreCompileInputs.cache
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.CopyComplete
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.dll
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\refint\MerakiEMS.Application.Bootstrap.dll
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.pdb
+D:\DotNet projects\MerakiEMS\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\ref\MerakiEMS.Application.Bootstrap.dll
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.deps.json
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.dll
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.pdb
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Common.dll
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.dll
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Domain.Entities.dll
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.dll
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Common.pdb
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.pdb
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Domain.Entities.pdb
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.pdb
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.AssemblyReference.cache
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.GeneratedMSBuildEditorConfig.editorconfig
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.AssemblyInfoInputs.cache
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.AssemblyInfo.cs
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.CoreCompileInputs.cache
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.CopyComplete
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.dll
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\refint\MerakiEMS.Application.Bootstrap.dll
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.pdb
+D:\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\ref\MerakiEMS.Application.Bootstrap.dll
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.deps.json
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.dll
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.pdb
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Common.dll
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.dll
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Domain.Entities.dll
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.dll
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Common.pdb
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.pdb
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Domain.Entities.pdb
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.pdb
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.AssemblyReference.cache
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.AssemblyInfoInputs.cache
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.AssemblyInfo.cs
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.CoreCompileInputs.cache
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.CopyComplete
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.dll
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\refint\MerakiEMS.Application.Bootstrap.dll
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.pdb
+C:\Users\LAPTOP WALA\Desktop\DotNet projects\AMS Repository\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\ref\MerakiEMS.Application.Bootstrap.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.deps.json
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.pdb
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Common.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Domain.Entities.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Common.pdb
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.pdb
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Domain.Entities.pdb
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.pdb
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.AssemblyReference.cache
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.AssemblyInfoInputs.cache
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.AssemblyInfo.cs
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.CoreCompileInputs.cache
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.CopyComplete
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\refint\MerakiEMS.Application.Bootstrap.dll
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.pdb
+C:\Users\laptop wala\Desktop\New folder\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\ref\MerakiEMS.Application.Bootstrap.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.deps.json
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.pdb
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Common.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Domain.Entities.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Common.pdb
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.pdb
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Domain.Entities.pdb
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.pdb
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.AssemblyReference.cache
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.AssemblyInfoInputs.cache
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.AssemblyInfo.cs
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.CoreCompileInputs.cache
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.sourcelink.json
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.CopyComplete
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\refint\MerakiEMS.Application.Bootstrap.dll
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.pdb
+C:\Users\Laptop Wala\Desktop\EMS NEW\AMS Repository - Copy\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\ref\MerakiEMS.Application.Bootstrap.dll
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.deps.json
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.dll
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Bootstrap.pdb
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Common.dll
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.dll
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Domain.Entities.dll
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.dll
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.Common.pdb
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Application.pdb
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Domain.Entities.pdb
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.pdb
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.AssemblyReference.cache
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.AssemblyInfoInputs.cache
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.AssemblyInfo.cs
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.CoreCompileInputs.cache
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.csproj.CopyComplete
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.dll
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\refint\MerakiEMS.Application.Bootstrap.dll
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\MerakiEMS.Application.Bootstrap.pdb
+C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Application.Bootstrap\obj\Debug\net6.0\ref\MerakiEMS.Application.Bootstrap.dll

@@ -1,0 +1,57 @@
+D:\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.deps.json
+D:\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.dll
+D:\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.pdb
+D:\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.Common.dll
+D:\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Domain.Entities.dll
+D:\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Infrastructure.Persistence.Sql.dll
+D:\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.Common.pdb
+D:\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Infrastructure.Persistence.Sql.pdb
+D:\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Domain.Entities.pdb
+D:\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.csproj.AssemblyReference.cache
+D:\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.AssemblyInfoInputs.cache
+D:\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.AssemblyInfo.cs
+D:\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.csproj.CoreCompileInputs.cache
+D:\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.csproj.CopyComplete
+D:\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.dll
+D:\Senior\Senior\Senior.Application\obj\Debug\net6.0\refint\Senior.Application.dll
+D:\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.pdb
+D:\Senior\Senior\Senior.Application\obj\Debug\net6.0\ref\Senior.Application.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.deps.json
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.Common.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Domain.Entities.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Infrastructure.Persistence.Sql.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.Common.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Infrastructure.Persistence.Sql.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Domain.Entities.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.csproj.AssemblyReference.cache
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.AssemblyInfoInputs.cache
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.AssemblyInfo.cs
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.csproj.CoreCompileInputs.cache
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.csproj.CopyComplete
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\obj\Debug\net6.0\refint\Senior.Application.dll
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.pdb
+C:\Users\FB traders\Downloads\Layered Architecture App\Senior\Senior\Senior.Application\obj\Debug\net6.0\ref\Senior.Application.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.deps.json
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.Common.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Domain.Entities.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Infrastructure.Persistence.Sql.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Application.Common.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Infrastructure.Persistence.Sql.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\bin\Debug\net6.0\Senior.Domain.Entities.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.csproj.AssemblyReference.cache
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.AssemblyInfoInputs.cache
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.AssemblyInfo.cs
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.csproj.CoreCompileInputs.cache
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.csproj.CopyComplete
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\obj\Debug\net6.0\refint\Senior.Application.dll
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\obj\Debug\net6.0\Senior.Application.pdb
+D:\Clean Architecture (Project)\Senior\Senior\Senior.Application\obj\Debug\net6.0\ref\Senior.Application.dll
