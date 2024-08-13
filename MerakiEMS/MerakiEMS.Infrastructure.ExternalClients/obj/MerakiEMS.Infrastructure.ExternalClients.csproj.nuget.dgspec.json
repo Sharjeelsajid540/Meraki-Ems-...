@@ -60,6 +60,10 @@
               "target": "Package",
               "version": "[11.2.1, )"
             },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
             "MediatR": {
               "target": "Package",
               "version": "[10.0.1, )"
@@ -79,6 +83,10 @@
             "Microsoft.OpenApi": {
               "target": "Package",
               "version": "[1.4.3, )"
+            },
+            "UAParser": {
+              "target": "Package",
+              "version": "[3.1.47, )"
             }
           },
           "imports": [
@@ -148,6 +156,10 @@
               "target": "Package",
               "version": "[11.0.1, )"
             },
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.102.2, )"
+            },
             "FluentValidation": {
               "target": "Package",
               "version": "[11.2.1, )"
@@ -160,6 +172,14 @@
               "target": "Package",
               "version": "[11.2.1, )"
             },
+            "Google.Apis.Sheets.v4": {
+              "target": "Package",
+              "version": "[1.68.0.3407, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
             "MediatR.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[10.0.1, )"
@@ -171,6 +191,14 @@
             "Microsoft.AspNetCore.Http.Abstractions": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "MiniExcel": {
+              "target": "Package",
+              "version": "[1.31.3, )"
+            },
+            "UAParser": {
+              "target": "Package",
+              "version": "[3.1.47, )"
             }
           },
           "imports": [
@@ -229,6 +257,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
             "Microsoft.AspNetCore.Cors": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -240,6 +272,10 @@
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.8, )"
+            },
+            "UAParser": {
+              "target": "Package",
+              "version": "[3.1.47, )"
             }
           },
           "imports": [
@@ -306,6 +342,10 @@
               "target": "Package",
               "version": "[7.10.0, )"
             },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
             "Microsoft.AspNetCore.Cors": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -313,6 +353,10 @@
             "Microsoft.AspNetCore.Http.Abstractions": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "UAParser": {
+              "target": "Package",
+              "version": "[3.1.47, )"
             }
           },
           "imports": [
@@ -359,6 +403,9 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
+              "C:\\Users\\laptop wala\\Desktop\\AMS Repository - Copy\\MerakiEMS\\MerakiEMS.Application.Common\\MerakiEMS.Application.Common.csproj": {
+                "projectPath": "C:\\Users\\laptop wala\\Desktop\\AMS Repository - Copy\\MerakiEMS\\MerakiEMS.Application.Common\\MerakiEMS.Application.Common.csproj"
+              },
               "C:\\Users\\laptop wala\\Desktop\\AMS Repository - Copy\\MerakiEMS\\MerakiEMS.Domain.Entities\\MerakiEMS.Domain.Entities.csproj": {
                 "projectPath": "C:\\Users\\laptop wala\\Desktop\\AMS Repository - Copy\\MerakiEMS\\MerakiEMS.Domain.Entities\\MerakiEMS.Domain.Entities.csproj"
               }
@@ -375,6 +422,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
             "Microsoft.AspNetCore.Cors": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -394,6 +445,10 @@
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[6.32.1, )"
+            },
+            "UAParser": {
+              "target": "Package",
+              "version": "[3.1.47, )"
             }
           },
           "imports": [

@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[2.2.8, )"
             },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
             "Microsoft.AspNetCore.Cors": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -71,6 +75,10 @@
             "Moq": {
               "target": "Package",
               "version": "[4.18.2, )"
+            },
+            "UAParser": {
+              "target": "Package",
+              "version": "[3.1.47, )"
             },
             "coverlet.collector": {
               "target": "Package",

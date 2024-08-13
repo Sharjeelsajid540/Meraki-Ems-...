@@ -97,3 +97,20 @@ C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Reposit
 C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\refint\MerakiEMS.Infrastructure.Persistence.Sql.dll
 C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.pdb
 C:\Users\laptop wala\Desktop\sql back eknd\AMS Repository - Copy (1)\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\ref\MerakiEMS.Infrastructure.Persistence.Sql.dll
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.deps.json
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.dll
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\bin\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.pdb
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\bin\Debug\net6.0\MerakiEMS.Application.Common.dll
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\bin\Debug\net6.0\MerakiEMS.Domain.Entities.dll
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\bin\Debug\net6.0\MerakiEMS.Application.Common.pdb
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\bin\Debug\net6.0\MerakiEMS.Domain.Entities.pdb
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.csproj.AssemblyReference.cache
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.AssemblyInfoInputs.cache
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.AssemblyInfo.cs
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.csproj.CoreCompileInputs.cache
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.csproj.CopyComplete
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.dll
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\refint\MerakiEMS.Infrastructure.Persistence.Sql.dll
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\MerakiEMS.Infrastructure.Persistence.Sql.pdb
+C:\Users\laptop wala\Desktop\AMS Repository - Copy\MerakiEMS\MerakiEMS.Infrastructure.Persistence.Sql\obj\Debug\net6.0\ref\MerakiEMS.Infrastructure.Persistence.Sql.dll
