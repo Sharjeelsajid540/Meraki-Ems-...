@@ -153,7 +153,6 @@ export const addUser = async (data) => {
 
     if (result.data.isRequestSuccessful === true) {
       return { success: true, message: "User has been Added" };
-
     } else {
       return { success: false, message: result.data.successResponse };
     }
@@ -185,7 +184,6 @@ export const fetchAllUsersData = async () => {
   try {
     const response = await axios.get(apiUrl + "api/User/GetAllUsers");
     if (response.status == 200) {
-
       return response.data;
     } else {
       return false;
@@ -237,7 +235,6 @@ export const getManagers = async () => {
     throw error; // Propagate the error back to the caller for handling
   }
 };
-
 
 ///////////   Get Roles   //////////
 
@@ -305,5 +302,106 @@ export const fetchUserImage = async (id) => {
   } catch (error) {
     console.error("Error fetching User Image:", error);
     return false;
+  }
+};
+
+export const fetchInterData = async (isDataFilter, Name) => {
+  try {
+    let apiUrlWithParams =
+      apiUrl + `api/Admin/GetAllCandidateData?isDataFilter=${isDataFilter}`;
+
+    if (Name !== null) {
+      apiUrlWithParams += `&Name=${Name}`;
+    }
+
+    const response = await axios.get(apiUrlWithParams);
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const updateCandidateData = async (data) => {
+  try {
+    const result = await axios.post(apiUrl + "api/Admin/UpdateCandidate", data);
+    if (result.status == 200) {
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const DeleteCandidateData = async (id) => {
+  try {
+    const result = await axios.post(
+      `${apiUrl}api/Admin/Deleteapplicant?ID=${id}`
+    );
+    if (result.status === 200) {
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const ShowCvCandidate = async (id) => {
+  try {
+    const result = await axios.post(
+      `${apiUrl}api/Admin/Getimageapplicant?id=${id}`
+    );
+    if (result.status === 200) {
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const fetchUserData = async (id) => {
+  try {
+    const response = await axios.post(apiUrl + `api/User/GetUser?id=${id}`);
+    if (response.status == 200) {
+      localStorage.setItem("userData", JSON.stringify(response.data));
+
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const UpdateLeaveStatus = async (data) => {
+  try {
+    const response = await axios.post(apiUrl + "api/Leaves/AdminRequest", data);
+
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    return err.response;
+  }
+};
+
+export const AddInterviewCandidate = async (data) => {
+  try {
+    const result = await axios.post(apiUrl + "api/Admin/Addapplicant", data);
+    return result.data;
+  } catch (error) {
+    throw error;
   }
 };

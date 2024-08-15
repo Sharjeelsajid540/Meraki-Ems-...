@@ -35,24 +35,18 @@ export default function Home() {
     if (userName == null || userName == undefined || userName == "") {
       router.push("/", { scroll: false });
     }
-
   }, [router]);
 
   const handleModalClose = () => {
     setAddLeaveModal(false);
   };
 
-
-
-
-
   const handleConfirmAddLeave = (Data) => {
-
     const payLoad = {
       ...Data,
       userID: usID?.id,
       name: localStorage?.getItem("userName"),
-    }
+    };
     setLoader(true);
     addLeave(payLoad).then((response) => {
       if (response.isRequestSuccessful === true) {
@@ -61,7 +55,6 @@ export default function Home() {
         setLoader(false);
         setIsChanged(isChanged + 1);
         fetchLeave({ id: usID?.id }).then((response) => {
-          console.log("check", response);
           setLeaveData(response);
           // if (response.length > 0) {
           //   const latestLeave = response[0];

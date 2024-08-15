@@ -1,291 +1,268 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import LeavesDetailsModal from "../../Components/models/LeavesDetailsModal";
 import Navbar from "../../Components/navbar";
 import SideNavbar from "../../Components/sideNavbar";
-import Loader from "../../Components/loader.js";
+import Loader from "../../Components/loader";
 import { GridTable } from "../../Components/gridTable";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { UpdateLeaveStatus, getPendingLeaves } from "../../../Apis/apis";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/navigation";
-import ConfirmationModal from "@/Components/Models/confirmationModal";
+import { getPendingLeaves, UpdateLeaveStatus } from "../../../Apis/apis";
+import UpdateLeaveModal from "../../Components/Models/UpdateLeaveModal";
 
 export default function Home() {
-    const [isLeaveFilter, setisLeaveFilter] = useState(true);
-    const [loader, setLoader] = useState(false);
-    const [leaveData, setLeaveData] = useState([]);
-    const [isChanged, setIsChanged] = useState(0);
-    const [usID, setUsID] = useState(null);
-    const [userName, setUserName] = useState("");
-    const [count, setCount] = useState(0);
-    const [selectedLeave, setSelectedLeave] = useState();
-    const [searchSelect, setSearchStatus] = useState("");
-    const [searchText, setSearchText] = useState("");
-    const [status, setStatus] = useState("");
-    const router = useRouter();
+  const [loader, setLoader] = useState(false);
+  const [leaveData, setLeaveData] = useState([]);
+  const [isLeaveFilter, setisLeaveFilter] = useState(true);
+  const [searchSelect, setSearchStatus] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [count, setCount] = useState(0);
+  const [selectedLeave, setSelectedLeave] = useState();
+  const [leavesDetailsModal, setLeavesDetailsModal] = useState(false);
+  const [updateLeaveModal, setUpdateLeaveModal] = useState(false);
+  const [adminName, setAdminName] = useState("");
+  const [refresh, setRefresh] = useState(false);
 
-    useEffect(() => {
-        fetchData(isLeaveFilter);
-        getPendingLeaves(isLeaveFilter).then((response) => {
-            if (response) {
-                setLeaveData(response);
-            }
-        });
-    }, [isLeaveFilter, count]);
-    useEffect(() => {
-        if (selectedLeave) {
-            setStatus(selectedLeave.status);
+  const fetchData = (filterType) => {
+    const statusParameter = searchSelect === "" ? null : searchSelect;
+    const nameParameter = searchText === "" ? null : searchText;
+
+    const params = {
+      isLeaveFilter: filterType,
+      name: nameParameter,
+      status: statusParameter,
+    };
+
+    getPendingLeaves(isLeaveFilter, searchText, searchSelect)
+      .then((response) => {
+        if (response) {
+          setLeaveData(response);
         }
-    }, [selectedLeave]);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
 
-    const handleSearch = () => {
-        fetchData(isLeaveFilter);
-        setCount(count + 1);
+  const handleSearch = () => {
+    fetchData(isLeaveFilter);
+    setCount(count + 1);
+  };
+
+  const handleModalClose = () => {
+    setLeavesDetailsModal(false);
+    setUpdateLeaveModal(false);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSearch();
+    }
+  };
+
+  const update = async (formdata) => {
+    const data = {
+      id: selectedLeave.id,
+      status: formdata.status,
+      adminRequestViewer: adminName,
+      comments: formdata.comments,
     };
+    try {
+      UpdateLeaveStatus(data);
+      setRefresh(!refresh);
+      toast.success("Request has been Updated");
+    } catch (err) {
+      toast.error("Error occurred!");
+    }
+  };
 
-    // useEffect(() => {
-    //     var role = localStorage.getItem("loginData");
-    //     var roleData = JSON.parse(role);
-    //     const uID = localStorage?.getItem("LoginData");
-    //     if (uID) {
-    //         setUsID(JSON.parse(uID));
-    //     }
-    //     const userName = localStorage?.getItem("userName");
-    //     if (userName == null || userName == undefined || userName == "") {
-    //         router.push("/", { scroll: false });
-    //     }
+  const reset = () => {
+    setSearchText("");
+  };
 
-    // }, [router]);
+  const columns = [
+    {
+      header: "Name",
+      accessorKey: "name",
+    },
+    {
+      header: "From",
+      accessorKey: "from",
+    },
+    {
+      header: "To",
+      accessorKey: "to",
+    },
 
+    {
+      header: "Leave Type",
+      accessorKey: "leaveType",
+    },
+    {
+      header: "Status",
+      accessorKey: "status",
+    },
+    {
+      header: "Details",
+      cell: (entry) => (
+        <button
+          className=" py-2 px-4 bg-custom-blue text-white font-bold rounded-2xl hover:bg-custom-hover"
+          variant="success"
+          onClick={() => {
+            setSelectedLeave(entry.cell.row.original);
+            setLeavesDetailsModal(true);
+          }}
+        >
+          Details
+        </button>
+      ),
+    },
+    {
+      header: "Action",
+      cell: (entry) => (
+        <button
+          className=" py-2 px-4 bg-custom-blue text-white font-bold rounded-2xl hover:bg-custom-hover"
+          variant="success"
+          onClick={() => {
+            setSelectedLeave(entry.cell.row.original);
+            setUpdateLeaveModal(true);
+          }}
+        >
+          Respond
+        </button>
+      ),
+    },
+  ];
 
-    // useEffect(() => {
-    //     if (usID) {
-    //         fetchLeave({ id: usID.id }).then((response) => {
-    //             setLeaveData(response);
-    //         });
-    //     }
-    // }, [isChanged, usID]);
-    const fetchData = (filterType) => {
-        const statusParameter = searchSelect === "" ? null : searchSelect;
-        const nameParameter = searchText === "" ? null : searchText;
+  useEffect(() => {
+    fetchData(isLeaveFilter);
+    const id = localStorage.getItem("LoginData");
+    if (id) {
+      const idData = JSON.parse(id);
 
-        const params = {
-            isLeaveFilter: filterType,
-            name: nameParameter,
-            status: statusParameter,
-        };
+      setAdminName(idData.name);
+    }
+  }, [selectedLeave, isLeaveFilter, searchSelect, refresh]);
 
-        getPendingLeaves(isLeaveFilter, searchText, searchSelect)
-            .then((response) => {
-                if (response) {
-                    setLeaveData(response);
-                    // console.log(attendanceData);
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
-    };
-    const handleKeyPress = (e) => {
-        if (e.key === "Enter") {
-            e.preventDefault(); // Prevent default behavior (page refresh)
-            // Call your search function here
-            handleSearch();
-        }
-    };
-    const columns = [
-        {
-            header: "Name",
-            accessorKey: "name",
-        },
-        {
-            header: "From",
-            accessorKey: "from",
-        },
-        {
-            header: "To",
-            accessorKey: "to",
-        },
+  return (
+    <>
+      {loader && <Loader />}
+      <ToastContainer />
 
-        {
-            header: "Leave Type",
-            accessorKey: "leaveType",
-        },
-        {
-            header: "Status",
-            accessorKey: "status",
-            cell: (info) => {
-                const status = info.getValue();
-                let color;
-                let text;
+      <div className="flex">
+        <SideNavbar />
+        <div className="w-full">
+          <Navbar />
 
-                if (status === "Pending") {
-                    color = "#FFB422";
-                    text = "Pending";
-                } else if (status === "Approved") {
-                    color = "green";
-                    text = "Approved";
-                } else {
-                    color = "red";
-                    text = "Rejected";
-                }
-
-                const style = {
-                    color,
-                    fontSize: "16px",
-                    fontWeight: 600,
-                    lineHeight: "19.36px",
-                    textAlign: "left",
-                };
-
-                return <span style={style}>{text}</span>;
-            },
-        },
-        {
-            header: "Details",
-            cell: (entry) => (
+          <div className="mt-10">
+            <div className="ml-20">
+              <h5 className="text-left text-4xl font-semibold leading-[29.05px] font-inter">
+                Leave Request List
+              </h5>
+            </div>
+            <div className="ml-20 mt-10">
+              <div className="">
+                &nbsp; &nbsp;
+                <label>
+                  <input
+                    type="radio"
+                    value=""
+                    checked={searchSelect === ""}
+                    onChange={() => setSearchStatus("")}
+                  />
+                  &nbsp; All Leaves
+                </label>
+                &nbsp; &nbsp;
+                <label>
+                  <input
+                    type="radio"
+                    value="Pending"
+                    checked={searchSelect === "Pending"}
+                    onChange={() => setSearchStatus("Pending")}
+                  />
+                  &nbsp; Pending Leaves
+                </label>
+                &nbsp; &nbsp;
+                <label>
+                  <input
+                    type="radio"
+                    value="Approved"
+                    checked={searchSelect === "Approved"}
+                    onChange={() => setSearchStatus("Approved")}
+                  />
+                  &nbsp; Approved Leaves
+                </label>
+                &nbsp; &nbsp;
+                <label>
+                  <input
+                    type="radio"
+                    value="Rejected"
+                    checked={searchSelect === "Rejected"}
+                    onChange={() => setSearchStatus("Rejected")}
+                  />
+                  &nbsp; Rejected Leaves
+                </label>
+              </div>
+              <div className="-mt-[50px] flex justify-end mr-[50px]">
+                <input
+                  className="border border-solid border-black mr-5 rounded  px-5 h-[40px]"
+                  type="text"
+                  placeholder="Enter name to search"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  onKeyDown={handleKeyPress}
+                />
                 <button
-                    className="secondary-btn-respond"
-                    variant="success"
-                    onClick={() => {
-                        setSelectedLeave(entry.cell.row.original);
-                        setShow(true);
-                    }}
+                  type="submit"
+                  className="py-4 px-5 bg-custom-blue text-white font-bold hover:bg-custom-hover rounded-2xl mb-5 mr-5"
+                  onClick={handleSearch}
                 >
-                    Details
+                  Search
                 </button>
-            ),
-        },
-        {
-            header: "Action",
-            cell: (entry) => (
                 <button
-                    className="secondary-btn-respond"
-                    variant="success"
-                    onClick={() => {
-                        setSelectedLeave(entry.cell.row.original);
-                        handleShow();
-                    }}
+                  type="submit"
+                  className="py-4 px-5 bg-custom-blue text-white font-bold hover:bg-custom-hover rounded-2xl mb-5 mr-5"
+                  onClick={reset}
                 >
-                    Respond
+                  Reset
                 </button>
-            ),
-        },
-
-
-    ];
-
-    return (
-        <>
-            {loader && <Loader />}
-            <ToastContainer />
-
-            <div className="flex">
-                <SideNavbar />
-                <div className="w-full">
-                    <Navbar />
-
-                    <div className="mt-10">
-                        <div className="grid grid-cols-12 items-center px-14">
-                            <div className="col-span-6">
-                                <div className="">
-                                    <h5 className="text-left text-4xl font-semibold leading-[29.05px] font-inter">
-                                        Leaves Request List
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-12 items-center px-20">
-                            <div className="col-span-6">
-                                <div>
-                                    <label className="inline-flex items-center">
-                                        <input
-                                            type="radio"
-                                            value="true"
-                                            checked={isLeaveFilter === true}
-                                            onChange={() => setisLeaveFilter(true)}
-                                        />
-                                        <span className="ml-2 mt-marjin-top ">Show Pending Leaves</span>
-                                    </label>
-                                    &nbsp; &nbsp; &nbsp;
-                                    <label className="inline-flex items-center ml-4">
-                                        <input
-                                            type="radio"
-                                            value="false"
-                                            checked={isLeaveFilter === false}
-                                            onChange={() => setisLeaveFilter(false)}
-                                        />
-                                        <span className="ml-2  mt-marjin-top ">Show All Leaves</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="col-span-6">
-                                <div className="row">
-                                    <div className="col-sm-5">
-                                        <form>
-                                            <div className="form-group">
-                                                <input
-                                                    className="fields form-control"
-                                                    type="text"
-                                                    placeholder="Enter name to search"
-                                                    value={searchText}
-                                                    onChange={(e) => setSearchText(e.target.value)}
-                                                    onKeyDown={handleKeyPress}
-                                                />
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div className="col-sm-5">
-                                        <form>
-                                            <div className="form-group">
-                                                <select
-                                                    className="fields form-control"
-                                                    value={searchSelect}
-                                                    onChange={(e) => setSearchStatus(e.target.value)}
-                                                    onKeyDown={handleKeyPress}
-                                                >
-                                                    <option value="">Select Status</option>
-                                                    <option value="approved">Approved</option>
-                                                    <option value="rejected">Rejected</option>
-                                                    <option value="pending">Pending</option>
-                                                </select>
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    <div className="">
-                                        <button
-                                            className="px-4 py-2 bg-custom-blue text-white  rounded-btn-border"
-                                            onClick={handleSearch}
-                                        >
-                                            Search
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div className=" mt-2 px-12">
-                            <GridTable
-                                data={leaveData}
-                                columns={columns}
-                                minHeight={"430px"}
-                                Width={"430px"}
-                            />
-                        </div>
-                    </div>
-                </div>
+                <button
+                  type="submit"
+                  className="py-4 px-5 bg-custom-blue text-white font-bold rounded hover:bg-custom-hover rounded-2xl mb-5"
+                >
+                  Show Calendar
+                </button>
+              </div>
             </div>
 
-            {/* <ConfirmationModal
-                open={confirmationModal}
-                onClose={handleModalClose}
-                onConfirm={handleConfirm}
-                msg={msg}
-            /> */}
+            <div className=" mt-2 px-12">
+              <GridTable
+                data={leaveData}
+                columns={columns}
+                minHeight={"430px"}
+                Width={"430px"}
+              />
 
-        </>
-    );
+              <LeavesDetailsModal
+                open={leavesDetailsModal}
+                onClose={handleModalClose}
+                leaveDeatilsData={selectedLeave}
+              />
+
+              <UpdateLeaveModal
+                open={updateLeaveModal}
+                onClose={handleModalClose}
+                updateleaveData={selectedLeave}
+                update={update}
+                refresh={refresh}
+                setRefresh={setRefresh}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }

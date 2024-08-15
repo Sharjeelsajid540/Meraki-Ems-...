@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-responsive-modal/styles.css";
 import "react-datepicker/dist/react-datepicker.css";
 
-const AddLeaveModal = ({ open, onClose, onConfirm }) => {
+export default function ({ open, onClose, onConfirm }) {
   const {
     control,
     handleSubmit,
@@ -34,8 +34,9 @@ const AddLeaveModal = ({ open, onClose, onConfirm }) => {
                 {...register("leaveType", {
                   required: "Leave type is required",
                 })}
-                className={`py-3 border rounded-2xl w-full ${errors.leaveType ? "border-red-500" : ""
-                  }`}
+                className={`py-3 border rounded-2xl w-full ${
+                  errors.leaveType ? "border-red-500" : ""
+                }`}
               >
                 <option value="">Select Leave Type</option>
                 <option value="sick">Sick Leave</option>
@@ -62,7 +63,9 @@ const AddLeaveModal = ({ open, onClose, onConfirm }) => {
                       placeholderText="Select Date"
                       onChange={(date) => field.onChange(date)}
                       selected={field.value}
-                      className={`py-3 px-2 border rounded-2xl w-96 ${errors.fromDate ? "border-red-500" : ""}`}
+                      className={`py-3 px-2 border rounded-2xl w-96 ${
+                        errors.fromDate ? "border-red-500" : ""
+                      }`}
                     />
                   )}
                 />
@@ -84,8 +87,9 @@ const AddLeaveModal = ({ open, onClose, onConfirm }) => {
                       placeholderText="Select Date"
                       onChange={(date) => field.onChange(date)}
                       selected={field.value}
-                      className={`py-3 px-2 border rounded-2xl w-96 ${errors.toDate ? "border-red-500" : ""
-                        }`}
+                      className={`py-3 px-2 border rounded-2xl w-96 ${
+                        errors.toDate ? "border-red-500" : ""
+                      }`}
                     />
                   )}
                 />
@@ -105,8 +109,9 @@ const AddLeaveModal = ({ open, onClose, onConfirm }) => {
                 {...register("description", {
                   required: "Description is required",
                 })}
-                className={`py-3 px-2 border rounded-2xl w-full ${errors.description ? "border-red-500" : ""
-                  }`}
+                className={`py-3 px-2 border rounded-2xl w-full ${
+                  errors.description ? "border-red-500" : ""
+                }`}
               />
               {errors.description && (
                 <p className="text-red-500">{errors.description.message}</p>
@@ -123,6 +128,4 @@ const AddLeaveModal = ({ open, onClose, onConfirm }) => {
       </form>
     </Modal>
   );
-};
-
-export default AddLeaveModal;
+}

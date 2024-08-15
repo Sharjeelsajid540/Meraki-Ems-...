@@ -10,12 +10,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import {
-  getManagers, getRoles, addUser
+import { getManagers, getRoles, addUser } from "../../../Apis/apis";
 
-} from "../../../Apis/apis";
-
-const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
+export default function ({ open, onClose, onConfirm }) {
   const [roleNames, setRoleNames] = useState([]);
   const [managerNames, setManagerNames] = useState([]);
   const [managerID, setManagerID] = useState("");
@@ -23,12 +20,9 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
   const [fileSizeError, setFileSizeError] = useState("");
   const [image, setImage] = useState("");
 
-
   const [showPassword, setShowPassword] = useState(false);
 
   // const navigate = useNavigate();
-
-
 
   const {
     register,
@@ -38,16 +32,12 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
     control,
   } = useForm();
 
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-
-
-
   const onSubmit = async (data) => {
-    console.log("ggggg", data)
+    console.log("ggggg", data);
     // onConfirm(data);
     if (!validateEmail(data.email)) {
       return;
@@ -68,7 +58,7 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
       return;
     }
     data.image = image;
-    console.log(data)
+    console.log(data);
     try {
       const result = await addUser(data);
 
@@ -80,7 +70,6 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
         toast.error(result.message);
       }
     } catch (error) {
-
       console.error("Error adding user:", error);
     }
   };
@@ -94,17 +83,14 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
     return true;
   };
 
-
   const validatePassword = (password) => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
     if (!passwordRegex.test(password)) {
       return "Password must contain at least 8 characters with a mix of lowercase, uppercase letters, and a special character";
     }
     return true;
   };
-
-
-
 
   const validateCNIC = (cnic) => {
     if (!/^\d{5}-\d{7}-\d{1}$/.test(cnic)) {
@@ -113,7 +99,6 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
     return true;
   };
 
-
   const validateContactNo = (contactNo) => {
     const regex = /^\d{4}-\d{7}$/;
     if (!regex.test(contactNo)) {
@@ -121,7 +106,6 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
     }
     return true;
   };
-
 
   const clear = () => {
     setValue("name", "");
@@ -142,12 +126,10 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
     fetchRolesData();
   }, []);
 
-
-
   const fetchRolesData = async () => {
     try {
       const rolesData = await getRoles();
-      setRoleNames(rolesData)
+      setRoleNames(rolesData);
       setIsChanged(isChanged + 1);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -162,8 +144,7 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
   const fetchManagersData = async () => {
     try {
       const managersData = await getManagers();
-      console.log("api response ", managersData)
-      setManagerNames(managersData)
+      setManagerNames(managersData);
       setIsChanged(isChanged + 1);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -203,7 +184,6 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
     }
   };
 
-
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -212,16 +192,13 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
 
     const storedManagerNames = getManagerNamesFromLocalStorage();
     setManagerNames(storedManagerNames);
-    console.log(storedManagerNames);
     setShow(true);
   };
 
   return (
     <div className="CustomerPage ">
       <div className="addEmployee-section custom">
-        <Modal open={open} onClose={onClose} center
-          show={show}
-        >
+        <Modal open={open} onClose={onClose} center show={show}>
           <h2 className="text-3xl mb-4 ">Add Employee</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 custom-EmployeeModal">
@@ -271,7 +248,7 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
                 </label>
                 <div className="relative">
                   <input
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     placeholder="Enter password"
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
                     {...register("password", {
@@ -483,6 +460,4 @@ const AddEmployeeModal = ({ open, onClose, onConfirm }) => {
       </div>
     </div>
   );
-};
-
-export default AddEmployeeModal;
+}

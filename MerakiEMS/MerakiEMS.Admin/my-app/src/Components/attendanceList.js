@@ -4,7 +4,7 @@ import { Modal } from "react-responsive-modal";
 import { GridTable } from "./gridTable";
 import "react-responsive-modal/styles.css";
 import "tailwindcss/tailwind.css"; // Ensure you have Tailwind CSS included in your project
-export default function AttendanceList({
+export default function ({
   data,
   columns,
   fineCount,
