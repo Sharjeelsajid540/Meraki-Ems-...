@@ -14,7 +14,7 @@ export default function CheckInCheckOut(props) {
   const [isCheckedIn, setIsCheckedIn] = useState(false);
   const [isCheckedOut, setIsCheckedOut] = useState(false);
   const [isChanged, setIsChanged] = useState(0);
-  console.log(props);
+
   useEffect(() => {
     const id = localStorage.getItem("LoginData");
     const attendId = localStorage.getItem("attendList");

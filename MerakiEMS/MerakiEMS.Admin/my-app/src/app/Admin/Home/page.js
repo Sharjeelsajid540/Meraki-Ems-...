@@ -40,12 +40,10 @@ export default function Home() {
 
   const [leaveResponseModal, setLeaveResponseModal] = useState(false);
 
-
   useEffect(() => {
     getAllUsers()
       .then((response) => {
         if (response) {
-          console.log("Users Name:", response);
           setAllUersData(response);
         }
       })
@@ -86,7 +84,6 @@ export default function Home() {
     return <span className={colorclassName}>{cellValue}</span>;
   };
 
-
   const handleModalClose = () => {
     setAddEmployeeModal(false);
   };
@@ -112,13 +109,10 @@ export default function Home() {
       fineStatus: isFinePending,
     };
 
-    console.log(nameParameter);
-
     getLate(params)
       .then((response) => {
         if (response) {
           setAttendanceData(response);
-          console.log(response);
         }
       })
       .catch((error) => {
@@ -128,13 +122,11 @@ export default function Home() {
 
   const handleOnClick = () => {
     setLeaveResponseModal(true);
-
   };
   const handleResponseleaveModalClosed = () => {
     setLeaveResponseModal(false);
   };
   const handleResponseLeave = async (event) => {
-    console.log("check", event)
     // event.preventDefault();
     const data = {
       id: paidEntry,
@@ -225,13 +217,15 @@ export default function Home() {
       accessorKey: "finePaid",
       cell: (value) => (
         <strong>
-          <span style={{
-            color: value.getValue("finePaid") === "Paid"
-              ? "green"
-              : value.getValue("finePaid") === "Pending"
-                ? "red"
-                : "orange"
-          }}
+          <span
+            style={{
+              color:
+                value.getValue("finePaid") === "Paid"
+                  ? "green"
+                  : value.getValue("finePaid") === "Pending"
+                  ? "red"
+                  : "orange",
+            }}
           >
             {value.getValue("finePaid")}
           </span>
@@ -275,7 +269,6 @@ export default function Home() {
     fetchData();
     setCount(count + 1);
   };
-
 
   useEffect(() => {
     fetchData(isLateFilter);
@@ -393,9 +386,6 @@ export default function Home() {
             </div>
           </div>
 
-
-
-
           <div className="mt-15 px-14">
             <div>
               <GridTable
@@ -409,11 +399,13 @@ export default function Home() {
         </div>
       </div>
 
-      {addEmployeeModal && <AddEmployeeModal
-        open={addEmployeeModal}
-        onClose={handleModalClose}
-      // onConfirm={handleConfirm}
-      />}
+      {addEmployeeModal && (
+        <AddEmployeeModal
+          open={addEmployeeModal}
+          onClose={handleModalClose}
+          // onConfirm={handleConfirm}
+        />
+      )}
 
       <LeaveResponseModal
         open={leaveResponseModal}

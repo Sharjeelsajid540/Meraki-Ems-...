@@ -5,19 +5,17 @@ import { fetchUserImage } from "../../Apis/apis";
 
 export default function NavBar() {
   const [userName, setUserName] = useState("");
-  const [userImage, setUserImage] = useState("");
+  const [imagebase64, setImageBase64] = useState("");
 
   useEffect(() => {
     const id = localStorage.getItem("LoginData");
     if (id) {
-      const idData = JSON.parse(id)
-        ;
+      const idData = JSON.parse(id);
       if (idData && idData.name) {
         setUserName(idData.name);
         fetchUserImage(idData.id)
           .then((response) => {
-            console.log("response", response);
-            setUserImage(response.image);
+            setImageBase64(response.image);
           })
           .catch((error) => {
             console.error("Error fetching user image:", error);
@@ -26,27 +24,30 @@ export default function NavBar() {
     }
   }, []);
 
-
-
   return (
     <div className="flex items-center h-26 px-36 bg-navbar-color">
-      <h2 className="flex justify-content-start mr-5 ml-Welcome-text">Welcome</h2>
-      <div className="ml-auto flex items-center space-x-4 mr-UserName-text">
+      <h2 className="flex justify-content-start mr-5">Welcome</h2>
+      <div className="ml-auto flex items-center">
         <img
           src={
-            userImage && userImage !== "" && userImage !== "string"
-              ? `data:image/jpeg;base64,${userImage}`
-              : "/Ellipse 8.png"
+            imagebase64 && imagebase64 !== "" && imagebase64 !== "string"
+              ? `data:image/jpeg;base64,${imagebase64}`
+              : "/pexels-pixabay-220453.jpg"
           }
-          className="h-[50px] w-[50px]"
+          className="h-[50px] rounded-[50px] w-[50px]"
         />
-        <h1 className="text-2xl font-signature">
-          <span className="text-black text-4xl">
+
+        <h1 className="text-2xl font-signature ml-5">
+          <Link
+            className="text-black text-4xl"
+            href="/Login"
+            target="_blank"
+            rel="noreferrer"
+          >
             {userName}
-          </span>
+          </Link>
         </h1>
       </div>
-
     </div>
   );
 }

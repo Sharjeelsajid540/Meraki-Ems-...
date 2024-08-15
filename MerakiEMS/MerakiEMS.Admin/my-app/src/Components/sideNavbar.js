@@ -4,7 +4,9 @@ import ConfirmationModal from "../Components/Models/confirmationModal.js";
 import { useRouter } from "next/navigation";
 
 export default function () {
-  const [userRole, setUserRole] = useState(JSON.parse(localStorage.getItem("LoginData")).userRole)
+  const [userRole, setUserRole] = useState(
+    JSON.parse(localStorage.getItem("LoginData")).userRole
+  );
   // useMemo(() => {
   //   if (typeof window !== "undefined") {
   //     const roleData = localStorage.getItem("LoginData");
@@ -40,7 +42,6 @@ export default function () {
 
   return (
     <>
-
       <div className="leftPanel h-screen w-1/6 bg-custom-blue flex flex-col justify-between ">
         <div className="mt-9">
           <div className="flex justify-center">
@@ -51,7 +52,11 @@ export default function () {
             />
           </div>
           <div className="flex flex-col mt-20">
-            <a href={userRole === "Admin" ? "/Admin/Home" : "/User/Home"} passHref className="no-underline">
+            <a
+              href={userRole === "Admin" ? "/Admin/Home" : "/User/Home"}
+              passHref
+              className="no-underline"
+            >
               <div className="">
                 <div className="Profile w-full mt-8 hover:bg-custom-hover flex justify-left ">
                   <div className="a-text flex items-center text-white text-3xl p-2 rounded ml-2 gap-4">
@@ -66,7 +71,11 @@ export default function () {
               </div>
             </a>
 
-            <a href={userRole === "Admin" ? "/ShowLeavesAdmin" : "/Leaves"} passHref className="no-underline">
+            <a
+              href={userRole === "Admin" ? "/ShowLeavesAdmin" : "/Leaves"}
+              passHref
+              className="no-underline"
+            >
               <div>
                 <div className="Profile w-full mt-8 hover:bg-custom-hover flex justify-left">
                   <div className="a-text flex items-center text-white text-3xl p-2 rounded ml-2 gap-4">
@@ -81,7 +90,7 @@ export default function () {
               </div>
             </a>
 
-            <a href="/Login" passHref className="no-underline">
+            <a href="/Profile" passHref className="no-underline">
               <div className="">
                 <div className="Profile w-full mt-8 hover:bg-custom-hover flex justify-left ">
                   <div className="a-text flex items-center text-white p-2 rounded ml-2 gap-1">
@@ -97,7 +106,7 @@ export default function () {
             </a>
 
             {userRole === "Admin" && (
-              <a href="/Login" passHref className="no-underline">
+              <a href="/Interviews" passHref className="no-underline">
                 <div className="">
                   <div className="Profile w-full mt-8 hover:bg-custom-hover flex justify-left ">
                     <div className="a-text flex items-center text-white p-2 rounded ml-2 gap-1">

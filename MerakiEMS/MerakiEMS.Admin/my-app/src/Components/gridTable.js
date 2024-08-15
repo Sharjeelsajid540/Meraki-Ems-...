@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   flexRender,
   useReactTable,
@@ -7,7 +8,7 @@ import {
   getSortedRowModel,
 } from "@tanstack/react-table";
 
-export const GridTable = ({ data, columns, minHeight, minWidth, sortable }) => {
+export const GridTable = ({ data, columns, sortable, role }) => {
   const [sorting, setSorting] = React.useState([]);
   const table = useReactTable({
     data,
@@ -21,60 +22,67 @@ export const GridTable = ({ data, columns, minHeight, minWidth, sortable }) => {
     onSortingChange: setSorting,
   });
 
-  table.getState().pagination.pageSize = 7;
+  table.getState().pagination.pageSize = 10;
+
   const tableSize = table.getPageCount();
 
   return (
     <>
-      <div
-        style={{ minHeight: minHeight, minWidth: minWidth }}
-        className="bg-white ml-3 mr-3 p-5 shadow-lg border  rounded-[20px]"
-      >
-        <table className="table table-striped w-full">
-          <thead className="">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr className="bg-custom-blue text-white" key={headerGroup.id}>
-                {headerGroup.headers.map((header, index) => {
-                  const isFirst = index === 0;
-                  const isLast = index === headerGroup.headers.length - 1;
-                  return (
-                    <th
-                      key={header.id}
-                      onClick={
-                        sortable && header.column.getToggleSortingHandler()
-                      }
-                      className={` ${isFirst ? "rounded-l-[10px]" : ""} ${isLast ? "rounded-r-[10px]" : ""
+      <div>
+        <div
+          className={`bg-white ml-3 mr-3 px-5 shadow-lg border rounded-[20px] overflow-x-auto ${
+            role === "User" ? "max-h-400px" : "max-h-470px"
+          } 3xl:max-h-720px`}
+        >
+          <table className="table table-stripe relative">
+            <thead className="sticky top-0 z-10">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr className="bg-custom-blue text-white" key={headerGroup.id}>
+                  {headerGroup.headers.map((header, index) => {
+                    const isFirst = index === 0;
+                    const isLast = index === headerGroup.headers.length - 1;
+                    return (
+                      <th
+                        key={header.id}
+                        onClick={
+                          sortable && header.column.getToggleSortingHandler()
+                        }
+                        className={` ${isFirst ? "rounded-l-[10px]" : ""} ${
+                          isLast ? "rounded-r-[10px]" : ""
                         }`}
-                    >
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        {
+                          { asc: "⬆", desc: "⬇" }[
+                            header.column.getIsSorted() ?? null
+                          ]
+                        }
+                      </th>
+                    );
+                  })}
+                </tr>
+              ))}
+            </thead>
+
+            <tbody>
+              {table.getRowModel().rows.map((row) => (
+                <tr key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id}>
                       {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
+                        cell.column.columnDef.cell,
+                        cell.getContext()
                       )}
-                      {
-                        { asc: "⬆", desc: "⬇" }[
-                        header.column.getIsSorted() ?? null
-                        ]
-                      }
-                    </th>
-                  );
-                })}
-              </tr>
-            ))}
-          </thead>
-
-          <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         {tableSize > 1 ? (
           <div className="flex justify-center">
             <div className="flex items-center mt-10 gap-20 bg-custom-blue text-white px-10  rounded-3xl shadow-md">

@@ -109,16 +109,17 @@ namespace MerakiEMS.Infrastructure.Persistence.Sql.Repositories
         {
             IQueryable<Leave> query = _context.Leave;
 
-            if (isLeaveFilter)
+            if (!isLeaveFilter)
             {
-                query = query.Where(s => s.Status == "Pending");
+                return new List<Leave>();
             }
-            if (Name != null)
+
+            if (isLeaveFilter && Name != null)
             {
-                
+
                 query = query.Where(s => s.Name.Contains(Name));
             }
-            if (Status != null)
+            if (isLeaveFilter && Status != null)
             {
                 query = query.Where(s => s.Status == Status);
             }
