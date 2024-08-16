@@ -63,6 +63,7 @@ export default function ({ open, onClose, onConfirm }) {
       const result = await addUser(data);
 
       if (result.success) {
+        onClose();
         clear();
         toast.success(result.message);
         setShow(false);
@@ -72,6 +73,7 @@ export default function ({ open, onClose, onConfirm }) {
     } catch (error) {
       console.error("Error adding user:", error);
     }
+    onClose;
   };
 
   // Validation functions
@@ -196,268 +198,264 @@ export default function ({ open, onClose, onConfirm }) {
   };
 
   return (
-    <div className="CustomerPage ">
-      <div className="addEmployee-section custom">
-        <Modal open={open} onClose={onClose} center show={show}>
-          <h2 className="text-3xl mb-4 ">Add Employee</h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 custom-EmployeeModal">
-              <div>
-                <label className="block text-2xl font-medium text-gray-700">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Name"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
-                  {...register("name", { required: "Name is required" })}
-                />
-                {errors.name && (
-                  <p className="text-red-500 text-2xl mt-1">
-                    {errors.name.message}
-                  </p>
-                )}
-              </div>
+    <Modal open={open} onClose={onClose} center show={show}>
+      <h2 className="text-3xl mb-1 ">Add Employee</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 custom-interview-modal">
+          <div>
+            <label className="block text-2xl font-medium text-gray-700">
+              Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter Name"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
+              {...register("name", { required: "Name is required" })}
+            />
+            {errors.name && (
+              <p className="text-red-500 text-2xl mt-1">
+                {errors.name.message}
+              </p>
+            )}
+          </div>
 
-              <div>
-                <label className="block text-2xl font-medium text-gray-700">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  placeholder="Enter Email"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
-                  {...register("email", {
-                    required: "Email is required",
-                    validate: validateEmail,
-                  })}
-                />
+          <div>
+            <label className="block text-2xl font-medium text-gray-700">
+              Email
+            </label>
+            <input
+              type="email"
+              placeholder="Enter Email"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
+              {...register("email", {
+                required: "Email is required",
+                validate: validateEmail,
+              })}
+            />
 
-                {errors.email && (
-                  <p className="text-red-500 text-2xl mt-1">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-            </div>
+            {errors.email && (
+              <p className="text-red-500 text-2xl mt-1">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+        </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 ">
-              <div>
-                <label className="block text-2xl font-medium text-gray-700">
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter password"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
-                    {...register("password", {
-                      required: "Password is required",
-                      validate: validatePassword,
-                    })}
-                    id="passwordInput"
-                  />
-                  <span
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                    onClick={togglePasswordVisibility}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      id="eyeIcon"
-                    >
-                      {showPassword ? (
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                      ) : (
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      )}
-                    </svg>
-                  </span>
-                </div>
-
-                {errors.password && (
-                  <p className="text-red-500 text-2xl mt-1">
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-2xl font-medium text-gray-700">
-                  CNIC
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter CNIC"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
-                  {...register("cnic", {
-                    required: "CNIC is required",
-                    validate: validateCNIC,
-                  })}
-                />
-
-                {errors.cnic && (
-                  <p className="text-red-500 text-2xl mt-1">
-                    {errors.cnic.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div>
-                <label className="block text-2xl font-medium text-gray-700">
-                  Contact No
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Contact No"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
-                  {...register("contactno", {
-                    required: "Contact No is required",
-                    validate: validateContactNo,
-                  })}
-                />
-                {errors.contactno && (
-                  <p className="text-red-500 text-2xl mt-1">
-                    {errors.contactno.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-2xl font-medium text-gray-700">
-                  Emergency Contact No
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter E-Contact No"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
-                  {...register("econtactno", {
-                    required: "Emergency Contact No is required",
-                    validate: validateContactNo,
-                  })}
-                />
-                {errors.econtactno && (
-                  <p className="text-red-500 text-2xl mt-1">
-                    {errors.econtactno.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="mt-4">
-              <label className="block text-2xl font-medium text-gray-700">
-                Address
-              </label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 ">
+          <div>
+            <label className="block text-2xl font-medium text-gray-700">
+              Password
+            </label>
+            <div className="relative">
               <input
-                type="text"
-                placeholder="Enter Address"
+                type={showPassword ? "password" : ""}
+                placeholder="Enter password"
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
-                {...register("address", { required: "Address is required" })}
+                {...register("password", {
+                  required: "Password is required",
+                  validate: validatePassword,
+                })}
+                id="passwordInput"
               />
-              {errors.address && (
-                <p className="text-red-500 text-2xl mt-1">
-                  {errors.address.message}
-                </p>
-              )}
+              <span
+                className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                onClick={togglePasswordVisibility}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  id="eyeIcon"
+                >
+                  {showPassword ? (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  ) : (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  )}
+                </svg>
+              </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div>
-                <label className="block text-2xl font-medium text-gray-700">
-                  Role
-                </label>
-                <select
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
-                  {...register("roleID", { required: "Role is required" })}
-                >
-                  {roleNames.map((role) => (
-                    <option key={role.id} value={role.id}>
-                      {role.roleName}
-                    </option>
-                  ))}
-                </select>
-                {errors.roleID && (
-                  <p className="text-red-500 text-2xl mt-1">
-                    {errors.roleID.message}
-                  </p>
-                )}
-              </div>
+            {errors.password && (
+              <p className="text-red-500 text-2xl mt-1">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
 
-              <div>
-                <label className="block text-2xl font-medium text-gray-700">
-                  Manager
-                </label>
-                <select
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
-                  {...register("managerID", { required: true })}
-                  value={managerID}
-                  onChange={(e) => setManagerID(e.target.value)}
-                  id="formGridState2"
-                >
-                  <option value="" disabled>
-                    Select Manager
-                  </option>
-                  {managerNames.map((manager) => (
-                    <option key={manager.managerID} value={manager.managerID}>
-                      {manager.managerName}
-                    </option>
-                  ))}
-                </select>
+          <div>
+            <label className="block text-2xl font-medium text-gray-700">
+              CNIC
+            </label>
+            <input
+              type="text"
+              placeholder="Enter CNIC"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
+              {...register("cnic", {
+                required: "CNIC is required",
+                validate: validateCNIC,
+              })}
+            />
 
-                {errors.managerID && (
-                  <p className="text-red-500 text-2xl mt-1">
-                    {errors.managerID.message}
-                  </p>
-                )}
-              </div>
-            </div>
+            {errors.cnic && (
+              <p className="text-red-500 text-2xl mt-1">
+                {errors.cnic.message}
+              </p>
+            )}
+          </div>
+        </div>
 
-            <div className="mt-16">
-              <label className="block text-2xl font-medium text-gray-700">
-                Profile Image
-              </label>
-              <input
-                type="file"
-                className="mt-1 block w-full text-2xl text-gray-500
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div>
+            <label className="block text-2xl font-medium text-gray-700">
+              Contact No
+            </label>
+            <input
+              type="text"
+              placeholder="Enter Contact No"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
+              {...register("contactno", {
+                required: "Contact No is required",
+                validate: validateContactNo,
+              })}
+            />
+            {errors.contactno && (
+              <p className="text-red-500 text-2xl mt-1">
+                {errors.contactno.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-2xl font-medium text-gray-700">
+              Emergency Contact No
+            </label>
+            <input
+              type="text"
+              placeholder="Enter E-Contact No"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
+              {...register("econtactno", {
+                required: "Emergency Contact No is required",
+                validate: validateContactNo,
+              })}
+            />
+            {errors.econtactno && (
+              <p className="text-red-500 text-2xl mt-1">
+                {errors.econtactno.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <label className="block text-2xl font-medium text-gray-700">
+            Address
+          </label>
+          <input
+            type="text"
+            placeholder="Enter Address"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
+            {...register("address", { required: "Address is required" })}
+          />
+          {errors.address && (
+            <p className="text-red-500 text-2xl mt-1">
+              {errors.address.message}
+            </p>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div>
+            <label className="block text-2xl font-medium text-gray-700">
+              Role
+            </label>
+            <select
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
+              {...register("roleID", { required: "Role is required" })}
+            >
+              {roleNames.map((role) => (
+                <option key={role.id} value={role.id}>
+                  {role.roleName}
+                </option>
+              ))}
+            </select>
+            {errors.roleID && (
+              <p className="text-red-500 text-2xl mt-1">
+                {errors.roleID.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-2xl font-medium text-gray-700">
+              Manager
+            </label>
+            <select
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-opacity-50"
+              {...register("managerID", { required: true })}
+              value={managerID}
+              onChange={(e) => setManagerID(e.target.value)}
+              id="formGridState2"
+            >
+              <option value="" disabled>
+                Select Manager
+              </option>
+              {managerNames.map((manager) => (
+                <option key={manager.managerID} value={manager.managerID}>
+                  {manager.managerName}
+                </option>
+              ))}
+            </select>
+
+            {errors.managerID && (
+              <p className="text-red-500 text-2xl mt-1">
+                {errors.managerID.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-16">
+          <label className="block text-2xl font-medium text-gray-700">
+            Profile Image
+          </label>
+          <input
+            type="file"
+            className="mt-1 block w-full text-2xl text-gray-500
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-full file:border-0
                         file:text-sm file:font-semibold
                         file:bg-violet-50 file:text-violet-700
                         hover:file:bg-violet-100"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-              {fileSizeError && (
-                <p className="text-red-500 text-xs mt-1">{fileSizeError}</p>
-              )}
-            </div>
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+          {fileSizeError && (
+            <p className="text-red-500 text-xs mt-1">{fileSizeError}</p>
+          )}
+        </div>
 
-            <div className="mt-16">
-              <button
-                type="submit"
-                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-3xl font-medium text-white bg-custom-blue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
-        </Modal>
-      </div>
-    </div>
+        <div className="mt-16">
+          <button
+            type="submit"
+            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-3xl font-medium text-white bg-custom-blue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </Modal>
   );
 }

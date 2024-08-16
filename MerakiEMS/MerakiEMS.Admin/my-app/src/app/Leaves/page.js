@@ -17,7 +17,7 @@ export default function Home() {
   const [leaveData, setLeaveData] = useState([]);
   const [isChanged, setIsChanged] = useState(0);
   const [usID, setUsID] = useState(null);
-  const [userName, setUserName] = useState("");
+  const [userNames, setUserNames] = useState("");
   const router = useRouter();
 
   const handleOnClick = () => {
@@ -29,8 +29,11 @@ export default function Home() {
     var roleData = JSON.parse(role);
     const uID = localStorage?.getItem("LoginData");
     if (uID) {
-      setUsID(JSON.parse(uID));
+      const parsedUID = JSON.parse(uID);
+      setUsID(parsedUID);
+      setUserNames(parsedUID.name);
     }
+
     const userName = localStorage?.getItem("userName");
     if (userName == null || userName == undefined || userName == "") {
       router.push("/", { scroll: false });
@@ -45,10 +48,11 @@ export default function Home() {
     const payLoad = {
       ...Data,
       userID: usID?.id,
-      name: localStorage?.getItem("userName"),
+      name: userNames,
     };
     setLoader(true);
     addLeave(payLoad).then((response) => {
+      console.log("payLoad", payLoad);
       if (response.isRequestSuccessful === true) {
         toast.success("Request has been Added");
         setAddLeaveModal(false);

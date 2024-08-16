@@ -37,16 +37,7 @@ export default function NavBar() {
           className="h-[50px] rounded-[50px] w-[50px]"
         />
 
-        <h1 className="text-2xl font-signature ml-5">
-          <Link
-            className="text-black text-4xl"
-            href="/Login"
-            target="_blank"
-            rel="noreferrer"
-          >
-            {userName}
-          </Link>
-        </h1>
+        <h1 className="text-2xl font-signature ml-5 font-bold">{userName}</h1>
       </div>
     </div>
   );

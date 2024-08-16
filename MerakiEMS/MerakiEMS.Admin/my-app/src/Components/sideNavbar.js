@@ -4,9 +4,7 @@ import ConfirmationModal from "../Components/Models/confirmationModal.js";
 import { useRouter } from "next/navigation";
 
 export default function () {
-  const [userRole, setUserRole] = useState(
-    JSON.parse(localStorage.getItem("LoginData")).userRole
-  );
+  const [userRole, setUserRole] = useState();
   // useMemo(() => {
   //   if (typeof window !== "undefined") {
   //     const roleData = localStorage.getItem("LoginData");
@@ -39,6 +37,10 @@ export default function () {
 
     handleModalClose();
   };
+
+  useEffect(() => {
+    setUserRole(JSON.parse(localStorage.getItem("LoginData")).userRole);
+  });
 
   return (
     <>

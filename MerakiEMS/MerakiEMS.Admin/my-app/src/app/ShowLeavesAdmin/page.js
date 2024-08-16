@@ -23,6 +23,7 @@ export default function Home() {
   const [updateLeaveModal, setUpdateLeaveModal] = useState(false);
   const [adminName, setAdminName] = useState("");
   const [refresh, setRefresh] = useState(false);
+  const [search, setSearch] = useState(false);
 
   const fetchData = (filterType) => {
     const statusParameter = searchSelect === "" ? null : searchSelect;
@@ -48,6 +49,7 @@ export default function Home() {
   const handleSearch = () => {
     fetchData(isLeaveFilter);
     setCount(count + 1);
+    setSearch(!search);
   };
 
   const handleModalClose = () => {
@@ -80,6 +82,7 @@ export default function Home() {
 
   const reset = () => {
     setSearchText("");
+    setSearch(!search);
   };
 
   const columns = [
@@ -103,6 +106,22 @@ export default function Home() {
     {
       header: "Status",
       accessorKey: "status",
+      cell: (value) => (
+        <strong>
+          <span
+            style={{
+              color:
+                value.getValue("Status") === "Approved"
+                  ? "green"
+                  : value.getValue("Status") === "Rejected"
+                  ? "red"
+                  : "orange",
+            }}
+          >
+            {value.getValue("Status")}
+          </span>
+        </strong>
+      ),
     },
     {
       header: "Details",
@@ -144,7 +163,7 @@ export default function Home() {
 
       setAdminName(idData.name);
     }
-  }, [selectedLeave, isLeaveFilter, searchSelect, refresh]);
+  }, [selectedLeave, isLeaveFilter, searchSelect, refresh, search]);
 
   return (
     <>

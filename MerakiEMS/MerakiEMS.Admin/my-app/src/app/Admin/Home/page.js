@@ -22,7 +22,7 @@ export default function Home() {
 
   const [attendanceData, setAttendanceData] = useState([]);
 
-  const [isLateFilter, setIsLateFilter] = useState(true);
+  const [isLateFilter, setIsLateFilter] = useState("");
   const [paidEntry, setPaidEntry] = useState([]);
   const [finePaid, setFinePaid] = useState("");
   const [show, setShow] = useState(false);
@@ -148,7 +148,7 @@ export default function Home() {
           }
           setLeaveResponseModal(false);
           setCount(count + 1);
-          getLate(isLateFilter);
+          //getLate(isLateFilter);
 
           setFinePaid("");
         } else {
@@ -272,7 +272,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchData(isLateFilter);
-    fetchData(isLateFilter);
+    //fetchData(isLateFilter);
   }, [isLateFilter, count]);
 
   useEffect(() => {
@@ -314,24 +314,24 @@ export default function Home() {
                   <input
                     type="radio"
                     value="true"
-                    checked={isLateFilter === true}
+                    checked={isLateFilter === false}
                     onChange={() => {
-                      setIsLateFilter(true);
+                      setIsLateFilter(false);
                     }}
                   />
-                  <span className="ml-2 mt-marjin-top ">Show Late Records</span>
+                  &nbsp; Show All Records
                 </label>
                 &nbsp; &nbsp; &nbsp;
                 <label className="inline-flex items-center ml-4">
                   <input
                     type="radio"
                     value="false"
-                    checked={isLateFilter === false}
+                    checked={isLateFilter === true}
                     onChange={() => {
-                      setIsLateFilter(false);
+                      setIsLateFilter(true);
                     }}
                   />
-                  <span className="ml-2  mt-marjin-top ">Show All Records</span>
+                  &nbsp; Show Late Records
                 </label>
                 &nbsp; &nbsp; &nbsp;
                 <label className="inline-flex items-center ml-4">

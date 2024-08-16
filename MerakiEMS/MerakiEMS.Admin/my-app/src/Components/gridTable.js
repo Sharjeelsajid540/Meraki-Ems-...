@@ -22,7 +22,7 @@ export const GridTable = ({ data, columns, sortable, role }) => {
     onSortingChange: setSorting,
   });
 
-  table.getState().pagination.pageSize = 10;
+  table.getState().pagination.pageSize = 8;
 
   const tableSize = table.getPageCount();
 

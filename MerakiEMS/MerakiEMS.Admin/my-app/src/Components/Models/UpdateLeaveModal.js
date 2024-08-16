@@ -17,8 +17,8 @@ const UpdateLeaveModal = ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    update({ status, comments });
     setRefresh(!refresh);
+    update({ status, comments });
     onClose();
   };
 
@@ -75,8 +75,8 @@ const UpdateLeaveModal = ({
             >
               <option value="">Select Status</option>
               <option value="Approved">Approved</option>
-              <option value="rejected">Rejected</option>
-              <option value="pending">Pending</option>
+              <option value="Rejected">Rejected</option>
+              <option value="Pending">Pending</option>
             </select>
           </div>
           <div className="mt-5">
