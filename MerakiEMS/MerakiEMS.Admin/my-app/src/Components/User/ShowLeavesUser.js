@@ -1,17 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Navbar from "../../Components/navbar";
-import SideNavbar from "../../Components/sideNavbar";
-import Loader from "../../Components/loader.js";
-import { GridTable } from "../../Components/gridTable";
 import "bootstrap/dist/css/bootstrap.min.css";
-import AddLeaveModal from "../../Components/Models/addLeaveModal.js";
+import AddLeaveModal from "../Models/AddLeaveModal";
 import { addLeave, fetchLeave, sendEmail } from "../../../Apis/apis";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import Loader from "../Common/Loader";
+import { GridTable } from "../Common/gridTable";
 
-export default function Home() {
+export default function ShowLeavesUser() {
   const [addLeaveModal, setAddLeaveModal] = useState(false);
   const [loader, setLoader] = useState(false);
   const [leaveData, setLeaveData] = useState([]);
@@ -52,32 +50,18 @@ export default function Home() {
     };
     setLoader(true);
     addLeave(payLoad).then((response) => {
-      console.log("payLoad", payLoad);
+      setLoader(false);
       if (response.isRequestSuccessful === true) {
         toast.success("Request has been Added");
         setAddLeaveModal(false);
-        setLoader(false);
         setIsChanged(isChanged + 1);
         fetchLeave({ id: usID?.id }).then((response) => {
           setLeaveData(response);
-          // if (response.length > 0) {
-          //   const latestLeave = response[0];
-          //   const emailData = {
-          //     id: usID?.id,
-          //     from: latestLeave.from,
-          //     to: latestLeave.to,
-          //     description: latestLeave.description,
-          //   };
-          //   sendEmail(emailData);
-          // } else {
-          //   toast.error("Failed to retrieve the latest leave data.");
-          // }
         });
       } else {
         toast.error("Error occurred. Please try again!");
       }
     });
-    setLoader(false);
   };
 
   useEffect(() => {
@@ -145,53 +129,40 @@ export default function Home() {
       header: "Updated At",
       accessorKey: "updatedAt",
     },
-    // {
-    //   header: "",
-    //   accessorKey: "comments",
-    // },
   ];
 
   return (
     <>
       {loader && <Loader />}
-      <ToastContainer />
-
-      <div className="flex">
-        <SideNavbar />
-        <div className="w-full">
-          <Navbar />
-
-          <div className="mt-10">
-            <div className="grid grid-cols-12 items-center px-14">
-              <div className="col-span-6">
-                <div className="">
-                  <h5 className="text-left text-4xl font-semibold leading-[29.05px] font-inter">
-                    Leave Status List
-                  </h5>
-                </div>
-              </div>
-              <div className="col-span-6 flex justify-end">
-                <div className="">
-                  <button
-                    onClick={handleOnClick}
-                    type="submit"
-                    className="py-4 px-5 bg-custom-blue text-white font-bold rounded hover:bg-custom-hover rounded-2xl mb-5"
-                  >
-                    Add Leave Request
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className=" mt-2 px-12">
-              <GridTable
-                data={leaveData}
-                columns={columns}
-                minHeight={"430px"}
-                Width={"430px"}
-              />
+      <div className="mt-10">
+        <div className="grid grid-cols-12 items-center px-14">
+          <div className="col-span-6">
+            <div className="">
+              <h5 className="text-left text-4xl font-semibold leading-[29.05px] font-inter">
+                Leave Status List
+              </h5>
             </div>
           </div>
+          <div className="col-span-6 flex justify-end">
+            <div className="">
+              <button
+                onClick={handleOnClick}
+                type="submit"
+                className="py-4 px-5 bg-custom-blue text-white font-bold rounded hover:bg-custom-hover rounded-2xl mb-5"
+              >
+                Add Leave Request
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className=" mt-2 px-12">
+          <GridTable
+            data={leaveData}
+            columns={columns}
+            minHeight={"430px"}
+            Width={"430px"}
+          />
         </div>
       </div>
 

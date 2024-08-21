@@ -15,6 +15,10 @@ const config: Config = {
       '300px' : '300px',
       '470px' : '470px',
     },
+    maxWidth: {
+      '1243px': '1243px',
+      '1575px' : '1575px',
+    },
         borderRadius: {
         'custom': '2.5rem',
         'btn-border' : '1rem',
@@ -23,6 +27,7 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+          
       },
           // Add custom screens here
       screens: {

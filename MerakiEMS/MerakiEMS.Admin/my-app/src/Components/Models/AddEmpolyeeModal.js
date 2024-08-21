@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-responsive-modal";
 import { useForm, Controller } from "react-hook-form";
-import DatePicker from "react-datepicker";
 import "react-responsive-modal/styles.css";
 import "react-datepicker/dist/react-datepicker.css";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getManagers, getRoles, addUser } from "../../../Apis/apis";
 
-export default function ({ open, onClose, onConfirm }) {
+export default function ({ open, onClose }) {
   const [roleNames, setRoleNames] = useState([]);
   const [managerNames, setManagerNames] = useState([]);
   const [managerID, setManagerID] = useState("");
@@ -21,8 +15,6 @@ export default function ({ open, onClose, onConfirm }) {
   const [image, setImage] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
-
-  // const navigate = useNavigate();
 
   const {
     register,
@@ -37,8 +29,6 @@ export default function ({ open, onClose, onConfirm }) {
   };
 
   const onSubmit = async (data) => {
-    console.log("ggggg", data);
-    // onConfirm(data);
     if (!validateEmail(data.email)) {
       return;
     }
@@ -58,7 +48,6 @@ export default function ({ open, onClose, onConfirm }) {
       return;
     }
     data.image = image;
-    console.log(data);
     try {
       const result = await addUser(data);
 
@@ -138,11 +127,6 @@ export default function ({ open, onClose, onConfirm }) {
     }
   };
 
-  // useEffect(() => {
-  //   const managersData = getManagers();
-  //   console.log("api response ", managersData)
-  //   // fetchRolesData();
-  // }, []);
   const fetchManagersData = async () => {
     try {
       const managersData = await getManagers();

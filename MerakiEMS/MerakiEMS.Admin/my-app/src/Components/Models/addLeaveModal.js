@@ -11,10 +11,12 @@ export default function ({ open, onClose, onConfirm }) {
     handleSubmit,
     formState: { errors },
     register,
+    reset,
   } = useForm();
 
   const onSubmit = (data) => {
     onConfirm(data);
+    reset();
   };
 
   return (

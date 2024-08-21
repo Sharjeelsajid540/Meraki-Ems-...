@@ -1,34 +1,33 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Navbar from "../../Components/navbar";
-import SideNavbar from "../../Components/sideNavbar";
-import Loader from "../../Components/loader";
 import "bootstrap/dist/css/bootstrap.min.css";
-import AddInterviewModal from "../../Components/Models/AddInterviewModal";
+import AddInterviewModal from "../Models/AddInterviewModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { fetchInterData } from "../../../Apis/apis";
-import { AddInterviewCandidate } from "../../../Apis/apis";
+import {
+  fetchInterData,
+  addInterviewCandidate,
+  updateCandidateData,
+  deleteCandidateData,
+  showCvCandidate,
+} from "../../../Apis/apis";
 import ReactStars from "react-stars";
-import { Button } from "react-bootstrap";
-import { updateCandidateData } from "../../../Apis/apis";
-import { DeleteCandidateData } from "../../../Apis/apis";
-import DeleteConfirmationModal from "../../Components/Models/DeleteConfirmatioModal";
-import { ShowCvCandidate } from "../../../Apis/apis";
-import ViewCvModal from "../../Components/models/ViewCvModal";
-import { GridTable } from "../../Components/gridTable";
-import ViewCommentsModal from "../../Components/models/ViewCommentsModal";
+import ViewCvModal from "../Models/ViewCommentsModal";
+import ViewCommentsModal from "../Models/ViewCommentsModal";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { GridTable } from "../Common/gridTable";
+import ConfirmationModal from "../Models/ConfirmationModal";
 
-export default function Home() {
+export default function Interview() {
   const [addInterviewModal, setAddInterviewModal] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [message, setMessage] = useState("");
   const [loader, setLoader] = useState(false);
   const [interviewData, setInterviewData] = useState([]);
   const [isDataFilter, setisDataFilter] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [modalHeader, setModalHeader] = useState("");
   const [modalFooter, setModalFooter] = useState("");
-  const [employyeeName, setEmployeeName] = useState("");
   const [updateData, setUpdateData] = useState([]);
   const [deleteItemId, setDeleteItemId] = useState(null);
   const [viewCv, setViewCv] = useState(false);
@@ -53,7 +52,7 @@ export default function Home() {
   };
 
   const handleCvModal = async (id) => {
-    const response = await ShowCvCandidate(id);
+    const response = await showCvCandidate(id);
 
     const base64String = response.file;
 
@@ -94,7 +93,6 @@ export default function Home() {
 
   const handleUpdateClick = (data) => {
     setUpdateData(data);
-    // console.log("data", data);
     setAddInterviewModal(true);
     setModalHeader("Update Interview Data");
     setModalFooter("Update");
@@ -103,11 +101,12 @@ export default function Home() {
   const openConfirmationModal = (id) => {
     setDeleteConfirmation(true);
     setDeleteItemId(id);
+    setMessage("Delete");
   };
 
   const handleDeleteData = async () => {
     try {
-      await DeleteCandidateData(deleteItemId).then((response) => {
+      await deleteCandidateData(deleteItemId).then((response) => {
         if (response.isRequestSuccessful) {
           toast.success("Candidate Deleted Successfully");
           fetchInterData(isDataFilter, searchText).then((response) => {
@@ -127,7 +126,7 @@ export default function Home() {
     setLoader(true);
     try {
       if (modalFooter === "Submit") {
-        const response = await AddInterviewCandidate(data);
+        const response = await addInterviewCandidate(data);
         if (response.isRequestSuccessful) {
           toast.success("Request has been Added");
           const fetchResponse = await fetchInterData(isDataFilter, searchText);
@@ -338,60 +337,50 @@ export default function Home() {
 
   return (
     <>
-      {loader && <Loader />}
-      <ToastContainer />
-
-      <div className="flex">
-        <SideNavbar />
-        <div className="w-4/5">
-          <Navbar />
-
-          <div className="mt-10">
-            <div className="grid grid-cols-12 items-center px-14">
-              <div className="col-span-6">
-                <div className="">
-                  <h5 className="text-left text-4xl font-semibold leading-[29.05px] font-inter">
-                    Interview Data
-                  </h5>
-                </div>
-              </div>
-              <div className="col-span-6 flex justify-end">
-                <div className="">
-                  <input
-                    className="border border-solid border-black mr-5 rounded py-3 px-5"
-                    placeholder="Enter name to search"
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                  />
-                  <button
-                    type="submit"
-                    className="py-4 px-5 bg-custom-blue text-white font-bold hover:bg-custom-hover rounded-2xl mb-5 mr-5"
-                    onClick={handleSearch}
-                  >
-                    Search
-                  </button>
-                  <button
-                    type="submit"
-                    className="py-4 px-5 bg-custom-blue text-white font-bold hover:bg-custom-hover rounded-2xl mb-5 mr-5"
-                    onClick={handleReset}
-                  >
-                    Reset
-                  </button>
-                  <button
-                    onClick={handleOnClick}
-                    type="submit"
-                    className="py-4 px-5 bg-custom-blue text-white font-bold rounded hover:bg-custom-hover rounded-2xl mb-5"
-                  >
-                    Add Applicant
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className=" mt-2 px-12">
-              <GridTable data={interviewData} columns={columns} />
+      <div className="mt-10">
+        <div className="grid grid-cols-12 items-center px-14">
+          <div className="col-span-6">
+            <div className="">
+              <h5 className="text-left text-4xl font-semibold leading-[29.05px] font-inter">
+                Interview Data
+              </h5>
             </div>
           </div>
+          <div className="col-span-6 flex justify-end">
+            <div className="">
+              <input
+                className="border border-solid border-black mr-5 rounded py-3 px-5"
+                placeholder="Enter name to search"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+              <button
+                type="submit"
+                className="py-4 px-5 bg-custom-blue text-white font-bold hover:bg-custom-hover rounded-2xl mb-5 mr-5"
+                onClick={handleSearch}
+              >
+                Search
+              </button>
+              <button
+                type="submit"
+                className="py-4 px-5 bg-custom-blue text-white font-bold hover:bg-custom-hover rounded-2xl mb-5 mr-5"
+                onClick={handleReset}
+              >
+                Reset
+              </button>
+              <button
+                onClick={handleOnClick}
+                type="submit"
+                className="py-4 px-5 bg-custom-blue text-white font-bold rounded hover:bg-custom-hover rounded-2xl mb-5"
+              >
+                Add Applicant
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className=" mt-2 px-12">
+          <GridTable data={interviewData} columns={columns} />
         </div>
       </div>
 
@@ -404,12 +393,13 @@ export default function Home() {
         updateData={updateData}
       />
 
-      <DeleteConfirmationModal
+      <ConfirmationModal
         open={deleteConfirmation}
         onClose={handleModalClose}
         onConfirm={handleDeleteData}
-        handleDeleteData={handleDeleteData}
+        msg={message}
       />
+
       <ViewCvModal
         open={viewCv}
         onClose={handleModalClose}

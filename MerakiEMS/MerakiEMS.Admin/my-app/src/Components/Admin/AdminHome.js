@@ -1,23 +1,15 @@
 "use client";
 import React, { useMemo, useState, useEffect } from "react";
-import Navbar from "../../../Components/navbar";
-import SideNavbar from "../../../Components/sideNavbar";
-import { GridTable } from "../../../Components/gridTable";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  fetchAllAttendanceData,
-  UpdateFineStatus,
-  getLate,
-  GenerateAttendanceExcel,
-  getAllUsers,
-} from "../../../../Apis/apis";
-
-import { ToastContainer, toast } from "react-toastify";
+import { UpdateFineStatus, getLate, getAllUsers } from "../../../Apis/apis";
 import "react-toastify/dist/ReactToastify.css";
-import AddEmployeeModal from "../../../Components/Models/AddEmpolyeeModal";
-import LeaveResponseModal from "../../../Components/Models/LeaveResponseModal";
+import AddEmployeeModal from "../Models/AddEmpolyeeModal";
+import LeaveResponseModal from "../Models/LeaveResponseModal";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { GridTable } from "../Common/gridTable";
+import { ToastContainer, toast } from "react-toastify";
 
-export default function Home() {
+export default function AdminHome() {
   const [addEmployeeModal, setAddEmployeeModal] = useState(false);
 
   const [attendanceData, setAttendanceData] = useState([]);
@@ -25,17 +17,10 @@ export default function Home() {
   const [isLateFilter, setIsLateFilter] = useState("");
   const [paidEntry, setPaidEntry] = useState([]);
   const [finePaid, setFinePaid] = useState("");
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [count, setCount] = useState(0);
   const [searchText, setSearchText] = useState("");
   const [searchDate, setSearchDate] = useState("");
   const [isFinePending, setIsFinePending] = useState(false);
-  const [fromsearchDate, setFromSearchDate] = useState("");
-  const [tosearchDate, setToSearchDate] = useState("");
-  const [usersname, setUsersName] = useState("");
-  const [username, setUserName] = useState("");
   const [allUsersData, setAllUersData] = useState({});
 
   const [leaveResponseModal, setLeaveResponseModal] = useState(false);
@@ -87,13 +72,6 @@ export default function Home() {
   const handleModalClose = () => {
     setAddEmployeeModal(false);
   };
-  // const handleConfirm = () => {
-  //   if (msg === "Check-In") {
-  //     handleConfirmCheckIn();
-  //   } else {
-  //     handleConfirmCheckout();
-  //   }
-  // };
 
   const handleButtonClick = () => {
     setAddEmployeeModal(true);
@@ -127,7 +105,6 @@ export default function Home() {
     setLeaveResponseModal(false);
   };
   const handleResponseLeave = async (event) => {
-    // event.preventDefault();
     const data = {
       id: paidEntry,
       finePaid: event,
@@ -148,7 +125,6 @@ export default function Home() {
           }
           setLeaveResponseModal(false);
           setCount(count + 1);
-          //getLate(isLateFilter);
 
           setFinePaid("");
         } else {
@@ -272,7 +248,6 @@ export default function Home() {
 
   useEffect(() => {
     fetchData(isLateFilter);
-    //fetchData(isLateFilter);
   }, [isLateFilter, count]);
 
   useEffect(() => {
@@ -283,128 +258,116 @@ export default function Home() {
 
   return (
     <>
-      <ToastContainer />
-      <div className="flex">
-        <SideNavbar />
-        <div className="w-full">
-          <Navbar />
-          <div className="grid grid-cols-12 items-center px-20">
-            <div className="col-span-6">
-              <div>
-                <h5 className="text-left text-5xl font-semibold leading-[29.05px] font-inter">
-                  Attendance list
-                </h5>
-              </div>
-            </div>
-            <div className="col-span-6 flex justify-end ">
-              <div>
-                <button
-                  className=" px-4 py-2 bg-custom-blue text-white  rounded-btn-border"
-                  onClick={handleButtonClick}
-                >
-                  Add Employee
-                </button>
-              </div>
-            </div>
+      <div className="grid grid-cols-12 items-center px-20">
+        <div className="col-span-6">
+          <div>
+            <h5 className="text-left text-5xl font-semibold leading-[29.05px] font-inter">
+              Attendance list
+            </h5>
           </div>
-          <div className="grid grid-cols-12 items-center px-20">
-            <div className="col-span-6">
-              <div>
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    value="true"
-                    checked={isLateFilter === false}
-                    onChange={() => {
-                      setIsLateFilter(false);
-                    }}
-                  />
-                  &nbsp; Show All Records
-                </label>
-                &nbsp; &nbsp; &nbsp;
-                <label className="inline-flex items-center ml-4">
-                  <input
-                    type="radio"
-                    value="false"
-                    checked={isLateFilter === true}
-                    onChange={() => {
-                      setIsLateFilter(true);
-                    }}
-                  />
-                  &nbsp; Show Late Records
-                </label>
-                &nbsp; &nbsp; &nbsp;
-                <label className="inline-flex items-center ml-4">
-                  <input
-                    type="checkbox"
-                    value={isFinePending}
-                    checked={isFinePending}
-                    onChange={() => setIsFinePending(!isFinePending)}
-                  />
-                  <span className="ml-2 mt-marjin-top ">Show Fine Pending</span>
-                </label>
-              </div>
-            </div>
-            <div className="col-span-6">
-              <div className="row">
-                <div className="col-sm-5">
-                  <form>
-                    <div className="form-group">
-                      <input
-                        className="fields form-control"
-                        type="text"
-                        placeholder="Enter name to search"
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                        onKeyDown={handleKeyPress}
-                      />
-                    </div>
-                  </form>
-                </div>
-                <div className="col-sm-5">
-                  <form>
-                    <div className="form-group">
-                      <input
-                        className="fields form-control"
-                        type="date"
-                        value={searchDate}
-                        onChange={(e) => setSearchDate(e.target.value)}
-                        onKeyDown={handleKeyPress}
-                      />
-                    </div>
-                  </form>
-                </div>
-                <div className="col-sm-2">
-                  <button
-                    className="px-4 py-2 bg-custom-blue text-white  rounded-btn-border"
-                    onClick={handleSearch}
-                  >
-                    Search
-                  </button>
-                </div>
-              </div>
-            </div>
+        </div>
+        <div className="col-span-6 flex justify-end ">
+          <div>
+            <button
+              className=" px-4 py-2 bg-custom-blue text-white  rounded-btn-border"
+              onClick={handleButtonClick}
+            >
+              Add Employee
+            </button>
           </div>
-
-          <div className="mt-15 px-14">
-            <div>
-              <GridTable
-                data={data}
-                columns={columns}
-                minHeight={"430px"}
-                Width={"430px"}
+        </div>
+      </div>
+      <div className="grid grid-cols-12 items-center px-20">
+        <div className="col-span-6">
+          <div>
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                value="true"
+                checked={isLateFilter === false}
+                onChange={() => {
+                  setIsLateFilter(false);
+                }}
               />
+              &nbsp; Show All Records
+            </label>
+            &nbsp; &nbsp; &nbsp;
+            <label className="inline-flex items-center ml-4">
+              <input
+                type="radio"
+                value="false"
+                checked={isLateFilter === true}
+                onChange={() => {
+                  setIsLateFilter(true);
+                }}
+              />
+              &nbsp; Show Late Records
+            </label>
+            &nbsp; &nbsp; &nbsp;
+            <label className="inline-flex items-center ml-4">
+              <input
+                type="checkbox"
+                value={isFinePending}
+                checked={isFinePending}
+                onChange={() => setIsFinePending(!isFinePending)}
+              />
+              <span className="ml-2 mt-marjin-top ">Show Fine Pending</span>
+            </label>
+          </div>
+        </div>
+        <div className="col-span-6">
+          <div className="row">
+            <div className="col-sm-5">
+              <form>
+                <div className="form-group">
+                  <input
+                    className="fields form-control"
+                    type="text"
+                    placeholder="Enter name to search"
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                  />
+                </div>
+              </form>
+            </div>
+            <div className="col-sm-5">
+              <form>
+                <div className="form-group">
+                  <input
+                    className="fields form-control"
+                    type="date"
+                    value={searchDate}
+                    onChange={(e) => setSearchDate(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                  />
+                </div>
+              </form>
+            </div>
+            <div className="col-sm-2">
+              <button
+                className="px-4 py-2 bg-custom-blue text-white  rounded-btn-border"
+                onClick={handleSearch}
+              >
+                Search
+              </button>
             </div>
           </div>
         </div>
       </div>
+      <div className="mt-15 px-14">
+        <div>
+          <GridTable
+            data={data}
+            columns={columns}
+            minHeight={"430px"}
+            Width={"430px"}
+          />
+        </div>
+      </div>
 
       {addEmployeeModal && (
-        <AddEmployeeModal
-          open={addEmployeeModal}
-          onClose={handleModalClose}
-          // onConfirm={handleConfirm}
-        />
+        <AddEmployeeModal open={addEmployeeModal} onClose={handleModalClose} />
       )}
 
       <LeaveResponseModal
