@@ -160,12 +160,6 @@ export default function ({
     onClose();
   };
 
-  // useEffect(() => {
-  //   if (modalFooter === "Submit") {
-  //     reset();
-  //   }
-  // }, [modalFooter]);
-
   return (
     <Modal open={open} onClose={handleModalCloses} center>
       <form onSubmit={handleSubmit(onSubmit)} className="px-6 rounded-md">

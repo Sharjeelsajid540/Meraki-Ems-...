@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-responsive-modal";
 import { useForm, Controller } from "react-hook-form";
-import DatePicker from "react-datepicker";
 import "react-responsive-modal/styles.css";
 import "react-datepicker/dist/react-datepicker.css";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getManagers, getRoles, addUser } from "../../../Apis/apis";
 
-export default function ({ open, onClose, onConfirm }) {
+export default function ({ open, onClose }) {
   const [roleNames, setRoleNames] = useState([]);
   const [managerNames, setManagerNames] = useState([]);
   const [managerID, setManagerID] = useState("");
@@ -21,8 +15,6 @@ export default function ({ open, onClose, onConfirm }) {
   const [image, setImage] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
-
-  // const navigate = useNavigate();
 
   const {
     register,
@@ -37,8 +29,6 @@ export default function ({ open, onClose, onConfirm }) {
   };
 
   const onSubmit = async (data) => {
-    console.log("ggggg", data);
-    // onConfirm(data);
     if (!validateEmail(data.email)) {
       return;
     }
@@ -58,7 +48,6 @@ export default function ({ open, onClose, onConfirm }) {
       return;
     }
     data.image = image;
-    console.log(data);
     try {
       const result = await addUser(data);
 
@@ -76,7 +65,6 @@ export default function ({ open, onClose, onConfirm }) {
     onClose;
   };
 
-  // Validation functions
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regex.test(email)) {
@@ -138,11 +126,6 @@ export default function ({ open, onClose, onConfirm }) {
     }
   };
 
-  // useEffect(() => {
-  //   const managersData = getManagers();
-  //   console.log("api response ", managersData)
-  //   // fetchRolesData();
-  // }, []);
   const fetchManagersData = async () => {
     try {
       const managersData = await getManagers();
@@ -450,7 +433,7 @@ export default function ({ open, onClose, onConfirm }) {
         <div className="mt-16">
           <button
             type="submit"
-            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-3xl font-medium text-white bg-custom-blue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-3xl font-medium text-white bg-custom-blue hover:bg-custom-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Submit
           </button>

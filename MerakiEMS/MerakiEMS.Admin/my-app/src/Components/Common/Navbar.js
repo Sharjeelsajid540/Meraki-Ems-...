@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { fetchUserImage } from "../../Apis/apis";
+import { fetchUserImage } from "../../../Apis/apis";
 
 export default function NavBar() {
   const [userName, setUserName] = useState("");
@@ -25,7 +24,7 @@ export default function NavBar() {
   }, []);
 
   return (
-    <div className="flex items-center h-26 px-36 bg-navbar-color">
+    <div className="flex items-center h-26 px-36 bg-navbar-color ">
       <h2 className="flex justify-content-start mr-5">Welcome</h2>
       <div className="ml-auto flex items-center">
         <img

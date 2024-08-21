@@ -16,13 +16,13 @@ export default function ({ open, onClose, onConfirm, msg }) {
         </div>
         <div className="flex gap-4 mt-10">
           <button
-            className="flex-1 py-2 px-4 bg-custom-blue text-white font-bold rounded hover:bg-green-700"
+            className="flex-1 py-2 px-4 bg-custom-blue text-white font-bold rounded hover:bg-custom-hover"
             onClick={onConfirm}
           >
             Yes
           </button>
           <button
-            className="flex-1 py-2 px-4 bg-custom-blue text-white font-bold rounded hover:bg-red-700"
+            className="flex-1 py-2 px-4 bg-custom-blue text-white font-bold rounded hover:bg-custom-hover"
             onClick={onClose}
           >
             No

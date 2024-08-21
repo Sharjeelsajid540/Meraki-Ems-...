@@ -2,22 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 
-const UpdateLeaveModal = ({
-  open,
-  onClose,
-  updateleaveData,
-  update,
-  refresh,
-  setRefresh,
-}) => {
-  console.log("updateleaveData", updateleaveData);
-
+const UpdateLeaveModal = ({ open, onClose, updateleaveData, update }) => {
   const [status, setStatus] = useState("");
   const [comments, setComments] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setRefresh(!refresh);
     update({ status, comments });
     onClose();
   };
@@ -32,11 +22,10 @@ const UpdateLeaveModal = ({
     if (updateleaveData) {
       setComments(updateleaveData.comments);
     }
-    console.log("comments", comments);
+
     if (updateleaveData) {
       setStatus(updateleaveData.status);
     }
-    console.log("status", status);
   }, [updateleaveData]);
 
   return (

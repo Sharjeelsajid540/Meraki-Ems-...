@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { useState } from "react";
 import {
   flexRender,
   useReactTable,
@@ -9,7 +8,7 @@ import {
 } from "@tanstack/react-table";
 
 export const GridTable = ({ data, columns, sortable, role }) => {
-  const [sorting, setSorting] = React.useState([]);
+  const [sorting, setSorting] = useState([]);
   const table = useReactTable({
     data,
     columns,
@@ -23,16 +22,18 @@ export const GridTable = ({ data, columns, sortable, role }) => {
   });
 
   table.getState().pagination.pageSize = 8;
-
-  const tableSize = table.getPageCount();
+  var tableSize = 0;
+  if (data && data.length > 0) {
+    tableSize = table.getPageCount();
+  }
 
   return (
     <>
       <div>
         <div
-          className={`bg-white ml-3 mr-3 px-5 shadow-lg border rounded-[20px] overflow-x-auto ${
+          className={`bg-white ml-3 mr-3 px-5 shadow-lg border rounded-[20px] overflow-auto ${
             role === "User" ? "max-h-400px" : "max-h-470px"
-          } 3xl:max-h-720px`}
+          } 3xl:max-h-720px `}
         >
           <table className="table table-stripe relative">
             <thead className="sticky top-0 z-10">
@@ -68,18 +69,24 @@ export const GridTable = ({ data, columns, sortable, role }) => {
             </thead>
 
             <tbody>
-              {table.getRowModel().rows.map((row) => (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  ))}
+              {data && data.length > 0 ? (
+                table.getRowModel().rows.map((row) => (
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <td key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td>No Data Avaliable</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

@@ -1,13 +1,16 @@
 "use client"
 import { useEffect } from "react";
 import { useRouter } from 'next/navigation'
+
 export default function Home() {
   const router = useRouter()
   useEffect(()=>{
 
-router.push('/Login', { scroll: false })
+ router.push('/Login', { scroll: false })
   })
   return (
-    <></>
+    <>
+    
+    </>
   );
 }
