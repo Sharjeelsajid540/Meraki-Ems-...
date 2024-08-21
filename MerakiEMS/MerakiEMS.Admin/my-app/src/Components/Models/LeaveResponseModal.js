@@ -19,7 +19,10 @@ export default function ({ open, onClose, onConfirm }) {
 
   return (
     <Modal open={open} onClose={onClose} center>
-      <form onSubmit={handleSubmit(onSubmit)} className="px-6 rounded-md">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="px-6 rounded-md custom"
+      >
         <div className="main-div">
           <div className="w-1/2">
             <h4 className="">Update Leave Response</h4>
@@ -50,7 +53,7 @@ export default function ({ open, onClose, onConfirm }) {
 
             <button
               type="submit"
-              className="py-2 px-4 bg-custom-blue text-white font-bold rounded hover:bg-custom-hover rounded-2xl"
+              className="py-2 px-4 bg-custom-blue text-white font-bold rounded hover:bg-custom-hover rounded-2xl mt-1"
             >
               Submit
             </button>

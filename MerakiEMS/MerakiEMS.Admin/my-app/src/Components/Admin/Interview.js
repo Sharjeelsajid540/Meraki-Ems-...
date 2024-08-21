@@ -12,7 +12,7 @@ import {
   showCvCandidate,
 } from "../../../Apis/apis";
 import ReactStars from "react-stars";
-import ViewCvModal from "../Models/ViewCommentsModal";
+import ViewCvModal from "../Models/ViewCvModal";
 import ViewCommentsModal from "../Models/ViewCommentsModal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { GridTable } from "../Common/gridTable";

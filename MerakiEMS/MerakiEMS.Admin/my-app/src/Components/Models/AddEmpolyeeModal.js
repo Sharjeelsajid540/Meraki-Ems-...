@@ -65,7 +65,6 @@ export default function ({ open, onClose }) {
     onClose;
   };
 
-  // Validation functions
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regex.test(email)) {
@@ -434,7 +433,7 @@ export default function ({ open, onClose }) {
         <div className="mt-16">
           <button
             type="submit"
-            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-3xl font-medium text-white bg-custom-blue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-3xl font-medium text-white bg-custom-blue hover:bg-custom-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Submit
           </button>
