@@ -105,7 +105,7 @@ namespace MerakiEMS.Application.Services
                         using (var smtp = new MailKit.Net.Smtp.SmtpClient())
                         {
                             await smtp.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-                            await smtp.AuthenticateAsync("merakiservice540@gmail.com", "qomn hnqf llvp cgrf");
+                            await smtp.AuthenticateAsync("merakiservice540@gmail.com", "tzyf ljsv rszw kzkz");
                             await smtp.SendAsync(emaill);
                             await smtp.DisconnectAsync(true);
                         }
